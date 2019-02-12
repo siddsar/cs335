@@ -2,21 +2,15 @@ import ply.lex as lex
 import argparse
 import sys
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument("--cfg", help="color config file", type=str)
-# parser.add_argument("--output", help="HTML file")
-# args = vars(parser.parse_args())
-# print(args['cfg'])
-# print(args['output'])
-cconfig = sys.argv[1]
-cconfig = cconfig[6:]
-outfile = sys.argv[3]
-outfile = outfile[9:]
-infile = sys.argv[2]
+# cconfig = sys.argv[1]
+# cconfig = cconfig[6:]
+# outfile = sys.argv[3]
+# outfile = outfile[9:]
+# infile = sys.argv[2]
 
 keywords = ['abstract','assert','boolean','break','byte','case','catch','char','class','const','continue',
 			'default','do','double','else','enum','extends','final','finally','float','for','goto','if',
-			'implements','import','instanceof','int','interface','long','native','new','package',
+			'implements','import','instanceof','int','interface','long','native','new','null','package',
 			'private','protected','public','return','short','static','strictfp','super','switch',
 			'synchronized','this','throw','throws','transient','try','void','volatile','while'
 			]
@@ -172,55 +166,55 @@ def t_error(t):
         t.lexer.skip(1)
 
 lexer = lex.lex()
-colors = {}
-with open(cconfig) as f:
-    for line in f:
-       (key, val) = line.split()
-       colors[key] = val
-#print(colors)
-inp = open(infile,"r").read();
-#print(inp)
-lexer.input(inp);
-html = "<html>"
-current_line = 1;
-current_pos = 0;
-while True:
-        tok = lexer.token()
-        if not tok:
-                break;
-        color = 'black'
-        if(tok.type in [k.upper() for k in keywords]):
-                color = colors['keywords']
-        elif(tok.type in colors.keys()):
-                color = colors[tok.type]
-        #print(tok,color)
+# colors = {}
+# with open(cconfig) as f:
+#     for line in f:
+#        (key, val) = line.split()
+#        colors[key] = val
+# #print(colors)
+# inp = open(infile,"r").read();
+# #print(inp)
+# lexer.input(inp);
+# html = "<html>"
+# current_line = 1;
+# current_pos = 0;
+# while True:
+#         tok = lexer.token()
+#         if not tok:
+#                 break;
+#         color = 'black'
+#         if(tok.type in [k.upper() for k in keywords]):
+#                 color = colors['keywords']
+#         elif(tok.type in colors.keys()):
+#                 color = colors[tok.type]
+#         #print(tok,color)
 
-        if(tok.lineno > current_line):
-                html+=("<br>"*(tok.lineno - current_line))
-                current_pos+=(tok.lineno-current_line)
-                current_line=tok.lineno
-
-
-        if(tok.lexpos > current_pos):
-                html+=("&nbsp;"*(tok.lexpos-current_pos))
-                current_pos = tok.lexpos
-
-        if(str(tok.type) == "BLOCK_COMMENT"):
-                html+="<font color="+color+">"
-                l = tok.value.split("\n")
-                for x in l:
-                        html+=x
-                        html+="<br>"
-                        current_line+=1
-                        #current_pos+=1
-                html+="</font>"
-        else:
-                html+="<font color="+color+">"+str(tok.value)+"</font>"
+#         if(tok.lineno > current_line):
+#                 html+=("<br>"*(tok.lineno - current_line))
+#                 current_pos+=(tok.lineno-current_line)
+#                 current_line=tok.lineno
 
 
-        current_pos+=len(str(tok.value))
+#         if(tok.lexpos > current_pos):
+#                 html+=("&nbsp;"*(tok.lexpos-current_pos))
+#                 current_pos = tok.lexpos
 
-html+="</html>"
-out= open(outfile,'w')
-out.write(html)
-out.close()
+#         if(str(tok.type) == "BLOCK_COMMENT"):
+#                 html+="<font color="+color+">"
+#                 l = tok.value.split("\n")
+#                 for x in l:
+#                         html+=x
+#                         html+="<br>"
+#                         current_line+=1
+#                         #current_pos+=1
+#                 html+="</font>"
+#         else:
+#                 html+="<font color="+color+">"+str(tok.value)+"</font>"
+
+
+#         current_pos+=len(str(tok.value))
+
+# html+="</html>"
+# out= open(outfile,'w')
+# out.write(html)
+# out.close()

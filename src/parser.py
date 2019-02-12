@@ -151,6 +151,14 @@ def p_Modifier(p):
     '''
     Modifier : STATIC
     | FINAL
+    | PUBLIC
+    | PROTECTED
+    | PRIVATE
+    | ABSTRACT
+    | VOLATILE
+    | SYNCHRONIZED
+    | TRANSIENT
+    | NATIVE
     '''
     
 # Section 19.8
@@ -903,6 +911,7 @@ def p_AssignmentOperator(p):
     | MINUS_ASSIGN
     | LSHIFT_ASSIGN
     | RSHIFT_ASSIGN
+    | RRSHIFT_ASSIGN
     '''
     
     #To check if I missed something

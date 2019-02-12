@@ -8,10 +8,10 @@ import sys
 # outfile = outfile[9:]
 # infile = sys.argv[2]
 
-keywords = ['abstract','assert','boolean','break','byte','case','catch','char','class','const','continue',
-			'default','do','double','else','enum','extends','final','finally','float','for','goto','if',
-			'implements','import','instanceof','int','interface','long','native','new','null','package',
-			'private','protected','public','return','short','static','strictfp','super','switch',
+keywords = ['abstract','boolean','break','byte','case','catch','char','class','continue',
+			'default','do','double','else','extends','final','finally','float','for','if',
+			'import','instanceof','int','long','native','new','null','package',
+			'private','protected','public','return','short','static','super','switch',
 			'synchronized','this','throw','throws','transient','try','void','volatile','while'
 			]
 
@@ -27,7 +27,7 @@ tokens = [
                 'LEQ',
 				'QMARK',
 				'COLON',
-				'AT',
+				
                 'PLUS',
                 'MINUS',
                 'MULT',
@@ -103,7 +103,7 @@ t_L_SQBR = r'\['
 t_R_SQBR = r'\]'
 
 t_QMARK = r'\?'
-t_AT = r'@'
+#t_AT = r'@'
 t_COLON = r':'
 t_EQUALS = r'=='
 t_ASSIGN = r'='
@@ -150,12 +150,14 @@ def t_IDENTIFIER(t):
 
 
 
-t_LINE_COMMENT = r'//.*'
+def t_LINE_COMMENT(t):
+        r'//.*'
+        pass
 
 def t_BLOCK_COMMENT(t):
         r'/\*(.|\n)*?\*/'
         t.lexer.lineno += t.value.count('\n')
-        return t
+        pass
 
 def t_newline(t):
         r'\n+'

@@ -9,7 +9,7 @@ public class FrequencyCharacter
         char string[] = str.toCharArray();    
             
         for(i = 0; i <str.length(); i++) {    
-            freq[i] = 1;    
+            freq[i] = -1;    
             for(j = i+1; j <str.length(); j++) {    
                 if(string[i] == string[j]) {    
                     freq[i]++;    

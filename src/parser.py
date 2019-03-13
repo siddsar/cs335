@@ -18,12 +18,38 @@ def p_Type(p):
 
 
 def p_Literal(p):
-    ''' Literal :   INT_LITERAL
-                  | FLOAT_LITERAL
-                  | CHAR_LITERAL
-                  | STRING_LITERAL
-                  | NULL
+    ''' Literal :   IntConst
+                  | FloatConst
+                  | CharConst
+                  | StringConst
+                  | NullConst
     '''
+    
+def p_IntConst(p):
+    '''
+    IntConst : INT_LITERAL
+    '''
+
+def p_FloatConst(p):
+    '''
+    FloatConst : FLOAT_LITERAL
+    '''
+
+def p_CharConst(p):
+    '''
+    CharConst : CHAR_LITERAL
+    '''
+
+def p_StringConst(p):
+    '''
+    StringConst : STRING_LITERAL
+    '''
+
+def p_NullConst(p):
+    '''
+    NullConst : NULL
+    '''
+
     
 def p_PrimitiveType(p):
     ''' PrimitiveType :    NumericType

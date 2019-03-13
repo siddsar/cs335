@@ -14,7 +14,7 @@ class SymbolTmap:
     def scope_terminate(self):
         self.cur_sc = self.map_scope[self.cur_sc].parent
 
-    def find(self,name,func):
+    def lookup(self,name,func):
         now_sc = self.cur_sc
         while now_sc != None:
             if func and name in self.map_scope[self.cur_sc].funcs:

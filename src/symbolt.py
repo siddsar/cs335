@@ -14,7 +14,7 @@ class SymbolTmap:
     def scope_terminate(self):
         self.cur_sc = self.map_scope[self.cur_sc].parent
 
-    def find(self,name,func):
+    def find(self,name,func=False):
         now_sc = self.cur_sc
         while now_sc != None:
             if func and name in self.map_scope[self.cur_sc].funcs:
@@ -26,14 +26,14 @@ class SymbolTmap:
         return None
 
     def ident(self):
-        self.cnt++
+        self.cnt+=1
         return 'scope__:' + str(self.cnt)
 
     def parent_scope(self):
         return self.map_scope[self.cur_sc].parent
 
     def temp_var(self):
-        self.var_cnt++
+        self.var_cnt+=1
         return 't__' + str(self.var_cnt)
 
     def insert(self,id,type_name,func=False,params=None,arr=False,size_arr=None,scope=None):
@@ -42,9 +42,9 @@ class SymbolTmap:
         if func:
             self.map_scope[scope].insert_func(id,type_name,params)
         else:
-            self.map_scope[scope].insert_var(id,type_name,is_array,size_arr)
+            self.map_scope[scope].insert_var(id,type_name,arr,size_arr)
 
-    def dump_TT(self):
+    # def dump_TT(self):
         # TODO
 
 class SymbolT:
@@ -66,7 +66,7 @@ class SymbolT:
         p = { 'type':type_name, 'params':params, 'number_params':len(params) }
         self.vars[id]=p
 
-    def dump_T(self):
+    # def dump_T(self):
         # TODO
 
 #     def print_table(self):

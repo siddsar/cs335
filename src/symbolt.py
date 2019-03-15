@@ -1,3 +1,4 @@
+from pprint import pprint
 class SymbolTmap:
     def __init__(self):
         self.cur_sc='begin'
@@ -44,8 +45,15 @@ class SymbolTmap:
         else:
             self.map_scope[scope].insert_var(id,type_name,arr,size_arr)
 
-    # def dump_TT(self):
-        # TODO
+    def dump_TT(self):
+        for i in self.map_scope.keys():
+            pprint(i)
+            pprint("Variables-----")
+            pprint(self.map_scope[i].vars)
+            pprint("Functions----")
+            pprint(self.map_scope[i].funcs)
+            pprint("-------------------------------")
+
 
 class SymbolT:
     def __init__(self, name, parent):

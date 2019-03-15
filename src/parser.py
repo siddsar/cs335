@@ -4,16 +4,16 @@ import argparse
 import sys
 from tac import *
 from symbolt import SymbolTmap
+from pprint import pprint
 
 tokens = lexer.tokens
 
 TAC = TAC()
 ST = SymbolTmap()
-
-
+rules_store = []
 def p_Goal(p):
     '''Goal : CompilationUnit'''
-
+    rules_store.append(p.slice)
 def p_Literal(p):
     ''' Literal :   IntConst
                   | FloatConst
@@ -24,7 +24,7 @@ def p_Literal(p):
     p[0] = p[1]
     p[0]['idVal'] = str(p[0]['idVal'])
     p[0]['is_var'] = False
-
+    rules_store.append(p.slice)
 def p_IntConst(p):
     '''
     IntConst : INT_LITERAL
@@ -33,7 +33,7 @@ def p_IntConst(p):
         'idVal' : p[1],
         'type' : 'INT'
     }
-
+    rules_store.append(p.slice)
 def p_FloatConst(p):
     '''
     FloatConst : FLOAT_LITERAL
@@ -42,7 +42,7 @@ def p_FloatConst(p):
         'idVal' : p[1],
         'type' : 'FLOAT'
     }
-
+    rules_store.append(p.slice)
 def p_CharConst(p):
     '''
     CharConst : CHAR_LITERAL
@@ -51,7 +51,7 @@ def p_CharConst(p):
         'idVal' : p[1],
         'type' : 'CHAR'
     }
-
+    rules_store.append(p.slice)
 def p_StringConst(p):
     '''
     StringConst : STRING_LITERAL
@@ -60,7 +60,7 @@ def p_StringConst(p):
         'idVal' : p[1],
         'type' : 'STRING'
     }
-
+    rules_store.append(p.slice)
 def p_NullConst(p):
     '''
     NullConst : NULL
@@ -69,12 +69,12 @@ def p_NullConst(p):
         'idVal' : p[1],
         'type' : 'NULL'
     }
-
+    rules_store.append(p.slice)
 def p_Type(p):
     ''' Type : PrimitiveType
             | ReferenceType '''
     p[0] = p[1]
-
+    rules_store.append(p.slice)
 def p_PrimitiveType(p):
     ''' PrimitiveType :    NumericType
                          | BOOLEAN
@@ -86,13 +86,13 @@ def p_PrimitiveType(p):
     else:
         p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_NumericType(p):
     ''' NumericType :   IntegralType
                       | FloatingPointType
     '''
     p[0] = p[1]
-
+    rules_store.append(p.slice)
 def p_IntegralType(p):
     ''' IntegralType :    BYTE
                         | SHORT
@@ -103,7 +103,7 @@ def p_IntegralType(p):
     p[0] = {
         'type' : p[1].upper()
     }
-
+    rules_store.append(p.slice)
 def p_FloatingPointType(p):
     ''' FloatingPointType :   FLOAT
                             | DOUBLE
@@ -112,19 +112,19 @@ def p_FloatingPointType(p):
         'type' : p[1].upper()
     }
 
-
+    rules_store.append(p.slice)
 def p_ReferenceType(p):
     ''' ReferenceType :   ArrayType
                         | ClassType
     '''
     p[0] = p[1]
-
+    rules_store.append(p.slice)
 def p_ClassType(p):
     ''' ClassType : Name
     '''
     p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_ArrayType(p):
     ''' ArrayType :    PrimitiveType Dims
                      | Name Dims
@@ -140,26 +140,26 @@ def p_ArrayType(p):
     p[0]['is_array'] = True
     p[0]['arr_size'] = p[2]
 
-
+    rules_store.append(p.slice)
 def p_Name(p):
     ''' Name :    SimpleName
                 | QualifiedName '''
     p[0] = p[1]
     p[0]['is_var'] = True
-
+    rules_store.append(p.slice)
 def p_SimpleName(p):
     ''' SimpleName : IDENTIFIER'''
     p[0] = {
         'place' : p[1],
     }
 
-
+    rules_store.append(p.slice)
 def p_QualifiedName(p):
     ''' QualifiedName : Name DOT IDENTIFIER'''
     p[0]= {
         'place' : p[1]['place'] + "." + p[3]
     }
-
+    rules_store.append(p.slice)
 def p_CompilationUnit(p):
     '''
     CompilationUnit : PackageDeclaration ImportDeclarations TypeDeclarations
@@ -172,60 +172,60 @@ def p_CompilationUnit(p):
     |
     '''
 
-
+    rules_store.append(p.slice)
 def p_ImportDeclarations(p):
     '''
     ImportDeclarations : ImportDeclaration
     | ImportDeclarations ImportDeclaration
     '''
 
-
+    rules_store.append(p.slice)
 def p_TypeDeclarations(p):
     '''
     TypeDeclarations : TypeDeclaration
     | TypeDeclarations TypeDeclaration
     '''
 
-
+    rules_store.append(p.slice)
 def p_PackageDeclaration(p):
     '''
     PackageDeclaration : PACKAGE Name STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_ImportDeclaration(p):
     '''
     ImportDeclaration : SingleTypeImportDeclaration
     | TypeImportOnDemandDeclaration
     '''
 
-
+    rules_store.append(p.slice)
 def p_SingleTypeImportDeclaration(p):
     '''
     SingleTypeImportDeclaration : IMPORT Name STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_TypeImportOnDemandDeclaration(p):
     '''
     TypeImportOnDemandDeclaration : IMPORT Name DOT MULT STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_TypeDeclaration(p):
     '''
     TypeDeclaration : ClassDeclaration
     | STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_Modifiers(p):
     '''
     Modifiers : Modifier
     | Modifiers Modifier
     '''
 
-
+    rules_store.append(p.slice)
 def p_Modifier(p):
     '''
     Modifier : STATIC
@@ -239,7 +239,7 @@ def p_Modifier(p):
     | TRANSIENT
     | NATIVE
     '''
-
+    rules_store.append(p.slice)
 def p_ClassDeclaration(p):
     '''
     ClassDeclaration : Modifiers CLASS IDENTIFIER Super ClassBody
@@ -248,26 +248,26 @@ def p_ClassDeclaration(p):
     | CLASS IDENTIFIER ClassBody
     '''
 
-
+    rules_store.append(p.slice)
 def p_Super(p):
     '''
     Super : EXTENDS ClassType
     '''
-
+    rules_store.append(p.slice)
 def p_ClassBody(p):
     '''
     ClassBody : L_CURLYBR R_CURLYBR
     | L_CURLYBR ClassBodyDeclarations R_CURLYBR
     '''
 
-
+    rules_store.append(p.slice)
 def p_ClassBodyDeclarations(p):
     '''
     ClassBodyDeclarations : ClassBodyDeclaration
     | ClassBodyDeclarations ClassBodyDeclaration
     '''
 
-
+    rules_store.append(p.slice)
 def p_ClassBodyDeclaration(p):
     '''
     ClassBodyDeclaration : ClassMemberDeclaration
@@ -275,21 +275,21 @@ def p_ClassBodyDeclaration(p):
     | StaticInitializer
     '''
 
-
+    rules_store.append(p.slice)
 def p_ClassMemberDeclaration(p):
     '''
     ClassMemberDeclaration : FieldDeclaration
     | MethodDeclaration
     '''
 
-
+    rules_store.append(p.slice)
 def p_FieldDeclaration(p):
     '''
-    FieldDeclaration : Modifiers LocalVariableDeclaration STMT_TERMINATOR
+    FieldDeclaration : Modifiers Type VariableDeclarators STMT_TERMINATOR
     | Type VariableDeclarators STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_VariableDeclarators(p):
     '''
     VariableDeclarators : VariableDeclarator
@@ -300,7 +300,7 @@ def p_VariableDeclarators(p):
     else:
     	p[0] = p[1] + [p[3]]
 
-
+    rules_store.append(p.slice)
 def p_VariableDeclarator(p):
     '''
     VariableDeclarator : VariableDeclaratorId
@@ -316,7 +316,7 @@ def p_VariableDeclarator(p):
         p[0]['place'] = p[1]
         p[0]['type'] = p[3]['ret_type']
     else:
-        TAC.emit(p[1][0], p[3]['place'], '', p[2])
+        TAC.emit([p[1][0], p[3]['place'], '', p[2]])
         p[0]['place'] = p[1]
         if 'is_var' not in p[3]:
             attributes = ST.find(p[3]['place'])
@@ -328,7 +328,7 @@ def p_VariableDeclarator(p):
 
         p[0]['type'] = p[3]['type']
 
-
+    rules_store.append(p.slice)
 def p_VariableDeclaratorId(p):
     '''
     VariableDeclaratorId : IDENTIFIER
@@ -336,7 +336,7 @@ def p_VariableDeclaratorId(p):
     p[0] = p[1]
 
 
-
+    rules_store.append(p.slice)
 def p_VariableInitializer(p):
     '''
     VariableInitializer : Expression
@@ -344,15 +344,15 @@ def p_VariableInitializer(p):
     '''
     p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_MethodDeclaration(p):
     '''
     MethodDeclaration : MethodHeader MethodAddParentScope MethodBody
     '''
-    TAC.emit('ret','','','')
+    TAC.emit(['ret','','',''])
     ST.scope_terminate()
 
-
+    rules_store.append(p.slice)
 def p_MethodAddParentScope(p):
     '''
     MethodAddParentScope :
@@ -360,7 +360,7 @@ def p_MethodAddParentScope(p):
     par_scope = ST.parent_scope()
     ST.insert(p[-1]['name'], p[-1]['type'],func=True, params=p[-1]['args'], scope=par_scope)
 
-
+    rules_store.append(p.slice)
 def p_MethodHeader(p):
     '''
     MethodHeader : Modifiers Type MethodDeclarator Throws
@@ -388,7 +388,7 @@ def p_MethodHeader(p):
             p[0]['type'] = 'VOID'
         # global global_return_type ###############################################################################
         # global_return_type = p[0]['type']
-
+    rules_store.append(p.slice)
 def p_MethodDeclarator(p):
     '''
     MethodDeclarator : IDENTIFIER L_ROUNDBR MethodCreateScope R_ROUNDBR
@@ -408,13 +408,13 @@ def p_MethodDeclarator(p):
         for parameter in p[4]:
             ST.insert(parameter['place'],parameter['type'])
     TAC.emit(['func', p[1], '', ''])
-
+    rules_store.append(p.slice)
 def p_MethodCreateScope(p):
     '''
     MethodCreateScope :
     '''
     ST.create_table(p[-2])
-
+    rules_store.append(p.slice)
 def p_FormalParametersList(p):
     '''
     FormalParameterList : FormalParameter
@@ -424,7 +424,7 @@ def p_FormalParametersList(p):
         p[0] = [p[1]]
     else:
         p[0] = p[1] + [p[3]]    
-
+    rules_store.append(p.slice)
 def p_FormalParameter(p):
     '''
     FormalParameter : Type VariableDeclaratorId
@@ -434,33 +434,33 @@ def p_FormalParameter(p):
         'type' : p[1]['type']
     }
 
-
+    rules_store.append(p.slice)
 def p_Throws(p):
     '''
     Throws : THROWS ClassTypeList
     '''
 
-
+    rules_store.append(p.slice)
 def p_ClassTypeList(p):
     '''
     ClassTypeList : ClassType
     | ClassTypeList COMMA ClassType
     '''
 
-
+    rules_store.append(p.slice)
 def p_MethodBody(p):
     '''
     MethodBody : Block
     | STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_StaticInitializer(p):
     '''
     StaticInitializer : STATIC Block
     '''
 
-
+    rules_store.append(p.slice)
 def p_ConstructorDeclaration(p):
     '''
     ConstructorDeclaration : Modifiers ConstructorDeclarator Throws ConstructorBody
@@ -469,14 +469,14 @@ def p_ConstructorDeclaration(p):
     | ConstructorDeclarator ConstructorBody
     '''
 
-
+    rules_store.append(p.slice)
 def p_ConstructorDeclarator(p):
     '''
     ConstructorDeclarator : SimpleName L_ROUNDBR FormalParameterList R_ROUNDBR
     | SimpleName L_ROUNDBR R_ROUNDBR
     '''
 
-
+    rules_store.append(p.slice)
 def p_ConstructorBody(p):
     '''
     ConstructorBody : L_CURLYBR ExplicitConstructorInvocation BlockStatements R_CURLYBR
@@ -485,7 +485,7 @@ def p_ConstructorBody(p):
     | L_CURLYBR R_CURLYBR
     '''
 
-
+    rules_store.append(p.slice)
 def p_ExplicitConstructorInvocation(p):
     '''
     ExplicitConstructorInvocation : THIS L_ROUNDBR ArgumentList R_ROUNDBR STMT_TERMINATOR
@@ -493,7 +493,7 @@ def p_ExplicitConstructorInvocation(p):
     | SUPER L_ROUNDBR ArgumentList R_ROUNDBR STMT_TERMINATOR
     | SUPER L_ROUNDBR R_ROUNDBR STMT_TERMINATOR
     '''
-
+    rules_store.append(p.slice)
 def p_ArrayInitializer(p):
     '''
     ArrayInitializer : L_CURLYBR VariableInitializers R_CURLYBR
@@ -501,26 +501,26 @@ def p_ArrayInitializer(p):
     '''
     #############################################################################################################################################
 
-
+    rules_store.append(p.slice)
 def p_VariableInitializers(p):
     '''
     VariableInitializers : VariableInitializer
     | VariableInitializers COMMA VariableInitializer
     '''
-
+    rules_store.append(p.slice)
 def p_Block(p):
     '''
     Block : L_CURLYBR R_CURLYBR
     | L_CURLYBR BlockStatements R_CURLYBR
     '''
 
-
+    rules_store.append(p.slice)
 def p_BlockStatements(p):
     '''
     BlockStatements : BlockStatement
     | BlockStatements BlockStatement
     '''
-
+    rules_store.append(p.slice)
 def p_BlockStatement(p):
     '''
     BlockStatement : LocalVariableDeclarationStatement
@@ -528,14 +528,14 @@ def p_BlockStatement(p):
     '''
     p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_LocalVariableDeclarationStatement(p):
     '''
     LocalVariableDeclarationStatement : LocalVariableDeclaration STMT_TERMINATOR
     '''
     p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_LocalVariableDeclaration(p):
     '''
     LocalVariableDeclaration : Type VariableDeclarators
@@ -588,7 +588,7 @@ def p_LocalVariableDeclaration(p):
                 ST.insert(i, p[1]['type'], is_array=True, arr_size=0)
     
 
-
+    rules_store.append(p.slice)
 def p_Statement(p):
     '''
     Statement : StatementWithoutTrailingSubstatement
@@ -600,7 +600,7 @@ def p_Statement(p):
     '''
     p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_StatementNoShortIf(p):
     '''
     StatementNoShortIf : StatementWithoutTrailingSubstatement
@@ -612,7 +612,7 @@ def p_StatementNoShortIf(p):
     p[0] = p[1]
 
 
-
+    rules_store.append(p.slice)
 def p_StatementWithoutTrailingSubstatement(p):
     '''
     StatementWithoutTrailingSubstatement : Block
@@ -628,25 +628,25 @@ def p_StatementWithoutTrailingSubstatement(p):
     '''
     p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_EmptyStatement(p):
     '''
     EmptyStatement : STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_LabeledStatement(p):
     '''
     LabeledStatement : IDENTIFIER COLON Statement
     '''
 
-
+    rules_store.append(p.slice)
 def p_LabeledStatementNoShortIf(p):
     '''
     LabeledStatementNoShortIf : IDENTIFIER COLON StatementNoShortIf
     '''
 
-
+    rules_store.append(p.slice)
 def p_ExpressionStatement(p):
     '''
     ExpressionStatement : StatementExpression STMT_TERMINATOR
@@ -654,7 +654,7 @@ def p_ExpressionStatement(p):
     p[0] = p[1]
 
 
-
+    rules_store.append(p.slice)
 def p_StatementExpression(p):
     '''
     StatementExpression : Assignment
@@ -668,25 +668,25 @@ def p_StatementExpression(p):
     p[0] = p[1]
 
 
-
+    rules_store.append(p.slice)
 def p_IfThenStatement(p):
     '''
     IfThenStatement : IF L_ROUNDBR Expression R_ROUNDBR IfstartSc Statement IfendSc
     '''
 
-
+    rules_store.append(p.slice)
 def p_IfThenElseStatement(p):
     '''
     IfThenElseStatement : IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc Statement ElseEndSc
     '''
 
-
+    rules_store.append(p.slice)
 def p_IfThenElseStatementNoShortIf(p):
     '''
     IfThenElseStatementNoShortIf : IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     '''
 
-
+    rules_store.append(p.slice)
 def p_IfstartSc(p):
     '''IfstartSc : '''
     labelif = ST.ident()
@@ -696,12 +696,12 @@ def p_IfstartSc(p):
     TAC.emit(['label', labelif, '', ''])
     ST.create_table(labelif)
     p[0] = [labelif, labelafterif]
-
+    rules_store.append(p.slice)
 def p_IfendSc(p):
     '''IfendSc : '''
     ST.scope_terminate()
     TAC.emit(['label', p[-2][1], '', ''])
-
+    rules_store.append(p.slice)
 def p_ElseStartSc(p):
     '''ElseStartSc : '''
     ST.scope_terminate()
@@ -710,14 +710,14 @@ def p_ElseStartSc(p):
     TAC.emit(['label', p[-3][1], '', ''])
     ST.create_table(p[-3][1])
     p[0] = [labelend]
-
+    rules_store.append(p.slice)
 def p_ElseEndSc(p):
     '''ElseEndSc : '''
     ST.scope_terminate()
     TAC.emit(['label', p[-2][0], '', ''])
 
 
-######################################################################################################3#
+    rules_store.append(p.slice)######################################################################################################3#
 def p_SwitchStatement(p):
     '''
     SwitchStatement : SWITCH L_ROUNDBR Expression R_ROUNDBR SwitchBlock
@@ -725,7 +725,7 @@ def p_SwitchStatement(p):
 #######################################################################################################33
 
 
-
+    rules_store.append(p.slice)
 def p_SwitchBlock(p):
     '''
     SwitchBlock : L_CURLYBR R_CURLYBR
@@ -735,7 +735,7 @@ def p_SwitchBlock(p):
     '''
     p[0] = p[2]
 
-
+    rules_store.append(p.slice)
 def p_SwitchBlockStatementGroups(p):
     '''
     SwitchBlockStatementGroups : SwitchBlockStatementGroup
@@ -752,46 +752,46 @@ def p_SwitchBlockStatementGroups(p):
         p[0]['expressions'] = p[1]['expressions'] + [p[2]['expression']]
         p[0]['labels'] = p[1]['labels'] + [p[2]['label']]
 
-
+    rules_store.append(p.slice)
 def p_SwitchBlockStatementGroup(p):
     '''
     SwitchBlockStatementGroup : SwitchLabels BlockStatements
     '''
     p[0] = p[1]
 
-#############################################################################################################################################3
+    rules_store.append(p.slice)#############################################################################################################################################3
 def p_SwitchLabels(p):
     '''
     SwitchLabels : SwitchLabel
     | SwitchLabels SwitchLabel
     '''
 
-
+    rules_store.append(p.slice)
 def p_SwitchLabel(p):
     '''
     SwitchLabel : CASE ConstantExpression COLON
     | DEFAULT COLON
     '''
 
-
+    rules_store.append(p.slice)
 def p_WhileStatement(p):
     '''
     WhileStatement : WHILE L_ROUNDBR Expression R_ROUNDBR Statement
     '''
 
-
+    rules_store.append(p.slice)
 def p_WhileStatementNoShortIf(p):
     '''
     WhileStatementNoShortIf : WHILE L_ROUNDBR Expression R_ROUNDBR StatementNoShortIf
     '''
 
-
+    rules_store.append(p.slice)
 def p_DoStatement(p):
     '''
     DoStatement : DO Statement WHILE L_ROUNDBR Expression R_ROUNDBR STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_ForStatement(p):
     '''
     ForStatement : FOR L_ROUNDBR ForInit STMT_TERMINATOR Expression STMT_TERMINATOR ForUpdate R_ROUNDBR Statement
@@ -804,7 +804,7 @@ def p_ForStatement(p):
     | FOR L_ROUNDBR STMT_TERMINATOR STMT_TERMINATOR R_ROUNDBR Statement
     '''
 
-
+    rules_store.append(p.slice)
 def p_ForStatementNoShortIf(p):
     '''
     ForStatementNoShortIf : FOR L_ROUNDBR ForInit STMT_TERMINATOR Expression STMT_TERMINATOR ForUpdate R_ROUNDBR StatementNoShortIf
@@ -817,34 +817,34 @@ def p_ForStatementNoShortIf(p):
     | FOR L_ROUNDBR STMT_TERMINATOR STMT_TERMINATOR R_ROUNDBR StatementNoShortIf
     '''
 
-
+    rules_store.append(p.slice)
 def p_ForInit(p):
     '''
     ForInit : StatementExpressionList
     | LocalVariableDeclaration
     '''
 
-
+    rules_store.append(p.slice)
 def p_ForUpdate(p):
     '''
     ForUpdate : StatementExpressionList
     '''
 
-
+    rules_store.append(p.slice)
 def p_StatementExpressionList(p):
     '''
     StatementExpressionList : StatementExpression
     | StatementExpressionList COMMA StatementExpression
     '''
 
-
+    rules_store.append(p.slice)
 def p_BreakStatement(p):
     '''
     BreakStatement : BREAK IDENTIFIER STMT_TERMINATOR
     | BREAK STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_ContinueStatement(p):
     '''
     ContinueStatement : CONTINUE IDENTIFIER STMT_TERMINATOR
@@ -853,7 +853,7 @@ def p_ContinueStatement(p):
 
 #########################################################################################################################################3
 
-
+    rules_store.append(p.slice)
 def p_ReturnStatement(p):
     '''
     ReturnStatement : RETURN Expression STMT_TERMINATOR
@@ -876,13 +876,13 @@ def p_ReturnStatement(p):
                 raise Exception("Wrong return type in %s" %(ST.cur_sc))
         TAC.emit(['ret', p[2]['place'], '', ''])
 
-
+    rules_store.append(p.slice)
 def p_ThrowStatement(p):
     '''
     ThrowStatement : THROW Expression STMT_TERMINATOR
     '''
 
-
+    rules_store.append(p.slice)
 def p_TryStatement(p):
     '''
     TryStatement : TRY Block Catches
@@ -890,20 +890,20 @@ def p_TryStatement(p):
     | TRY Block Finally
     '''
 
-
+    rules_store.append(p.slice)
 def p_Catches(p):
     '''
     Catches : CatchClause
     | Catches CatchClause
     '''
 
-
+    rules_store.append(p.slice)
 def p_CatchClause(p):
     '''
     CatchClause : CATCH L_ROUNDBR FormalParameter R_ROUNDBR Block
     '''
 
-
+    rules_store.append(p.slice)
 def p_Finally(p):
     '''
     Finally : FINALLY Block
@@ -912,7 +912,7 @@ def p_Finally(p):
 
 
 			# Section 19.12
-
+    rules_store.append(p.slice)
 def p_Primary(p):
     '''
     Primary : PrimaryNoNewArray
@@ -920,7 +920,7 @@ def p_Primary(p):
     '''
     p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_PrimaryNoNewArray(p):
     '''
     PrimaryNoNewArray : Literal
@@ -936,14 +936,14 @@ def p_PrimaryNoNewArray(p):
     else:
         p[0] = p[2]
 
-
+    rules_store.append(p.slice)
 def p_ClassInstanceCreationExpression(p):
     '''
     ClassInstanceCreationExpression : NEW ClassType L_ROUNDBR R_ROUNDBR
     | NEW ClassType L_ROUNDBR ArgumentList R_ROUNDBR
     '''
 
-
+    rules_store.append(p.slice)
 def p_ArgumentList(p):
     '''
     ArgumentList : Expression
@@ -954,7 +954,7 @@ def p_ArgumentList(p):
     else:
         p[0] = p[1] + [p[3]]
 
-
+    rules_store.append(p.slice)
 def p_ArrayCreationExpression(p):
     '''
     ArrayCreationExpression : NEW PrimitiveType DimExprs Dims
@@ -968,7 +968,7 @@ def p_ArrayCreationExpression(p):
             'arr_size' : p[3],
             'is_array' : True,
         }
-
+    rules_store.append(p.slice)
 def p_DimExprs(p):
     '''
     DimExprs : DimExpr
@@ -978,7 +978,7 @@ def p_DimExprs(p):
         p[0] = [p[1]]
     else:
         p[0] = p[1] + [p[2]]
-
+    rules_store.append(p.slice)
 def p_DimExpr(p):
     '''
     DimExpr : L_SQBR Expression R_SQBR
@@ -988,7 +988,7 @@ def p_DimExpr(p):
     else:
         raise Exception("Array declaration requires a size as integer : " + p[2]['place'])
 
-
+    rules_store.append(p.slice)
 def p_Dims(p):
     '''
     Dims : L_SQBR R_SQBR
@@ -999,14 +999,14 @@ def p_Dims(p):
     else:
         p[0] = 1 + p[1]
 
-
+    rules_store.append(p.slice)
 def p_FieldAccess(p):
     '''
     FieldAccess : Primary DOT IDENTIFIER
     | SUPER DOT IDENTIFIER
     '''
 
-
+    rules_store.append(p.slice)
 def p_MethodInvocation(p):
     '''
     MethodInvocation : Name L_ROUNDBR ArgumentList R_ROUNDBR
@@ -1043,7 +1043,7 @@ def p_MethodInvocation(p):
                 'ret_type' : attributes['type']
             }
 
-
+    rules_store.append(p.slice)
 def p_ArrayAccess(p):
     '''
     ArrayAccess : Name L_SQBR Expression R_SQBR
@@ -1079,7 +1079,7 @@ def p_ArrayAccess(p):
     p[0]['name'] = p[1]['place']
     p[0]['index'] = str(index)
 
-
+    rules_store.append(p.slice)
 def p_PostfixExpression(p):
     '''
     PostfixExpression : Primary
@@ -1107,7 +1107,7 @@ def p_PostfixExpression(p):
         # p[0]['type'] = p[1]['type']
         # p[0]['place'] = p[1]['place']
 
-
+    rules_store.append(p.slice)
 def p_PostIncrementExpression(p):
     '''
     PostIncrementExpression : PostfixExpression INCREMENT
@@ -1120,7 +1120,7 @@ def p_PostIncrementExpression(p):
         }
     else:
         raise Exception("Error: increment operator can be used with integers only")
-
+    rules_store.append(p.slice)
 def p_PostDecrementExpression(p):
     '''
     PostDecrementExpression : PostfixExpression DECREMENT
@@ -1134,7 +1134,7 @@ def p_PostDecrementExpression(p):
     else:
         raise Exception("Error: decrement operator can be used with integers only")
 
-
+    rules_store.append(p.slice)
 def p_UnaryExpression(p):
     '''
     UnaryExpression : PreIncrementExpression
@@ -1145,7 +1145,7 @@ def p_UnaryExpression(p):
     '''
     p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_PreIncrementExpression(p):
     '''
     PreIncrementExpression : INCREMENT UnaryExpression
@@ -1159,7 +1159,7 @@ def p_PreIncrementExpression(p):
     else:
         raise Exception("Error: increment operator can be used with integers only")
 
-
+    rules_store.append(p.slice)
 def p_PreDecrementExpression(p):
     '''
     PreDecrementExpression : DECREMENT UnaryExpression
@@ -1173,7 +1173,7 @@ def p_PreDecrementExpression(p):
     else:
         raise Exception("Error: decrement operator can be used with integers only")
 
-
+    rules_store.append(p.slice)
 def p_UnaryExpressionNotPlusMinus(p):
     '''
     UnaryExpressionNotPlusMinus : PostfixExpression
@@ -1189,7 +1189,7 @@ def p_UnaryExpressionNotPlusMinus(p):
         p[0] = p[2]
         p[0]['place'] = t
 
-
+    rules_store.append(p.slice)
 def p_CastExpression(p):
     '''
     CastExpression : L_ROUNDBR PrimitiveType Dims R_ROUNDBR UnaryExpression
@@ -1198,7 +1198,7 @@ def p_CastExpression(p):
     | L_ROUNDBR Name Dims R_ROUNDBR UnaryExpressionNotPlusMinus
     '''
 
-
+    rules_store.append(p.slice)
 def p_MultiplicativeExpression(p):
     '''
     MultiplicativeExpression : UnaryExpression
@@ -1235,7 +1235,7 @@ def p_MultiplicativeExpression(p):
         else:
             raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
 
-
+    rules_store.append(p.slice)
 def p_AdditiveExpression(p):
     '''
     AdditiveExpression : MultiplicativeExpression
@@ -1258,7 +1258,7 @@ def p_AdditiveExpression(p):
         p[0]['type'] = 'INT'
     else:
         raise Exception("Error: integer value is needed")
-
+    rules_store.append(p.slice)
 def p_ShiftExpression(p):
     '''
     ShiftExpression : AdditiveExpression
@@ -1284,7 +1284,7 @@ def p_ShiftExpression(p):
     else:
         raise Exception("Error: integer value is needed")
 
-
+    rules_store.append(p.slice)
 def p_RelationalExpression(p):
     '''
     RelationalExpression : ShiftExpression
@@ -1349,7 +1349,7 @@ def p_RelationalExpression(p):
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
     
 
-
+    rules_store.append(p.slice)
 def p_EqualityExpression(p):
     '''
     EqualityExpression : RelationalExpression
@@ -1392,7 +1392,7 @@ def p_EqualityExpression(p):
         raise Exception('Only INT type comparisions supported: ' + p[1]['place'] + ' and' + p[3]['place'])
     
 
-
+    rules_store.append(p.slice)
 def p_AndExpression(p):
     '''
     AndExpression : EqualityExpression
@@ -1413,7 +1413,7 @@ def p_AndExpression(p):
         p[0]['type'] = 'INT'
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
-
+    rules_store.append(p.slice)
 def p_ExclusiveOrExpression(p):
     '''
     ExclusiveOrExpression : AndExpression
@@ -1435,7 +1435,7 @@ def p_ExclusiveOrExpression(p):
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
 
-
+    rules_store.append(p.slice)
 def p_InclusiveOrExpression(p):
     '''
     InclusiveOrExpression : ExclusiveOrExpression
@@ -1457,7 +1457,7 @@ def p_InclusiveOrExpression(p):
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
     rules_store.append(p.slice)
-
+    rules_store.append(p.slice)
 def p_ConditionalAndExpression(p):
     '''
     ConditionalAndExpression : InclusiveOrExpression
@@ -1483,7 +1483,7 @@ def p_ConditionalAndExpression(p):
         p[0]['type'] = 'INT'
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
-
+    rules_store.append(p.slice)
 def p_ConditionalOrExpression(p):
     '''
     ConditionalOrExpression : ConditionalAndExpression
@@ -1510,7 +1510,7 @@ def p_ConditionalOrExpression(p):
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
     rules_store.append(p.slice)
 
-
+    rules_store.append(p.slice)
 def p_ConditionalExpression(p):
     '''
     ConditionalExpression : ConditionalOrExpression
@@ -1519,7 +1519,7 @@ def p_ConditionalExpression(p):
     if len(p) == 2:
         p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_AssignmentExpression(p):
     '''
     AssignmentExpression : ConditionalExpression
@@ -1528,7 +1528,7 @@ def p_AssignmentExpression(p):
     if len(p) == 2:
         p[0] = p[1]
 
-
+    rules_store.append(p.slice)
 def p_Assignment(p):
     '''
     Assignment : LeftHandSide AssignmentOperator AssignmentExpression
@@ -1538,16 +1538,16 @@ def p_Assignment(p):
         if attributes == None:
             raise Exception("Undeclared variable used: "+str(p[1]['place']))
         if 'is_array' in attributes and attributes['is_array']:
-            raise Exception("Array '%s' not indexed properly" +str(p[1]['place']))
+            raise Exception("Array not indexed properly" +str(p[1]['place']))
         if attributes['type'] == p[3]['type']:
             TAC.emit([p[1]['place'], p[3]['place'], '', p[2]])
         else:
-            raise Exception("Type Mismatch for symbol: "+str(p[3]['place']))
+            raise Exception("Type Mismatch for symbol: "+ str(p[3]['place'])+str(p[3]['type']))
     else:
         dest = p[1]['name'] + '[' + p[1]['index'] + ']'
         TAC.emit([dest, p[3]['place'], '', '='])
 
-
+    rules_store.append(p.slice)
 def p_LeftHandSide(p):
     '''
     LeftHandSide : Name
@@ -1555,7 +1555,7 @@ def p_LeftHandSide(p):
     | ArrayAccess
     '''
     p[0] = p[1]
-
+    rules_store.append(p.slice)
 def p_AssignmentOperator(p):
     '''
     AssignmentOperator : ASSIGN
@@ -1571,22 +1571,21 @@ def p_AssignmentOperator(p):
     p[0] = p[1]
 
     #To check if I missed something
-
+    rules_store.append(p.slice)
 def p_Expression(p):
     '''
     Expression : AssignmentExpression
     '''
     p[0] = p[1]
-
+    rules_store.append(p.slice)
 def p_ConstantExpression(p):
     '''
     ConstantExpression : Expression
     '''
     p[0] = p[1]
-
+    rules_store.append(p.slice)
 def p_error(p):
     print("Syntax Error in line %d" %(p.lineno))
-
 
 def main():
     tokens = lexer.tokens
@@ -1597,6 +1596,12 @@ def main():
     code += "\n"
     t = yacc.parse(code)
     print(t)
+    TAC.print_tac()
+    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    ST.dump_TT()
+    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    pprint(rules_store)
+
     #sys.stdout = open(file_out + ".html", 'w')
     #html_output( t(i)
 

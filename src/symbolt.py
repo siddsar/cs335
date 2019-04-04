@@ -1,5 +1,6 @@
 from pprint import pprint
 class SymbolTmap:
+    
     def __init__(self):
         self.cur_sc='begin'
         self.cur_t=SymbolT(self.cur_sc,parent=None)
@@ -7,6 +8,7 @@ class SymbolTmap:
         self.map_scope[self.cur_sc] = self.cur_t
         self.id_cnt=0
         self.var_cnt=0
+        
 
     def create_table(self,name):
         self.map_scope[name] = SymbolT(name,self.cur_sc)
@@ -65,11 +67,38 @@ class SymbolT:
         self.scope = name
         self.vars = dict()
         self.funcs = dict()
+        self.offset = 0
+    
+    def find_size(type_name):
+        type_name = type_name.upper()
+
+        if(type_name == 'INT'):
+            return 4
+        elif( type_name == 'FLOAT'):
+            return 4
+        elif(type_name == 'CHAR'):
+            return 1
+        elif(type_name == 'BYTE'):
+            return 1
+        elif(type_name == 'SHORT'):
+            return 2
+        elif( type_name == 'DOUBLE'):
+            return 8
+        elif( type_name == 'LONG'):
+            return 8
+
 
     def insert_var(self,id,type_name,arr=False,size_arr=None):
         if id in self.vars.keys():
             raise Exception('Variable %s is already declared before!' %(id))
-        p = { 'type':type_name, 'arr':arr, 'size':size_arr }
+        
+        size = find_size(type_name)
+        if(arr):
+            self.offset += (size_arr * size)
+        else:
+            self.offset += size
+
+        p = { 'type':type_name, 'arr':arr, 'size_arr':size_arr , 'offset':self.offset}
         self.vars[id]=p
 
     def insert_func(self,id,type_name,params):

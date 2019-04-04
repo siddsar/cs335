@@ -9,26 +9,30 @@ class SymbolTmap:
         self.var_cnt=0
 
     def create_table(self,name):
+        self.map_scope[name] = SymbolT(name,self.cur_sc)
         self.cur_sc = name
-        self.map_scope[self.cur_sc] = SymbolT(name,self.cur_sc)
+
 
     def scope_terminate(self):
         self.cur_sc = self.map_scope[self.cur_sc].parent
 
     def find(self,name,func=False):
         now_sc = self.cur_sc
+        # print(now_sc)
+        # print(func)
+        # print(name)
         while now_sc != None:
-            if func and name in self.map_scope[self.cur_sc].funcs:
-                return self.map_scope[self.cur_sc].funcs[name]
-            elif not func and name in self.map_scope[self.cur_sc].vars:
-                return self.map_scope[self.cur_sc].vars[name]
-            now_sc = self.map_scope[self.cur_sc].parent
-
+            if func and name in self.map_scope[now_sc].funcs:
+                return self.map_scope[now_sc].funcs[name]
+            elif not func and name in self.map_scope[now_sc].vars:
+                return self.map_scope[now_sc].vars[name]
+            now_sc = self.map_scope[now_sc].parent
+            # print(now_sc)
         return None
 
     def ident(self):
-        self.cnt+=1
-        return 'scope__:' + str(self.cnt)
+        self.id_cnt+=1
+        return 'scope__:' + str(self.id_cnt)
 
     def parent_scope(self):
         return self.map_scope[self.cur_sc].parent
@@ -72,17 +76,4 @@ class SymbolT:
         if id in self.funcs.keys():
             raise Exception('Function %s is already declared before!' %(id))
         p = { 'type':type_name, 'params':params, 'number_params':len(params) }
-        self.vars[id]=p
-
-    # def dump_T(self):
-        # TODO
-
-#     def print_table(self):
-#         print("Parent: %s" %(self.parent))
-#         print("Scope: %s \nSymbols:" %(self.scope))
-#         for key, val in self.symbols.items():
-#             print(key,val)
-#         print("Functions:")
-#         for key, val in self.functions.items():
-#             print(key,val)
-# print("*************************")
+        self.funcs[id]=p

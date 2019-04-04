@@ -358,7 +358,9 @@ def p_MethodAddParentScope(p):
     MethodAddParentScope :
     '''
     par_scope = ST.parent_scope()
+    # print(par_scope)
     ST.insert(p[-1]['name'], p[-1]['type'],func=True, params=p[-1]['args'], scope=par_scope)
+    # print(p[-1]['name'], p[-1]['type'],True, p[-1]['args'], par_scope)
 
     rules_store.append(p.slice)
 def p_MethodHeader(p):
@@ -423,7 +425,7 @@ def p_FormalParametersList(p):
     if len(p) == 2:
         p[0] = [p[1]]
     else:
-        p[0] = p[1] + [p[3]]    
+        p[0] = p[1] + [p[3]]
     rules_store.append(p.slice)
 def p_FormalParameter(p):
     '''
@@ -586,7 +588,7 @@ def p_LocalVariableDeclaration(p):
                 if 'is_array' in symbol and len(symbol['arr_size']) != p[1]['arr_size']:
                     raise Exception("Array dimensions mismatch: %s" %(i))
                 ST.insert(i, p[1]['type'], is_array=True, arr_size=0)
-    
+
 
     rules_store.append(p.slice)
 def p_Statement(p):
@@ -720,22 +722,44 @@ def p_ElseEndSc(p):
     rules_store.append(p.slice)######################################################################################################3#
 def p_SwitchStatement(p):
     '''
-    SwitchStatement : SWITCH L_ROUNDBR Expression R_ROUNDBR SwitchBlock
+    SwitchStatement : SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3
     '''
+    if not p[3]['type'] == 'INT':
+        raise Exception("Switch clause only supports Integer types")
+    rules_store.append(p.slice)
 #######################################################################################################33
 
 
     rules_store.append(p.slice)
+
+def p_SwMark2(p):
+    ''' SwMark2 : '''
+    l1 = ST.ident()
+    l2 = ST.ident()
+    TAC.emit(['goto', l2, '', ''])
+    ST.create_table(l2)
+    p[0] = [l1, l2]
+
+def p_SwMark3(p):
+    ''' SwMark3 : '''
+    TAC.emit(['label', p[-2][1], '', ''])
+    for i in range(len(p[-1]['labels'])):
+        label = p[-1]['labels'][i]
+        exp = p[-1]['expressions'][i]
+        if exp == '':
+            TAC.emit(['goto', label, '', ''])
+        else:
+            TAC.emit(['ifgoto', p[-4]['place'], 'eq ' + exp, label])
+    TAC.emit(['label', p[-2][0], '', ''])
+    ST.scope_terminate()
 def p_SwitchBlock(p):
     '''
     SwitchBlock : L_CURLYBR R_CURLYBR
-    | L_CURLYBR SwitchBlockStatementGroups SwitchLabels R_CURLYBR
     | L_CURLYBR SwitchBlockStatementGroups R_CURLYBR
-    | L_CURLYBR SwitchLabels R_CURLYBR
     '''
     p[0] = p[2]
-
     rules_store.append(p.slice)
+
 def p_SwitchBlockStatementGroups(p):
     '''
     SwitchBlockStatementGroups : SwitchBlockStatementGroup
@@ -751,73 +775,158 @@ def p_SwitchBlockStatementGroups(p):
     else:
         p[0]['expressions'] = p[1]['expressions'] + [p[2]['expression']]
         p[0]['labels'] = p[1]['labels'] + [p[2]['label']]
-
     rules_store.append(p.slice)
+
 def p_SwitchBlockStatementGroup(p):
     '''
-    SwitchBlockStatementGroup : SwitchLabels BlockStatements
+    SwitchBlockStatementGroup : SwitchLabel BlockStatements
     '''
     p[0] = p[1]
-
     rules_store.append(p.slice)#############################################################################################################################################3
-def p_SwitchLabels(p):
-    '''
-    SwitchLabels : SwitchLabel
-    | SwitchLabels SwitchLabel
-    '''
-
-    rules_store.append(p.slice)
 def p_SwitchLabel(p):
     '''
-    SwitchLabel : CASE ConstantExpression COLON
-    | DEFAULT COLON
+    SwitchLabel : SwMark1 CASE ConstantExpression COLON
+    | SwMark1 DEFAULT COLON
     '''
-
+    p[0] = {}
+    if len(p) == 5:
+        if not p[3]['type'] == 'INT':
+            raise Exception("Only Integers allowed for case comparisions")
+        p[0]['expression'] = p[3]['place']
+    else:
+        p[0]['expression'] = ''
+    p[0]['label'] = p[1]
     rules_store.append(p.slice)
+
+def p_SwMark1(p):
+    ''' SwMark1 : '''
+    l = ST.ident()
+    TAC.emit(['label', l, '', ''])
+    p[0] = l
+
 def p_WhileStatement(p):
     '''
-    WhileStatement : WHILE L_ROUNDBR Expression R_ROUNDBR Statement
+    WhileStatement : WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 Statement WhMark3
     '''
-
     rules_store.append(p.slice)
+
 def p_WhileStatementNoShortIf(p):
     '''
-    WhileStatementNoShortIf : WHILE L_ROUNDBR Expression R_ROUNDBR StatementNoShortIf
+    WhileStatementNoShortIf : WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
     '''
-
     rules_store.append(p.slice)
+
+def p_WhMark1(p):
+    '''WhMark1 : '''
+    l1 = ST.ident()
+    l2 = ST.ident()
+    l3 = ST.ident()
+    ST.create_table(l1)
+    TAC.emit(['label',l1,'',''])
+    p[0]=[l1,l2,l3]
+
+def p_WhMark2(p):
+    '''WhMark2 : '''
+    TAC.emit(['ifgoto',p[-2]['place'],'eq 0', p[-4][2]])
+    TAC.emit(['goto',p[-4][1],'',''])
+    TAC.emit(['label',p[-4][1],'',''])
+
+def p_WhMark3(p):
+    '''WhMark3 : '''
+    TAC.emit(['goto',p[-6][0],'',''])
+    TAC.emit(['label',p[-6][2],'',''])
+    ST.scope_terminate()
+
 def p_DoStatement(p):
     '''
-    DoStatement : DO Statement WHILE L_ROUNDBR Expression R_ROUNDBR STMT_TERMINATOR
+    DoStatement : DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR
     '''
-
     rules_store.append(p.slice)
+
+def p_doWhMark1(p):
+    '''doWhMark1 : '''
+    l1 = ST.ident()
+    l2 = ST.ident()
+    l3 = ST.ident()
+    ST.create_table(l1)
+    TAC.emit(['label',l1,'',''])
+    p[0]=[l1,l2,l3]
+
+def p_doWhMark3(p):
+    '''doWhMark3 : '''
+    TAC.emit(['ifgoto',p[-2]['place'],'eq 0', p[-7][2]])
+    TAC.emit(['goto',p[-7][1],'',''])
+    TAC.emit(['label',p[-7][2],'',''])
+
+def p_doWhMark2(p):
+    '''doWhMark2 : '''
+    #TAC.emit('goto',p[-3][1],'','')
+    TAC.emit(['label',p[-3][1],'',''])
+    ST.scope_terminate()
+
 def p_ForStatement(p):
     '''
-    ForStatement : FOR L_ROUNDBR ForInit STMT_TERMINATOR Expression STMT_TERMINATOR ForUpdate R_ROUNDBR Statement
-    | FOR L_ROUNDBR STMT_TERMINATOR Expression STMT_TERMINATOR ForUpdate R_ROUNDBR Statement
-    | FOR L_ROUNDBR ForInit STMT_TERMINATOR STMT_TERMINATOR ForUpdate R_ROUNDBR Statement
-    | FOR L_ROUNDBR ForInit STMT_TERMINATOR Expression STMT_TERMINATOR R_ROUNDBR Statement
-    | FOR L_ROUNDBR ForInit STMT_TERMINATOR STMT_TERMINATOR R_ROUNDBR Statement
-    | FOR L_ROUNDBR STMT_TERMINATOR Expression STMT_TERMINATOR R_ROUNDBR Statement
-    | FOR L_ROUNDBR STMT_TERMINATOR STMT_TERMINATOR ForUpdate R_ROUNDBR Statement
-    | FOR L_ROUNDBR STMT_TERMINATOR STMT_TERMINATOR R_ROUNDBR Statement
+    ForStatement : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     '''
-
     rules_store.append(p.slice)
+
 def p_ForStatementNoShortIf(p):
     '''
-    ForStatementNoShortIf : FOR L_ROUNDBR ForInit STMT_TERMINATOR Expression STMT_TERMINATOR ForUpdate R_ROUNDBR StatementNoShortIf
-    | FOR L_ROUNDBR STMT_TERMINATOR Expression STMT_TERMINATOR ForUpdate R_ROUNDBR StatementNoShortIf
-    | FOR L_ROUNDBR ForInit STMT_TERMINATOR STMT_TERMINATOR ForUpdate R_ROUNDBR StatementNoShortIf
-    | FOR L_ROUNDBR ForInit STMT_TERMINATOR Expression STMT_TERMINATOR R_ROUNDBR StatementNoShortIf
-    | FOR L_ROUNDBR ForInit STMT_TERMINATOR STMT_TERMINATOR R_ROUNDBR StatementNoShortIf
-    | FOR L_ROUNDBR STMT_TERMINATOR Expression STMT_TERMINATOR R_ROUNDBR StatementNoShortIf
-    | FOR L_ROUNDBR STMT_TERMINATOR STMT_TERMINATOR ForUpdate R_ROUNDBR StatementNoShortIf
-    | FOR L_ROUNDBR STMT_TERMINATOR STMT_TERMINATOR R_ROUNDBR StatementNoShortIf
+    ForStatementNoShortIf : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     '''
-
     rules_store.append(p.slice)
+
+def p_FoMark0(p):
+    '''FoMark0 : '''
+    l0 = ST.ident()
+    ST.create_table(l0)
+
+def p_FoMark1(p):
+    '''FoMark1 : '''
+    l1 = ST.ident()
+    l2 = ST.ident()
+    l3 = ST.ident()
+    TAC.emit(['label',l1,'',''])
+    p[0]=[l1,l2,l3]
+
+def p_FoMark2(p):
+    '''FoMark2 : '''
+    TAC.emit(['ifgoto',p[-4]['place'],'eq 0', p[-5][2]])
+    TAC.emit(['goto',p[-5][1],'',''])
+    TAC.emit(['label',p[-5][1],'',''])
+
+def p_FoMark4(p):
+    '''FoMark4 : '''
+    TAC.emit(['ifgoto',p[-3]['place'],'eq 0', p[-4][2]])
+    TAC.emit(['goto',p[-4][1],'',''])
+    TAC.emit(['label',p[-4][1],'',''])
+
+def p_FoMark3(p):
+    '''FoMark3 : '''
+    TAC.emit(['goto',p[-7][0],'',''])
+    TAC.emit(['label',p[-7][2],'',''])
+    ST.scope_terminate()
+
+def p_FoMark5(p):
+    '''FoMark5 : '''
+    TAC.emit(['goto',p[-6][0],'',''])
+    TAC.emit(['label',p[-6][2],'',''])
+    ST.scope_terminate()
+
 def p_ForInit(p):
     '''
     ForInit : StatementExpressionList
@@ -843,14 +952,17 @@ def p_BreakStatement(p):
     BreakStatement : BREAK IDENTIFIER STMT_TERMINATOR
     | BREAK STMT_TERMINATOR
     '''
-
+    if(len(p)==3 and p[1]=='break'):
+        TAC.emit(['goto', stackend[-1], '', ''])
     rules_store.append(p.slice)
+
 def p_ContinueStatement(p):
     '''
     ContinueStatement : CONTINUE IDENTIFIER STMT_TERMINATOR
     | CONTINUE STMT_TERMINATOR
     '''
-
+    if(len(p)==3 and p[1]=='continue'):
+        TAC.emit(['goto', stackbegin[-1], '', ''])
 #########################################################################################################################################3
 
     rules_store.append(p.slice)
@@ -862,8 +974,13 @@ def p_ReturnStatement(p):
     if len(p)==3 :
         TAC.emit(['ret', '', '', ''])
     else:
+        # print("return st1")
+        # ST.dump_TT()
+        # print("..............................")
         to_return = ST.find(ST.cur_sc,func=True)['type']
+        # print("return st2")
         curr_returned = ST.find(p[2]['place'])
+
         if curr_returned != None:
             # if to_return[0] != curr_returned['type']:
             if to_return != curr_returned['type']:
@@ -1017,7 +1134,7 @@ def p_MethodInvocation(p):
     | SUPER DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
     '''
     if p[2] == '(':
-        attributes = ST.find(p[1]['place'], is_func=True)
+        attributes = ST.find(p[1]['place'], func=True)
         if attributes == None and p[1]['place'] != "System.out.println":
             raise Exception("Undeclared function used: %s" %(p[1]['place']))
 
@@ -1026,7 +1143,7 @@ def p_MethodInvocation(p):
                 for parameter in p[3]:
                     TAC.emit(['print',parameter['place'],'',''])
         else:
-            temp_var = ST.Temp_var()
+            temp_var = ST.temp_var()
             if len(p) == 5:
                 prototype = attributes['params']
                 if len(prototype) != len(p[3]):
@@ -1347,7 +1464,7 @@ def p_RelationalExpression(p):
             p[0]['type'] = 'INT'
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
-    
+
 
     rules_store.append(p.slice)
 def p_EqualityExpression(p):
@@ -1390,7 +1507,7 @@ def p_EqualityExpression(p):
             p[0]['type'] = 'INT'
     else:
         raise Exception('Only INT type comparisions supported: ' + p[1]['place'] + ' and' + p[3]['place'])
-    
+
 
     rules_store.append(p.slice)
 def p_AndExpression(p):
@@ -1533,6 +1650,7 @@ def p_Assignment(p):
     '''
     Assignment : LeftHandSide AssignmentOperator AssignmentExpression
     '''
+    # print(p[1])
     if 'access_type' not in p[1].keys():
         attributes = ST.find(p[1]['place'])
         if attributes == None:
@@ -1595,12 +1713,13 @@ def main():
     code = open(inputfile, 'r').read()
     code += "\n"
     t = yacc.parse(code)
-    print(t)
+    print("...........................")
+    # print(t)
     TAC.print_tac()
     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     ST.dump_TT()
     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    pprint(rules_store)
+    # pprint(rules_store)
 
     #sys.stdout = open(file_out + ".html", 'w')
     #html_output( t(i)

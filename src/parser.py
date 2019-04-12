@@ -8,8 +8,8 @@ from pprint import pprint
 
 tokens = lexer.tokens
 
-TAC = TAC()
 ST = SymbolTmap()
+TAC = TAC(ST)
 rules_store = []
 def p_Goal(p):
     '''Goal : CompilationUnit'''
@@ -1146,13 +1146,13 @@ def p_MethodInvocation(p):
                     if parameter['type'] != proto['type']:
                         raise Exception("Wrong type of arg passed to function %s; got %s but expected %s" %(p[1]['place'], parameter['type'], proto['type']))
                     TAC.emit(['param',parameter['place'],'',''])
+            ST.insert(temp_var,attributes['type'],temp=True)
             TAC.emit(['call',p[1]['place'],temp_var,''])
             p[0] = {
                 'place' : temp_var,
                 'ret_type' : attributes['type']
             }
-            ST.insert(temp_var,attributes['type'],temp=True)
-
+            
     rules_store.append(p.slice)
 def p_ArrayAccess(p):
     '''
@@ -1182,13 +1182,13 @@ def p_ArrayAccess(p):
 
     src = p[1]['place'] + '[' + str(index) + ']'
     t1 = ST.temp_var()
+    ST.insert(t1,attributes['type'],temp=True)
     TAC.emit([t1, src, '', '='])
     p[0]['type'] = attributes['type']
     p[0]['place'] = t1
     p[0]['access_type'] = 'array'
     p[0]['name'] = p[1]['place']
     p[0]['index'] = str(index)
-    ST.insert(t1,p[0]['type'],temp=True)
     rules_store.append(p.slice)
 def p_PostfixExpression(p):
     '''
@@ -1297,8 +1297,8 @@ def p_UnaryExpressionNotPlusMinus(p):
         p[0] = p[1]
     else:
         t = ST.temp_var()
-        TAC.emit([t, p[2]['place'], '', p[1]])
         ST.insert(t,p[2]['type'],temp=True)
+        TAC.emit([t, p[2]['place'], '', p[1]])
         p[0] = p[2]
         p[0]['place'] = t
 
@@ -1331,24 +1331,25 @@ def p_MultiplicativeExpression(p):
         return
     if p[2] == '*':
         if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
-            TAC.emit([newPlace,p[1]['place'], p[3]['place'], p[2]])
             p[0]['type'] = 'INT'
+            ST.insert(newPlace,p[0]['type'],temp=True)
+            TAC.emit([newPlace,p[1]['place'], p[3]['place'], p[2]])
         else:
             raise Exception('Error: Type is not compatible'+p[1]['place']+','+p[3]['place']+'.')
     elif p[2] == '/' :
         if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
-            TAC.emit([newPlace, p[1]['place'], p[3]['place'], p[2]])
             p[0]['type'] = 'INT'
+            ST.insert(newPlace,p[0]['type'],temp=True)
+            TAC.emit([newPlace, p[1]['place'], p[3]['place'], p[2]])
         else:
             raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
     elif p[2] == '%':
         if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
-            TAC.emit([newPlace,p[1]['place'],p[3]['place'],p[2]])
             p[0]['type'] = 'INT'
+            ST.insert(newPlace,p[0]['type'],temp=True)
+            TAC.emit([newPlace,p[1]['place'],p[3]['place'],p[2]])
         else:
             raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
-    ST.insert(newPlace,p[0]['type'],temp=True)
-
     rules_store.append(p.slice)
 def p_AdditiveExpression(p):
     '''
@@ -1368,11 +1369,13 @@ def p_AdditiveExpression(p):
         return
 
     if p[1]['type'] == 'INT' and p[3]['type'] == 'INT':
-        TAC.emit([newPlace, p[1]['place'], p[3]['place'], p[2]])
         p[0]['type'] = 'INT'
+        ST.insert(newPlace,p[0]['type'],temp=True)
+        TAC.emit([newPlace, p[1]['place'], p[3]['place'], p[2]])
     else:
         raise Exception("Error: integer value is needed")
     rules_store.append(p.slice)
+
 def p_ShiftExpression(p):
     '''
     ShiftExpression : AdditiveExpression
@@ -1393,8 +1396,9 @@ def p_ShiftExpression(p):
         return
 
     if p[1]['type'] == 'INT' and p[3]['type'] == 'INT':
-        TAC.emit([newPlace, p[1]['place'], p[3]['place'], p[2]])
         p[0]['type'] = 'INT'
+        ST.insert(newPlace,p[0]['type'],temp=True)
+        TAC.emit([newPlace, p[1]['place'], p[3]['place'], p[2]])
     else:
         raise Exception("Error: integer value is needed")
 
@@ -1424,6 +1428,8 @@ def p_RelationalExpression(p):
 
     if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
         if p[2]=='>':
+            p[0]['type'] = 'INT'
+            ST.insert(newPlace,p[0]['type'],temp=True)
             TAC.emit(['ifgoto', p[1]['place'], 'gt ' + p[3]['place'], l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
@@ -1431,8 +1437,9 @@ def p_RelationalExpression(p):
             TAC.emit(['label', l2, '', ''])
             TAC.emit([newPlace, '1', '', '='])
             TAC.emit(['label', l3, '', ''])
-            p[0]['type'] = 'INT'
         elif p[2]=='>=':
+            p[0]['type'] = 'INT'
+            ST.insert(newPlace,p[0]['type'],temp=True)
             TAC.emit(['ifgoto', p[1]['place'], 'geq ' + p[3]['place'], l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
@@ -1440,8 +1447,9 @@ def p_RelationalExpression(p):
             TAC.emit(['label', l2, '', ''])
             TAC.emit([newPlace, '1', '', '='])
             TAC.emit(['label', l3, '', ''])
-            p[0]['type'] = 'INT'
         elif p[2]=='<':
+            p[0]['type'] = 'INT'
+            ST.insert(newPlace,p[0]['type'],temp=True)
             TAC.emit(['ifgoto', p[1]['place'], 'lt ' + p[3]['place'], l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
@@ -1449,8 +1457,9 @@ def p_RelationalExpression(p):
             TAC.emit(['label', l2, '', ''])
             TAC.emit([newPlace, '1', '', '='])
             TAC.emit(['label', l3, '', ''])
-            p[0]['type'] = 'INT'
         elif p[2]=='<=':
+            p[0]['type'] = 'INT'
+            ST.insert(newPlace,p[0]['type'],temp=True)
             TAC.emit(['ifgoto', p[1]['place'], 'leq ' + p[3]['place'], l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
@@ -1458,7 +1467,6 @@ def p_RelationalExpression(p):
             TAC.emit(['label', l2, '', ''])
             TAC.emit([newPlace, '1', '', '='])
             TAC.emit(['label', l3, '', ''])
-            p[0]['type'] = 'INT'
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
 
@@ -1485,6 +1493,8 @@ def p_EqualityExpression(p):
         return
     if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
         if(p[2][0]=='='):
+            p[0]['type'] = 'INT'
+            ST.insert(newPlace,p[0]['type'],temp=True)
             TAC.emit(['ifgoto', p[1]['place'], 'eq ' + p[3]['place'], l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
@@ -1492,8 +1502,9 @@ def p_EqualityExpression(p):
             TAC.emit(['label', l2, '', ''])
             TAC.emit([newPlace, '1', '', '='])
             TAC.emit(['label', l3, '', ''])
-            p[0]['type'] = 'INT'
         else:
+            p[0]['type'] = 'INT'
+            ST.insert(newPlace,p[0]['type'],temp=True)
             TAC.emit(['ifgoto', p[1]['place'], 'neq '+ p[3]['place'], l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
@@ -1501,7 +1512,6 @@ def p_EqualityExpression(p):
             TAC.emit(['label', l2, '', ''])
             TAC.emit([newPlace, '1', '', '='])
             TAC.emit(['label', l3, '', ''])
-            p[0]['type'] = 'INT'
     else:
         raise Exception('Only INT type comparisions supported: ' + p[1]['place'] + ' and' + p[3]['place'])
 
@@ -1523,8 +1533,9 @@ def p_AndExpression(p):
     if p[1]['type']=='TYPE_ERROR' or p[3]['type']=='TYPE_ERROR':
         return
     if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
-        TAC.emit([newPlace,p[1]['place'],p[3]['place'],'&'])
         p[0]['type'] = 'INT'
+        ST.insert(newPlace,p[0]['type'],temp=True)
+        TAC.emit([newPlace,p[1]['place'],p[3]['place'],'&'])
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
     rules_store.append(p.slice)
@@ -1544,8 +1555,9 @@ def p_ExclusiveOrExpression(p):
     if p[1]['type']=='TYPE_ERROR' or p[3]['type']=='TYPE_ERROR':
         return
     if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
-        TAC.emit([newPlace,p[1]['place'],p[3]['place'],'^'])
         p[0]['type'] = 'INT'
+        ST.insert(newPlace,p[0]['type'],temp=True)
+        TAC.emit([newPlace,p[1]['place'],p[3]['place'],'^'])
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
 
@@ -1566,8 +1578,9 @@ def p_InclusiveOrExpression(p):
     if p[1]['type']=='TYPE_ERROR' or p[3]['type']=='TYPE_ERROR':
         return
     if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
-        TAC.emit([newPlace, p[1]['place'], p[3]['place'], '|'])
         p[0]['type'] = 'INT'
+        ST.insert(newPlace,p[0]['type'],temp=True)
+        TAC.emit([newPlace, p[1]['place'], p[3]['place'], '|'])
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
     rules_store.append(p.slice)
@@ -1590,11 +1603,12 @@ def p_ConditionalAndExpression(p):
         return
     if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
         l1 = ST.ident()
+        p[0]['type'] = 'INT'
+        ST.insert(newPlace,p[0]['type'],temp=True)
         TAC.emit([newPlace,p[1]['place'],'','='])
         TAC.emit(['ifgoto',p[1]['place'],'eq 0',l1])
         TAC.emit([newPlace, p[1]['place'], p[3]['place'], '&'])
         TAC.emit(['label',l1,'',''])
-        p[0]['type'] = 'INT'
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
     rules_store.append(p.slice)
@@ -1615,11 +1629,12 @@ def p_ConditionalOrExpression(p):
         return
     if p[1]['type'] == 'INT' and p[3]['type'] == 'INT' :
         l1 = ST.ident()
+        p[0]['type'] = 'INT'
+        ST.insert(newPlace,p[0]['type'],temp=True)
         TAC.emit([newPlace,p[1]['place'],'','='])
         TAC.emit(['ifgoto',p[1]['place'],'eq 1',l1])
         TAC.emit([newPlace, p[1]['place'], p[3]['place'], '|'])
         TAC.emit(['label',l1,'',''])
-        p[0]['type'] = 'INT'
     else:
         raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
     rules_store.append(p.slice)

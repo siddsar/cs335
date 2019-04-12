@@ -24,13 +24,16 @@ def generate_assembly(item):
 		print("No imp")
 	elif(item[-1]=='+'):
 		res_var = ST.find(item[0])
+		print(item[0])
 		base_pointer=0
 		print(res_var)
-		destination_addr = base_pointer + res_var['offset']
-		if ST.find(item[1])==None:
-			if ST.find(item[2])==None:
-				res_var = int(item[1])+int(item[2])
-				print("mov $"+res_var+","+destination_addr)
+		# destination_addr = base_pointer + res_var['offset']
+		# if ST.find(item[1])==None:
+		# 	if ST.find(item[2])==None:
+		# 		res_var = int(item[1])+int(item[2])
+		# 		print("mov $"+res_var+","+destination_addr)
+			
+
 
 
 tokens = lexer.tokens

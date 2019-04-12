@@ -20,9 +20,12 @@ class SymbolTmap:
 
     def find(self,name,func=False):
         now_sc = self.cur_sc
+        # print("ffffffffff1")
         # print(now_sc)
         # print(func)
         # print(name)
+        # print(self.map_scope[now_sc].vars)
+        # print("ffffffffff222")
         while now_sc != None:
             if func and name in self.map_scope[now_sc].funcs:
                 return self.map_scope[now_sc].funcs[name]
@@ -93,12 +96,12 @@ class SymbolT:
         if id in self.vars.keys():
             raise Exception('Variable %s is already declared before!' %(id))
         size = self.find_size(type_name)
+        p = { 'type':type_name, 'arr':arr, 'size_arr':size_arr , 'offset':self.offset, 'temp':temp}
         if(arr):
             self.offset += (size_arr * size)
         else:
             self.offset += size
-
-        p = { 'type':type_name, 'arr':arr, 'size_arr':size_arr , 'offset':self.offset, 'temp':temp}
+        
         self.vars[id]=p
 
     def insert_func(self,id,type_name,params):

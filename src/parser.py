@@ -123,7 +123,7 @@ def p_ClassType(p):
     ''' ClassType : Name
     '''
     p[0] = p[1]
-
+    p[0]['type'] = 'class'
     rules_store.append(p.slice)
 def p_ArrayType(p):
     ''' ArrayType :    PrimitiveType Dims
@@ -729,9 +729,6 @@ def p_SwitchStatement(p):
     rules_store.append(p.slice)
 #######################################################################################################33
 
-
-    rules_store.append(p.slice)
-
 def p_SwMark2(p):
     ''' SwMark2 : '''
     l1 = ST.ident()
@@ -742,6 +739,7 @@ def p_SwMark2(p):
 
 def p_SwMark3(p):
     ''' SwMark3 : '''
+    TAC.emit('goto', p[-2][0], '', '', ST)
     TAC.emit(['label', p[-2][1], '', ''])
     for i in range(len(p[-1]['labels'])):
         label = p[-1]['labels'][i]
@@ -866,13 +864,13 @@ def p_doWhMark2(p):
 
 def p_ForStatement(p):
     '''
-    ForStatement : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
-    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    ForStatement : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     '''
     rules_store.append(p.slice)
@@ -900,14 +898,20 @@ def p_FoMark1(p):
     l1 = ST.ident()
     l2 = ST.ident()
     l3 = ST.ident()
+    l4 = ST.ident()
     TAC.emit(['label',l1,'',''])
-    p[0]=[l1,l2,l3]
+    p[0]=[l1,l2,l3,l4]
 
 def p_FoMark2(p):
     '''FoMark2 : '''
-    TAC.emit(['ifgoto',p[-4]['place'],'eq 0', p[-5][2]])
-    TAC.emit(['goto',p[-5][1],'',''])
-    TAC.emit(['label',p[-5][1],'',''])
+    TAC.emit(['goto',p[-6][0],'',''])
+    TAC.emit(['label',p[-6][1],'',''])
+    TAC.emit(['ifgoto',p[-5]['place'],'eq 0', p[-6][3]])
+
+def p_FoMark6(p):
+    '''FoMark6 : '''
+    TAC.emit(['goto', p[-3][1],'',''])
+    TAC.emit(['label',p[-3][2],'',''])
 
 def p_FoMark4(p):
     '''FoMark4 : '''
@@ -917,8 +921,8 @@ def p_FoMark4(p):
 
 def p_FoMark3(p):
     '''FoMark3 : '''
-    TAC.emit(['goto',p[-7][0],'',''])
-    TAC.emit(['label',p[-7][2],'',''])
+    TAC.emit(['goto',p[-8][2],'',''])
+    TAC.emit(['label',p[-8][3],'',''])
     ST.scope_terminate()
 
 def p_FoMark5(p):
@@ -977,6 +981,7 @@ def p_ReturnStatement(p):
         # print("return st1")
         # ST.dump_TT()
         # print("..............................")
+        #TODO
         to_return = ST.find(ST.cur_sc,func=True)['type']
         # print("return st2")
         curr_returned = ST.find(p[2]['place'])
@@ -998,7 +1003,6 @@ def p_ThrowStatement(p):
     '''
     ThrowStatement : THROW Expression STMT_TERMINATOR
     '''
-
     rules_store.append(p.slice)
 def p_TryStatement(p):
     '''
@@ -1006,29 +1010,22 @@ def p_TryStatement(p):
     | TRY Block Catches Finally
     | TRY Block Finally
     '''
-
     rules_store.append(p.slice)
 def p_Catches(p):
     '''
     Catches : CatchClause
     | Catches CatchClause
     '''
-
     rules_store.append(p.slice)
 def p_CatchClause(p):
     '''
     CatchClause : CATCH L_ROUNDBR FormalParameter R_ROUNDBR Block
     '''
-
     rules_store.append(p.slice)
 def p_Finally(p):
     '''
     Finally : FINALLY Block
     '''
-
-
-
-			# Section 19.12
     rules_store.append(p.slice)
 def p_Primary(p):
     '''
@@ -1036,7 +1033,6 @@ def p_Primary(p):
     | ArrayCreationExpression
     '''
     p[0] = p[1]
-
     rules_store.append(p.slice)
 def p_PrimaryNoNewArray(p):
     '''
@@ -1052,7 +1048,6 @@ def p_PrimaryNoNewArray(p):
         p[0] = p[1]
     else:
         p[0] = p[2]
-
     rules_store.append(p.slice)
 def p_ClassInstanceCreationExpression(p):
     '''
@@ -1104,7 +1099,6 @@ def p_DimExpr(p):
         p[0] = p[2]['place']
     else:
         raise Exception("Array declaration requires a size as integer : " + p[2]['place'])
-
     rules_store.append(p.slice)
 def p_Dims(p):
     '''
@@ -1115,14 +1109,12 @@ def p_Dims(p):
         p[0] = 1
     else:
         p[0] = 1 + p[1]
-
     rules_store.append(p.slice)
 def p_FieldAccess(p):
     '''
     FieldAccess : Primary DOT IDENTIFIER
     | SUPER DOT IDENTIFIER
     '''
-
     rules_store.append(p.slice)
 def p_MethodInvocation(p):
     '''
@@ -1260,8 +1252,11 @@ def p_UnaryExpression(p):
     | MINUS UnaryExpression
     | UnaryExpressionNotPlusMinus
     '''
-    p[0] = p[1]
-
+    if len(p) == 2:
+        p[0] = p[1]
+        return
+    else:
+        pass
     rules_store.append(p.slice)
 def p_PreIncrementExpression(p):
     '''
@@ -1275,7 +1270,6 @@ def p_PreIncrementExpression(p):
         }
     else:
         raise Exception("Error: increment operator can be used with integers only")
-
     rules_store.append(p.slice)
 def p_PreDecrementExpression(p):
     '''
@@ -1657,6 +1651,8 @@ def p_Assignment(p):
             raise Exception("Undeclared variable used: "+str(p[1]['place']))
         if 'is_array' in attributes and attributes['is_array']:
             raise Exception("Array not indexed properly" +str(p[1]['place']))
+        if 'ret_type' in p[3].keys() and p[3]['ret_type'][0] == attributes['type']:
+            TAC.emit([p[1]['place'], p[3]['place'], '', p[2]])
         if attributes['type'] == p[3]['type']:
             TAC.emit([p[1]['place'], p[3]['place'], '', p[2]])
         else:

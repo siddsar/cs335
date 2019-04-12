@@ -1151,6 +1151,7 @@ def p_MethodInvocation(p):
                 'place' : temp_var,
                 'ret_type' : attributes['type']
             }
+            ST.insert(temp_var,attributes['type'],temp=True)
 
     rules_store.append(p.slice)
 def p_ArrayAccess(p):
@@ -1171,7 +1172,8 @@ def p_ArrayAccess(p):
 
     arr_size = attributes['arr_size']
     address_indices = p[2]
-    t2 = ST.get_temp_var()
+    t2 = ST.temp_var()
+    ST.insert(t2,attributes['type'],temp=True)
     TAC.emit([t2, address_indices[0], '', '='])
     for i in range(1, len(address_indices)):
         TAC.emit([t2, t2, arr_size[i], '*'])
@@ -1181,13 +1183,12 @@ def p_ArrayAccess(p):
     src = p[1]['place'] + '[' + str(index) + ']'
     t1 = ST.temp_var()
     TAC.emit([t1, src, '', '='])
-
     p[0]['type'] = attributes['type']
     p[0]['place'] = t1
     p[0]['access_type'] = 'array'
     p[0]['name'] = p[1]['place']
     p[0]['index'] = str(index)
-
+    ST.insert(t1,p[0]['type'],temp=True)
     rules_store.append(p.slice)
 def p_PostfixExpression(p):
     '''
@@ -1297,6 +1298,7 @@ def p_UnaryExpressionNotPlusMinus(p):
     else:
         t = ST.temp_var()
         TAC.emit([t, p[2]['place'], '', p[1]])
+        ST.insert(t,p[2]['type'],temp=True)
         p[0] = p[2]
         p[0]['place'] = t
 
@@ -1345,6 +1347,7 @@ def p_MultiplicativeExpression(p):
             p[0]['type'] = 'INT'
         else:
             raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
+    ST.insert(newPlace,p[0]['type'],temp=True)
 
     rules_store.append(p.slice)
 def p_AdditiveExpression(p):

@@ -1,6 +1,6 @@
 from pprint import pprint
 class SymbolTmap:
-    
+
     def __init__(self):
         self.cur_sc='begin'
         self.cur_t=SymbolT(self.cur_sc,parent=None)
@@ -8,7 +8,7 @@ class SymbolTmap:
         self.map_scope[self.cur_sc] = self.cur_t
         self.id_cnt=0
         self.var_cnt=0
-        
+
 
     def create_table(self,name):
         self.map_scope[name] = SymbolT(name,self.cur_sc)
@@ -41,15 +41,15 @@ class SymbolTmap:
 
     def temp_var(self):
         self.var_cnt+=1
-        return 't__' + str(self.var_cnt)
+        return 'kaizoku_' + str(self.var_cnt)
 
-    def insert(self,id,type_name,func=False,params=None,arr=False,size_arr=None,scope=None):
+    def insert(self,id,type_name,func=False,params=None,arr=False,size_arr=None,scope=None,temp=False):
         if scope == None:
             scope=self.cur_sc
         if func:
             self.map_scope[scope].insert_func(id,type_name,params)
         else:
-            self.map_scope[scope].insert_var(id,type_name,arr,size_arr)
+            self.map_scope[scope].insert_var(id,type_name,arr,size_arr,temp)
 
     def dump_TT(self):
         for i in self.map_scope.keys():
@@ -68,7 +68,8 @@ class SymbolT:
         self.vars = dict()
         self.funcs = dict()
         self.offset = 0
-    
+
+
     def find_size(self,type_name):
         type_name = type_name.upper()
 
@@ -88,17 +89,16 @@ class SymbolT:
             return 8
 
 
-    def insert_var(self,id,type_name,arr=False,size_arr=None):
+    def insert_var(self,id,type_name,arr=False,size_arr=None,temp=False):
         if id in self.vars.keys():
             raise Exception('Variable %s is already declared before!' %(id))
-        
         size = self.find_size(type_name)
         if(arr):
             self.offset += (size_arr * size)
         else:
             self.offset += size
 
-        p = { 'type':type_name, 'arr':arr, 'size_arr':size_arr , 'offset':self.offset}
+        p = { 'type':type_name, 'arr':arr, 'size_arr':size_arr , 'offset':self.offset, 'temp':temp}
         self.vars[id]=p
 
     def insert_func(self,id,type_name,params):

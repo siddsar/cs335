@@ -69,7 +69,7 @@ class SymbolT:
         self.funcs = dict()
         self.offset = 0
     
-    def find_size(type_name):
+    def find_size(self,type_name):
         type_name = type_name.upper()
 
         if(type_name == 'INT'):
@@ -92,7 +92,7 @@ class SymbolT:
         if id in self.vars.keys():
             raise Exception('Variable %s is already declared before!' %(id))
         
-        size = find_size(type_name)
+        size = self.find_size(type_name)
         if(arr):
             self.offset += (size_arr * size)
         else:

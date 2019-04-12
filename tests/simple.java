@@ -1,6 +1,6 @@
 class Debug {
     int main() {
         int a;
-        a = 32;
+        a = 5+4;
     }
 }

@@ -1133,7 +1133,10 @@ def p_MethodInvocation(p):
         if p[1]['place'] == 'System.out.println':
             if len(p) == 5:
                 for parameter in p[3]:
-                    TAC.emit(['print',parameter['place'],'',''])
+                    if 'type' in parameter.keys():
+                        TAC.emit(['print',parameter['place'],'','_' + parameter['type']])
+                    else:
+                        TAC.emit(['print',parameter['place'],'','_INT'])
         else:
             temp_var = ST.temp_var()
             if len(p) == 5:
@@ -1152,7 +1155,7 @@ def p_MethodInvocation(p):
                 'place' : temp_var,
                 'ret_type' : attributes['type']
             }
-            
+
     rules_store.append(p.slice)
 def p_ArrayAccess(p):
     '''
@@ -1677,7 +1680,7 @@ def p_Assignment(p):
             raise Exception("Type Mismatch for symbol: "+ str(p[3]['place'])+str(p[3]['type']))
     else:
         dest = p[1]['name'] + '[' + p[1]['index'] + ']'
-        TAC.emit([dest, p[3]['place'], '', '='])
+        TAC.emit([p[1]['name'],p[1]['index'] , p[3]['place'], '=arr'])
 
     rules_store.append(p.slice)
 def p_LeftHandSide(p):

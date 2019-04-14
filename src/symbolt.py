@@ -10,9 +10,10 @@ class SymbolTmap:
         self.var_cnt=0
 
 
-    def create_table(self,name):
+    def create_table(self,name, glob_offset):
         self.map_scope[name] = SymbolT(name,self.cur_sc)
         self.cur_sc = name
+        self.map_scope[name].offset = glob_offset
 
 
     def scope_terminate(self):
@@ -46,13 +47,15 @@ class SymbolTmap:
         self.var_cnt+=1
         return 'kaizoku_' + str(self.var_cnt)
 
-    def insert(self,id,type_name,func=False,params=None,arr=False,size_arr=None,scope=None,temp=False):
+    def insert(self, id,type_name,func=False,params=None,arr=False,size_arr=None,scope=None,temp=False):
         if scope == None:
             scope=self.cur_sc
         if func:
-            self.map_scope[scope].insert_func(id,type_name,params)
+            return self.map_scope[scope].insert_func(id,type_name,params)
         else:
-            self.map_scope[scope].insert_var(id,type_name,arr,size_arr,temp)
+            return self.map_scope[scope].insert_var(id,type_name,arr,size_arr,temp)
+
+
 
     def dump_TT(self):
         for i in self.map_scope.keys():
@@ -96,16 +99,20 @@ class SymbolT:
         if id in self.vars.keys():
             raise Exception('Variable %s is already declared before!' %(id))
         size = self.find_size(type_name)
-        p = { 'type':type_name, 'arr':arr, 'size_arr':size_arr , 'offset':self.offset, 'temp':temp}
+
         if(arr):
             self.offset += (size_arr * size)
         else:
             self.offset += size
-        
+
+        p = { 'type':type_name, 'arr':arr, 'size_arr':size_arr , 'offset':self.offset, 'temp':temp}
+
         self.vars[id]=p
+        return self.offset
 
     def insert_func(self,id,type_name,params):
         if id in self.funcs.keys():
             raise Exception('Function %s is already declared before!' %(id))
         p = { 'type':type_name, 'params':params, 'number_params':len(params) }
         self.funcs[id]=p
+        return 0

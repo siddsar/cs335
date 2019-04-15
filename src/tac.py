@@ -11,7 +11,7 @@ class TAC:
 			print(item[1]+':')
 			print("\tpush %ebp")
 			print("\tmov %esp, %ebp")
-			print("\tadd $512, %esp")
+			print("\tadd $-512, %esp")
 		elif item[0]=='arg' :
 			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+"(%ebp), %eax")
 			print("\tmov %eax, -"+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")

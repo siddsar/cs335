@@ -391,10 +391,7 @@ def p_MethodHeader(p):
         p[0]['name'] = p[2]['name']
         p[0]['args'] = p[2]['args']
         if type(p[1]) == type({}):
-            if 'is_array' in p[1].keys():
-                p[0]['type'] = (p[1]['type'], p[1]['arr_size'])
-            else:
-                p[0]['type'] = (p[1]['type'], 0)############################################################################3
+            p[0]['type'] = p[1]['type']############################################################################3
         else:
             p[0]['type'] = 'VOID'
         global global_return_type ###############################################################################
@@ -430,7 +427,6 @@ def p_MethodDeclarator(p):
             else:
                 offset_stack[-1] += ST.insert(parameter['place'],parameter['type'])
     TAC.emit(['func', p[1], '', ''])
-    TAC.emit(['arg', 'this', '', ''])
     for arg in p[0]['args']:
         TAC.emit(['arg', arg['place'], '', ''])
     rules_store.append(p.slice)

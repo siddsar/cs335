@@ -949,29 +949,29 @@ def p_doWhMark2(p):
 
 def p_ForStatement(p):
     '''
-    ForStatement : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
-    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
-    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
+    ForStatement : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 ForExpression FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 ForExpression FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 ForExpression R_ROUNDBR FoMark4 Statement FoMark5
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 ForExpression R_ROUNDBR FoMark4 Statement FoMark5
     '''
     rules_store.append(p.slice)
 
 def p_ForStatementNoShortIf(p):
     '''
-    ForStatementNoShortIf : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    ForStatementNoShortIf : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 ForExpression FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 ForExpression FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 ForExpression R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 ForExpression R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     '''
     rules_store.append(p.slice)
+
+def p_ForExpression(p):
+    '''
+    ForExpression : Expression STMT_TERMINATOR
+    | STMT_TERMINATOR
+    '''
+    if len(p)==3:
+        p[0]=p[1]
 
 def p_FoMark0(p):
     '''FoMark0 : '''
@@ -989,31 +989,31 @@ def p_FoMark1(p):
 
 def p_FoMark2(p):
     '''FoMark2 : '''
-    TAC.emit(['goto',p[-6][0],'',''])
-    TAC.emit(['label',p[-6][1],'',''])
-    TAC.emit(['ifgoto',[p[-5]['place'],0],'eq', p[-6][3]])
+    TAC.emit(['goto',p[-5][0],'',''])
+    TAC.emit(['label',p[-5][1],'',''])
+    TAC.emit(['ifgoto',[p[-4]['place'],0],'eq', p[-5][3]])
 
 def p_FoMark6(p):
     '''FoMark6 : '''
-    TAC.emit(['goto', p[-3][1],'',''])
-    TAC.emit(['label',p[-3][2],'',''])
+    TAC.emit(['goto', p[-2][1],'',''])
+    TAC.emit(['label',p[-2][2],'',''])
 
 def p_FoMark4(p):
     '''FoMark4 : '''
-    TAC.emit(['ifgoto',[p[-3]['place'],0],'eq', p[-4][2]])
-    TAC.emit(['goto',p[-4][1],'',''])
-    TAC.emit(['label',p[-4][1],'',''])
+    TAC.emit(['ifgoto',[p[-2]['place'],0],'eq', p[-3][2]])
+    TAC.emit(['goto',p[-3][1],'',''])
+    TAC.emit(['label',p[-3][1],'',''])
 
 def p_FoMark3(p):
     '''FoMark3 : '''
-    TAC.emit(['goto',p[-8][2],'',''])
-    TAC.emit(['label',p[-8][3],'',''])
+    TAC.emit(['goto',p[-7][2],'',''])
+    TAC.emit(['label',p[-7][3],'',''])
     ST.scope_terminate()
 
 def p_FoMark5(p):
     '''FoMark5 : '''
-    TAC.emit(['goto',p[-6][0],'',''])
-    TAC.emit(['label',p[-6][2],'',''])
+    TAC.emit(['goto',p[-5][0],'',''])
+    TAC.emit(['label',p[-5][2],'',''])
     ST.scope_terminate()
 
 def p_ForInit(p):

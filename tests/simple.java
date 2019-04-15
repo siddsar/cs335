@@ -22,9 +22,10 @@ class Debug {
 
     int main() {
     	int x =  fact(5);
-    	int[] arr;
-    	arr = new int[5];
-    	// x = fact(4);
+    	int[] intArray = new int[20];
+	intArray[1] = 44;
+	intArray[4] = 333;
+     	// x = fact(4);
         // int a = 19;
         // int b = 2;
         // int d = 1 ;

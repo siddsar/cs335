@@ -312,30 +312,76 @@ def p_VariableDeclarator(p):
     | VariableDeclaratorId ASSIGN VariableInitializer
     '''
     p[0] = {}
+    to_emit = []
     if len(p) == 2:
         p[0]['place'] = p[1]
-        p[0]['assign'] = None
+        # p[0]['assign'] = None
         return
     elif type(p[3]) != type({}):
         return
-    if 'ret_type' in p[3].keys():
+    if 'fields' in p[3].keys():
+        obj_name = p[1] + "_obj_" + p[3]['name']
+        size = p[3]['count']
+        # to_emit.append(['declare', p[1], t, p[3]['type'], ST])
+        t = ST.temp_var()
+        ST.insert(t,'INT',temp=True)
+        to_emit.append([t, str(size), '', '='])
+        to_emit.append(['declare', obj_name, t, 'INT'])
+        p[0]['class_name'] = p[3]['name']
+        p[0]['place'] = p[1]
+        p[0]['emit_intrs'] = to_emit
+        ST.insert(obj_name, 'INT', arr=True, size_arr=size)
+        return
+
+    if 'is_array' in p[3].keys() and p[3]['is_array']:
+        t = ST.temp_var()
+        ST.insert(t,'INT',temp=True)
+        to_emit.append([t, '1', '', '='])
+        for i in p[3]['place']:
+            to_emit.append([t, t, i, '*'])
+        to_emit.append(['declare', p[1], t, p[3]['type']])
+        p[0]['place'] = (p[1], p[3]['place'])
+        p[0]['type'] = p[3]['type']
+        p[0]['emit_intrs'] = to_emit
+    elif 'ret_type' in p[3].keys():
         p[0]['place'] = p[1]
         p[0]['type'] = p[3]['ret_type']
+        to_emit.append([p[1], p[3]['place'], '', '='])
+        p[0]['emit_intrs'] = to_emit
+
     else:
-        #TAC.emit([p[1], p[3]['place'], '', p[2]])
-        p[0]['assign'] = p[3]['place']
+        to_emit.append([p[1], p[3]['place'], '', p[2]])
         p[0]['place'] = p[1]
         if 'is_var' not in p[3]:
             attributes = ST.find(p[3]['place'])
-            # if 'is_array' in attributes and attributes['is_array']:
-            #     p[0]['is_array'] = True
-            #     p[0]['arr_size'] = attributes['arr_size']
-            # else:
-            p[0]['is_array'] = False
+            if attributes == None:
+                p[0]['type'] = p[3]['type']
+                p[0]['emit_intrs'] = to_emit
+                return
+            if 'is_array' in attributes and attributes['is_array']:
+                p[0]['is_array'] = True
+                p[0]['arr_size'] = attributes['arr_size']
+            else:
+                p[0]['is_array'] = False
 
         p[0]['type'] = p[3]['type']
-
+        p[0]['emit_intrs'] = to_emit
+        # p[0]['assign'] = p[3]['place']
+        # p[0]['place'] = p[1]
+        # if 'is_var' not in p[3]:
+        #     pprint(rules_store)
+        #     pprint(p[3])
+        #     print("-------------------------------++++++++++++++++")
+        #     attributes = ST.find(p[3]['place'])
+        #     # if 'is_array' in attributes and attributes['is_array']:
+        #     #     p[0]['is_array'] = True
+        #     #     p[0]['arr_size'] = attributes['arr_size']
+        #     # else:
+        #     p[0]['is_array'] = False
+        #
+        # p[0]['type'] = p[3]['type']
     rules_store.append(p.slice)
+
 def p_VariableDeclaratorId(p):
     '''
     VariableDeclaratorId : IDENTIFIER
@@ -355,6 +401,7 @@ def p_MethodDeclaration(p):
     '''
     MethodDeclaration : MethodHeader MethodAddParentScope MethodBody
     '''
+    p[0]=p[1]
     TAC.emit(['ret','','',''])
     ST.scope_terminate()
     offset_stack.pop()
@@ -580,8 +627,6 @@ def p_LocalVariableDeclaration(p):
         if 'is_array' not in p[1].keys():
             if t == None:
                 offset_stack[-1] += ST.insert(i, p[1]['type'])
-                if 'assign' in symbol.keys():
-                    TAC.emit([symbol['place'], symbol['assign'], '', '='])
                 return
             if len(i) == 2:
                 raise Exception("Array cannot be assigned to a primitive type")
@@ -592,10 +637,10 @@ def p_LocalVariableDeclaration(p):
             if type(t) != type(tuple([])) and t != p[1]['type']:
                 raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t))
             # print(i)
-            ST.dump_TT()
+            # ST.dump_TT()
             offset_stack[-1] += ST.insert(i, p[1]['type'])
-            if 'assign' in symbol.keys():
-                TAC.emit([symbol['place'], symbol['assign'], '', '='])
+            # if 'assign' in symbol.keys():
+            #     TAC.emit([symbol['place'], symbol['assign'], '', '='])
         else:
             if type(i) != type(' '):
                 if t == None:
@@ -626,7 +671,7 @@ def p_LocalVariableDeclaration(p):
     for symbol in p[2]:
         if "emit_intrs" in symbol.keys():
             for X in symbol["emit_intrs"]:
-                TAC.emit([X[0], X[1], X[2], X[3]])
+                TAC.emit(X)
 
     rules_store.append(p.slice)
 def p_Statement(p):
@@ -1116,6 +1161,7 @@ def p_ArrayCreationExpression(p):
             'arr_size' : p[3],
             'is_array' : True,
         }
+    # pprint(p[0])
     rules_store.append(p.slice)
 def p_DimExprs(p):
     '''
@@ -1135,6 +1181,7 @@ def p_DimExpr(p):
         p[0] = p[2]['place']
     else:
         raise Exception("Array declaration requires a size as integer : " + p[2]['place'])
+    # pprint(p[0])
     rules_store.append(p.slice)
 def p_Dims(p):
     '''
@@ -1848,7 +1895,7 @@ def p_Assignment(p):
         else:
             raise Exception("Type Mismatch for symbol: "+ str(p[3]['place'])+str(p[3]['type']))
     else:
-        dest = p[1]['name'] + '[' + p[1]['index'] + ']'
+        # dest = p[1]['name'] + '[' + p[1]['index'] + ']'
         TAC.emit([p[1]['name'],p[1]['index'] , p[3]['place'], '=arr'])
 
     rules_store.append(p.slice)

@@ -1011,14 +1011,15 @@ def p_ReturnStatement(p):
 
         to_return = global_return_type
         curr_returned = ST.find(p[2]['place'])
-
+        print(to_return)
+        print(curr_returned['type'])
         if curr_returned != None:
-            if to_return[0] != curr_returned['type']:
+            if to_return != curr_returned['type']:
                 raise Exception("Wrong return type in %s" %(ST.cur_sc))
             if 'is_array' in curr_returned.keys() and len(curr_returned['arr_size']) != to_return[1]:
                 raise Exception("Dimension mismatch in return statement in %s" %(ST.curr_scope))
         else:
-            if p[2]['type'] != to_return[0] or to_return[1] != 0:
+            if p[2]['type'] != to_return :
                 raise Exception("Wrong return type in %s" %(ST.cur_sc))
         TAC.emit(['ret', p[2]['place'], '', ''])
 

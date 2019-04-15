@@ -73,7 +73,7 @@ class TAC:
 					# print("mov %ebx,0(%eax)")
 					print("\tmov -"+str(op1['offset'])+"(%ebp),%eax")
 					print("\tadd -"+str(op2['offset'])+"(%ebp),%eax")
-					print("\tmov %eax,-"+str(o['offset'])+"(%ebp),%eax")
+					#print("\tmov %eax,-"+str(o['offset'])+"(%ebp),%eax")
 
 
 

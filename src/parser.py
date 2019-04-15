@@ -592,7 +592,7 @@ def p_LocalVariableDeclaration(p):
             if type(t) != type(tuple([])) and t != p[1]['type']:
                 raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t))
             # print(i)
-            ST.dump_TT()
+            # ST.dump_TT()
             offset_stack[-1] += ST.insert(i, p[1]['type'])
             if 'assign' in symbol.keys():
                 TAC.emit([symbol['place'], symbol['assign'], '', '='])
@@ -1898,13 +1898,22 @@ def main():
     # file_out = inputfile.split('/')[-1].split('.')[0]
     code = open(inputfile, 'r').read()
     code += "\n"
+    print("\t.data")
+    print("\toutFormatInt:")
+    print("\t.string \"%d\\n\"")
+    print("\toutFormatStr:")
+    print("\t.string \"%s\\n\"")
+    print("\tinFormat:")
+    print("\t.string \"%d\\n\"")
+    print("\t.global main")
     t = yacc.parse(code)
-    print("...........................")
+
+    # print("...........................")
     # print(t)
     TAC.print_tac()
-    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    # ST.dump_TT()
-    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    ST.dump_TT()
+    # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     # pprint(rules_store)
 
     #sys.stdout = open(file_out + ".html", 'w')

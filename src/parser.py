@@ -909,7 +909,7 @@ def p_ForStatement(p):
 
 def p_ForStatementNoShortIf(p):
     '''
-    ForStatementNoShortIf : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    ForStatementNoShortIf : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -1187,7 +1187,10 @@ def p_MethodInvocation(p):
                 TAC.emit(['param', p[1]['this'], '', ''])
 
             offset_stack[-1] += ST.insert(temp_var,attributes['type'],temp=True)
-            TAC.emit(['call',p[1]['place'],temp_var,''])
+            if attributes['type'] == 'VOID':
+                TAC.emit(['call',p[1]['place'],'',''])
+            else:
+                TAC.emit(['call',p[1]['place'],temp_var,''])
             TAC.emit(['adjust_rsp',attributes['number_params']*4,'',''])
             p[0] = {
                 'place' : temp_var,

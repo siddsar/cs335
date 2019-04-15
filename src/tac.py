@@ -46,7 +46,7 @@ class TAC:
 				print("\t ret")
 			else:
 				v = self.ST.find(item[1])
-				print("\tmov -"+v[offset]+"(%ebp), %eax")
+				print("\tmov -"+str(v['offset'])+"(%ebp), %eax")
 				print("\t ret")
 		elif(item[0]=='label'):
 			print("\t"+item[1])
@@ -281,8 +281,10 @@ class TAC:
 					
 		elif item[3]=='=':
 			res_var = self.ST.find(item[0])
+			print(res_var)
+			print(item)
 			op = self.ST.find(item[1])
-			# self.ST.dump_TT()
+			self.ST.dump_TT()
 			if op==None:
 				print("\tmov $"+item[1]+", %eax")
 			else:

@@ -1,10 +1,11 @@
 class Debug {
 
-    int add(int a, int b,int x,int d,char cc ) {
-        // int n = 9;
-        int c = a + b;
-        char x = cc ;
-        return x+d ;
+    int add(int aks, int b,int x,int d,char cc ) {
+        // int niggga = 9;
+        // int c = a + b;
+        // char x = cc ;
+        // return x+d ;
+        return aks;
     }
 
     int main() {
@@ -15,9 +16,9 @@ class Debug {
         // c = a && b || d;
         // c = ~a;
         int Nigga = 3;
-        int n=4
-        if(n*n> n-n){
-        	n = 4+6;
+        int n = 4;
+        if(n*n > n-n){
+        	n = 4 + 6;
         }
         add(1,2,3,4,'a');
         int z = 525;

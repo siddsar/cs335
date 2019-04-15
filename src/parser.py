@@ -414,6 +414,7 @@ def p_MethodAddParentScope(p):
     MethodAddParentScope :
     '''
     par_scope = ST.parent_scope()
+    # pprint(p[-1])
     # print(par_scope)
     offset_stack[-1] += ST.insert(p[-1]['name'], p[-1]['type'],func=True, params=p[-1]['args'], scope=par_scope)
     # print(p[-1]['name'], p[-1]['type'],True, p[-1]['args'], par_scope)
@@ -1259,16 +1260,18 @@ def p_ArrayAccess(p):
     '''
     p[0] = {}
     attributes = ST.find(p[1]['place'])
+    # pprint(p[1])
+    # pprint(attributes)
     if attributes == None:
         raise Exception("Undeclared Symbol Used: %s" %(p[1]['place']))
-    if not 'is_array' in attributes or not attributes['is_array']:
+    if not 'arr' in attributes or not attributes['arr']:
         raise Exception("Only array type can be indexed : %s" %(p[1]['place']))
 
     indexes = p[2]
-    if not len(indexes) == len(attributes['arr_size']):
+    if not len(indexes) == len(attributes['size_arr']):
         raise Exception("Not a valid indexing for array %s" %(p[1]['place']))
 
-    arr_size = attributes['arr_size']
+    arr_size = attributes['size_arr']
     address_indices = p[2]
     t2 = ST.temp_var()
     offset_stack[-1] += ST.insert(t2,attributes['type'],temp=True)

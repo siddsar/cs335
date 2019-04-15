@@ -1,29 +1,5 @@
 class Debug {
 
-<<<<<<< HEAD
-    // int add(int aks, int b,int x,int d,char cc ) {
-    //     // int niggga;
-    //     // niggga = 3;
-
-    //     // int c = a + b;
-    //     // char x = cc ;
-    //     // return x+d ;
-    //     return aks;
-    // }
-
-    int printInt(int n);
-
-    int fact(int n){
-    	// int nigga =325;
-    	// return 4;
-
-    	// if(n==1){
-    	// 	return 1;
-    	// }
-    	// int x = 4;
-    	return 325;
-    	// return n * x;
-=======
     int fact(int n){
     	// int nigga =325;
     	// return 4;
@@ -34,14 +10,10 @@ class Debug {
     	int y = fact(z);
     	// return 325;
     	return n*y;
->>>>>>> 6248ca309abe6b53876da26855c90df0c3a0ce01
     }
 
 
     int main() {
-<<<<<<< HEAD
-
-=======
     	// // int x;
     	int x = fact(2);
     	// // // // int[] arr;
@@ -55,7 +27,6 @@ class Debug {
     	// 	System.out.println(y);
     	// }
     	// int y = 25;
->>>>>>> 6248ca309abe6b53876da26855c90df0c3a0ce01
 
     	// for(int i=0;i<8;i=i+1){
     	// 	y = y+13;

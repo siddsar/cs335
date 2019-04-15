@@ -340,7 +340,6 @@ def p_VariableDeclaratorId(p):
     '''
     p[0] = p[1]
 
-
     rules_store.append(p.slice)
 def p_VariableInitializer(p):
     '''
@@ -413,7 +412,8 @@ def p_MethodDeclarator(p):
     # stackbegin.append(p[1])
     # stackend.append(p[1])
     if len(p) == 6:
-        for parameter in p[4]:
+        for i in range(len(p[4])):
+            parameter = p[4][i]
             if 'is_array' in parameter and parameter['is_array']:
                 try:
                     size = parameter['arr_size']
@@ -452,7 +452,7 @@ def p_FormalParameter(p):
     FormalParameter : Type VariableDeclaratorId
     '''
     p[0] = {
-        'place' : p[2][0],
+        'place' : p[2],
         'type' : p[1]['type']
     }
     if 'is_array' in p[1].keys() and p[1]['is_array']:
@@ -1008,7 +1008,10 @@ def p_ReturnStatement(p):
     | RETURN STMT_TERMINATOR
     '''
     if len(p)==3 :
-        TAC.emit(['ret', '', '', ''])
+        if global_return_type=='VOID':
+            TAC.emit(['ret', '', '', ''])
+        else :
+            raise Exception("Expected return type %s" %(global_return_type))
     else:
 
         to_return = global_return_type

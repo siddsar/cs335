@@ -14,256 +14,235 @@ class TAC:
 			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+"(%ebp), %eax")
 			print("\tmov %eax, -"+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")
 		elif(item[0]=='ifgoto'):
-			# print("\tNo imp")
-			
-			print("\t item")
+			v1 = self.ST.find(item[1][0])
+			v2 = self.ST.find(item[1][1])
+			if v1==None:
+				print("\tmov $"+item[1][0]+", %eax")
+			else :
+				print("\tmov -"+v1['offset']+"(%ebp), %eax")
+			if v2==None:
+				print("\tmov $"+item[1][1]+", %ebx")
+			else :
+				print("\tmov -"+v2['offset']+"(%ebp), %ebx")
+
+			print("\tcmp %eax, %ebx")
+			if item[2]=='eq':
+				print("\tje "+item[3])
+			elif item[2]=='neq':
+				print("\tjne "+item[3])
+			elif item[2]=='gt':
+				print("\tjg "+item[3])	
+			elif item[2]=='gte':
+				print("\tjge "+item[3])	
+			elif item[2]=='lt':
+				print("\tjl "+item[3])
+			elif item[2]=='lte':
+				print("\tjle "+item[3])		
 		elif(item[0]=='goto'):
 			print("\tjmp "+item[1])
 		elif(item[0]=='ret'):
-			print("\tNo imp")
+			if(item[1]==''):
+				print("\t ret")
+			else:
+				v = self.ST.find(item[1])
+				print("\tmov -"+v[offset]+"(%ebp), %eax")
+				print("\t ret")
 		elif(item[0]=='label'):
 			print("\t"+item[1])
 		elif(item[0]=='call'):
-			print("\tNo imp")
+			if(item[2]==''):
+				print("\tcall "+item[1])
+			else:
+				print("\tcall "+item[1])
+				v = self.ST.find(item[2])
+				print("\t mov %eax, -"+v['offset']+"(%ebp)")
+		elif(item[0]=='adjust_rsp'):
+			print("\t add $"+item[1]+", %esp")
 		elif(item[-1]=='+'):
 			res_var = self.ST.find(item[0])
+
 			if self.ST.find(item[1])==None:
 				if self.ST.find(item[2])==None:
 					val = int(item[1])+int(item[2])
-					# print("mov $"+str(res_var['offset'])+",%eax")
-					# print("addl %rbp,%eax")
-					# print("mov $"+str(val)+",0(%eax)")
 					print("\tmov $"+str(val)+",-"+str(res_var['offset'])+"(%ebp)")
 				else:
 					op = self.ST.find(item[2])
-					# print("mov $"+str(op['offset'])+",%ebx")
-					# print("addl %rbp,%ebx")
-					# print("mov (%ebx),%eax")
-					# print("mov $"+item[1]+",%ebx")
-					# print("addl %eax,%ebx")
-					# print("mov $"+str(res_var['offset'])+",%eax")
-					# print("addl %rbp,%eax")
-					# print("mov %ebx,0(%eax)")
-					# print("mov -"+str(res_var['offset'])+"(%ebp),%eax")
-
-
-					# print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
-					print("\tadd $"+item[1]+",-"+str(op['offset'])+"(%ebp)")
-					# print("\tadd %ebx,%eax")
-					# print("\tmov %eax,-"+str(res_var['offset'])+"(%ebp)")
+					print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
+					print("\tadd $"+item[1]+",%eax")
+					print("\tmov %eax,-"+str(res_var['offset'])+"(%ebp)")
 
 			else:
 				if self.ST.find(item[2])==None:
 					op = self.ST.find(item[1])
-					# print("mov $"+str(op['offset'])+",%ebx")
-					# print("addl %rbp,%ebx")
-					# print("mov (%ebx),%eax")
-					# print("mov $"+item[2]+",%ebx")
-					# print("addl %eax,%ebx")
-					# print("mov $"+str(res_var['offset'])+",%eax")
-					# print("addl %rbp,%eax")
-					# print("mov %ebx,0(%eax)")
-					# print("\tadd $"+item[2]+",-"+str(res['offset'])+"(%ebp)")
+					print("\tmov -"+str(op['offset'])+"(%ebp),%ebx")
+					print("\tadd $"+item[2]+",%ebx")
+					print("\tmov %ebx, -" + str(res_var['offset']) + "(%ebp)")
+
 
 				else:
 					op1 = self.ST.find(item[1])
 					op2 = self.ST.find(item[2])
-					# print("mov $"+str(self.ST.find(item[1])['offset'])+",%ecx")
-					# print("addl %rbp,%ecx")
-					# print("mov (%ecx),%eax")
-					# print("mov $"+str(self.ST.find(item[2])['offset'])+",%ecx")
-					# print("addl %rbp,%ecx")
-					# print("mov (%ecx),%ebx")
-					# print("addl %eax,%ebx")
-					# print("mov $"+str(res_var['offset'])+",%eax")
-					# print("addl %rbp,%eax")
-					# print("mov %ebx,0(%eax)")
 					print("\tmov -"+str(op1['offset'])+"(%ebp),%eax")
 					print("\tadd -"+str(op2['offset'])+"(%ebp),%eax")
-					print("\tmov %eax,-"+str(op1['offset'])+"(%ebp),%eax")
+					print("\tmov %eax,-"+str(res_var['offset'])+"(%ebp)")
 
+		elif(item[-1]=='-'):
 
-
-		elif(item[3]=='-'):
 			res_var = self.ST.find(item[0])
+
 			if self.ST.find(item[1])==None:
 				if self.ST.find(item[2])==None:
 					val = int(item[1])-int(item[2])
-					print("mov $"+str(res_var['offset'])+",%eax")
-					print("addl %rbp,%eax")
-					print("mov $"+str(val)+",0(%eax)")
+					print("\tmov $"+str(val)+",-"+str(res_var['offset'])+"(%ebp)")
 				else:
 					op = self.ST.find(item[2])
-					print("mov $"+str(op['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov (%ebx),%eax")
-					print("mov $"+item[1]+",%ebx")
-					print("subl %eax,%ebx")
-					print("mov $"+str(res_var['offset'])+",%eax")
-					print("addl %rbp,%eax")
-					print("mov %ebx,0(%eax)")
+					print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
+					print("\tmov $"+str(item[1])",%ebx")
+					print("\tsub %eax,%ebx")
+					print("\tmov %ebx,-"+str(res_var['offset'])+"(%ebp)")
+
 			else:
 				if self.ST.find(item[2])==None:
 					op = self.ST.find(item[1])
-					print("mov $"+str(op['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov (%ebx),%eax")
-					print("mov $"+item[2]+",%ebx")
-					print("subl %ebx,%eax")
-					print("mov $"+str(res_var['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov %eax,0(%ebx)")
+					print("\tmov -"+str(op['offset'])+"(%ebp),%ebx")
+					print("\tsub $"+item[2]+",%ebx")
+					print("\tmov %ebx, -" + str(res_var['offset']) + "(%ebp)")
+
+
 				else:
-					print("mov $"+str(self.ST.find(item[1])['offset'])+",%ecx")
-					print("addl %rbp,%ecx")
-					print("mov (%ecx),%eax")
-					print("mov $"+str(self.ST.find(item[2])['offset'])+",%ecx")
-					print("addl %rbp,%ecx")
-					print("mov (%ecx),%ebx")
-					print("subl %ebx,%eax")
-					print("mov $"+str(res_var['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov %eax,0(%ebx)")
+					op1 = self.ST.find(item[1])
+					op2 = self.ST.find(item[2])
+					print("\tmov -"+str(op1['offset'])+"(%ebp),%eax")
+					print("\tsub -"+str(op2['offset'])+"(%ebp),%eax")
+					print("\tmov %eax,-"+str(res_var['offset'])+"(%ebp)")
+
 		elif(item[3]=='*'):
+
 			res_var = self.ST.find(item[0])
+
 			if self.ST.find(item[1])==None:
 				if self.ST.find(item[2])==None:
 					val = int(item[1])*int(item[2])
-					print("mov $"+str(res_var['offset'])+",%eax")
-					print("addl %rbp,%eax")
-					print("mov $"+str(val)+",0(%eax)")
+					print("\tmov $"+str(val)+",-"+str(res_var['offset'])+"(%ebp)")
 				else:
 					op = self.ST.find(item[2])
-					print("mov $"+str(op['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov (%ebx),%eax")
-					print("mov $"+item[1]+",%ebx")
-					print("imul %eax,%ebx")
-					print("mov $"+str(res_var['offset'])+",%eax")
-					print("addl %rbp,%eax")
-					print("mov %ebx,0(%eax)")
+					print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
+					print("\timul $"+item[1]+",%eax")
+					print("\tmov %eax,-"+str(res_var['offset'])+"(%ebp)")
+
 			else:
 				if self.ST.find(item[2])==None:
 					op = self.ST.find(item[1])
-					print("mov $"+str(op['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov (%ebx),%eax")
-					print("mov $"+item[2]+",%ebx")
-					print("imul %ebx,%eax")
-					print("mov $"+str(res_var['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov %eax,0(%ebx)")
+					print("\tmov -"+str(op['offset'])+"(%ebp),%ebx")
+					print("\timul $"+item[2]+",%ebx")
+					print("\tmov %ebx, -" + str(res_var['offset']) + "(%ebp)")
+
+
 				else:
-					print("mov $"+str(self.ST.find(item[1])['offset'])+",%ecx")
-					print("addl %rbp,%ecx")
-					print("mov (%ecx),%eax")
-					print("mov $"+str(self.ST.find(item[2])['offset'])+",%ecx")
-					print("addl %rbp,%ecx")
-					print("mov (%ecx),%ebx")
-					print("imul %ebx,%eax")
-					print("mov $"+str(res_var['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov %eax,0(%ebx)")
-		# elif(item[3]=='/'):
-		# 	res_var = self.ST.find(item[0])
-		# 	if self.ST.find(item[1])==None:
-		# 		if self.ST.find(item[2])==None:
-		# 			val = int(item[1])/int(item[2])
-		# 			print("mov $"+str(res_var['offset'])+",%eax")
-		# 			print("addl %rbp,%eax")
-		# 			print("mov $"+str(val)+",0(%eax)")
-		# 		else:
-		# 			op = self.ST.find(item[2])
-		# 			print("mov $"+str(op['offset'])+",%ebx")
-		# 			print("addl %rbp,%ebx")
-		# 			print("mov (%ebx),%eax")
-		# 			print("mov $"+item[1]+",%ebx")
-		# 			print("idiv %eax,%ebx")
-		# 			print("mov $"+str(res_var['offset'])+",%eax")
-		# 			print("addl %rbp,%eax")
-		# 			print("mov %ebx,0(%eax)")
-		# 	else:
-		# 		if self.ST.find(item[2])==None:
-		# 			op = self.ST.find(item[1])
-		# 			print("mov $"+str(op['offset'])+",%ebx")
-		# 			print("addl %rbp,%ebx")
-		# 			print("mov (%ebx),%eax")
-		# 			print("mov $"+item[2]+",%ebx")
-		# 			print("idiv %ebx,%eax")
-		# 			print("mov $"+str(res_var['offset'])+",%ebx")
-		# 			print("addl %rbp,%ebx")
-		# 			print("mov %eax,0(%ebx)")
-		# 		else:
-		# 			print("mov $"+str(self.ST.find(item[1])['offset'])+",%ecx")
-		# 			print("addl %rbp,%ecx")
-		# 			print("mov (%ecx),%eax")
-		# 			print("mov $"+str(self.ST.find(item[2])['offset'])+",%ecx")
-		# 			print("addl %rbp,%ecx")
-		# 			print("mov (%ecx),%ebx")
-		# 			print("idiv %ebx,%eax")
-		# 			print("mov $"+str(res_var['offset'])+",%ebx")
-		# 			print("addl %rbp,%ebx")
-		# 			print("mov %eax,0(%ebx)")
-		elif(item[3]=='&' or item[3]=="||" or item[3]=='^'):
+					op1 = self.ST.find(item[1])
+					op2 = self.ST.find(item[2])
+					print("\tmov -"+str(op1['offset'])+"(%ebp),%eax")
+					print("\timul -"+str(op2['offset'])+"(%ebp),%eax")
+					print("\tmov %eax,-"+str(res_var['offset'])+"(%ebp)")
+
+		elif(item[3]=='/'):
+
 			res_var = self.ST.find(item[0])
+
 			if self.ST.find(item[1])==None:
 				if self.ST.find(item[2])==None:
+					val = int(item[1])/int(item[2])
+					print("\tmov $"+str(val)+",-"+str(res_var['offset'])+"(%ebp)")
+				else:
+					op = self.ST.find(item[2])
+					dx = int(item[1])>>32
+					ax = ((int(item[1])<<32)>>32)
+					print("\tmov $" + str(dx) + ", %edx")
+					print("\tmov $" + str(ax) + ", %eax")
+					print("\tidiv -" + str(op['offset'])+"(%ebp)")
+					print("\tmov %eax, -" + str(res_var['offset']) + "(%ebp)")
+					
+			else:
+				if self.ST.find(item[2])==None:
+					op = self.ST.find(item[1])
+					print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
+					print("\tmov $0, %edx")
+					print("\tmov $" + item[2] +",%ebx")
+					print("\tidiv %ebx")
+					print("\tmov %eax, -" + str(res_var['offset']) + "(%ebp)")
+					
+				else:
+					op1 = self.ST.find(item[1])
+					op2 = self.ST.find(item[2])
+					print("\tmov -"+str(op1['offset'])+"(%ebp),%eax")
+					print("\tmov $0, %edx")
+					print("\tmov -"+str(op2['offset'])+"(%ebp),%eax")
+					print("\tidiv %ebx")
+					print("\tmov %eax, -" + str(res_var['offset']) + "(%ebp)")
+
+
+		elif(item[3]=='&' or item[3]=="||" or item[3]=='^'):
+
+			res_var = self.ST.find(item[0])
+
+			if self.ST.find(item[1])==None:
+
+				if self.ST.find(item[2])==None:
+
 					if item[3]=='&':
 						val = int(item[1]) and int(item[2])
 					elif item[3]=="||":
 						val = int(item[1]) or int(item[2])
 					else:
 						val = int(item[1])^int(item[2])
-					print("mov $"+str(res_var['offset'])+",%eax")
-					print("addl %rbp,%eax")
-					print("mov $"+str(val)+",0(%eax)")
+					print("mov $" + str(val) + ",-" + str(res_var['offset'])+"(%ebp)")
+
 				else:
+
 					op = self.ST.find(item[2])
-					print("mov $"+str(op['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov (%ebx),%eax")
-					print("mov $"+item[1]+",%ebx")
+					print("mov $"+ item[1] +",%ebx")
+					print("mov -"+str(op['offset'])+"(%ebp),%eax")
+
 					if item[3]=='&':
 						print("and %ebx,%eax")
 					elif item[3]=="||":
 						print("or %ebx,%eax")
 					else:
 						print("xor %ebx,%eax")
-					print("mov $"+str(res_var['offset'])+",%eax")
-					print("addl %rbp,%eax")
-					print("mov %ebx,0(%eax)")
+
+					print("mov %ebx, -"+str(res_var['offset'])+"(%ebp)")
+					
 			else:
+
 				if self.ST.find(item[2])==None:
 					op = self.ST.find(item[1])
-					print("mov $"+str(op['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov (%ebx),%eax")
-					print("mov $"+item[2]+",%ebx")
+					print("mov $"+ item[2] +",%ebx")
+					print("mov -"+str(op['offset'])+"(%ebp),%eax")
+
 					if item[3]=='&':
-						print("and %eax,%ebx")
+						print("and %ebx,%eax")
 					elif item[3]=="||":
-						print("or %eax,%ebx")
+						print("or %ebx,%eax")
 					else:
-						print("xor %eax,%ebx")
-					print("mov $"+str(res_var['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov %eax,0(%ebx)")
+						print("xor %ebx,%eax")
+
+					print("mov %ebx, -"+str(res_var['offset'])+"(%ebp)")
+					
 				else:
-					print("mov $"+str(self.ST.find(item[1])['offset'])+",%ecx")
-					print("addl %rbp,%ecx")
-					print("mov (%ecx),%eax")
-					print("mov $"+str(self.ST.find(item[2])['offset'])+",%ecx")
-					print("addl %rbp,%ecx")
-					print("mov (%ecx),%ebx")
+					op1 = self.ST.find(item[1])
+					op2 = self.ST.find(item[2])
+					print("mov -"+str(op1['offset'])+"(%ebp),%ebx")
+					print("mov -"+str(op2['offset'])+"(%ebp),%eax")
+
 					if item[3]=='&':
-						print("and %eax,%bax")
+						print("and %ebx,%eax")
 					elif item[3]=="||":
-						print("or %eax,%ebx")
+						print("or %ebx,%eax")
 					else:
-						print("xor %eax,%ebx")
-					print("mov $"+str(res_var['offset'])+",%ebx")
-					print("addl %rbp,%ebx")
-					print("mov %eax,0(%ebx)")
+						print("xor %ebx,%eax")
+
+					print("mov %ebx, -"+str(res_var['offset'])+"(%ebp)")
+					
 		# elif item[3]=='=':
 			# res_var = self.ST.find(item[0])
 			# op = self.ST.find(item[1])

@@ -20,11 +20,11 @@ class TAC:
 			if v1==None:
 				print("\tmov $"+item[1][0]+", %eax")
 			else :
-				print("\tmov -"+v1['offset']+"(%ebp), %eax")
+				print("\tmov -"+str(v1['offset'])+"(%ebp), %eax")
 			if v2==None:
-				print("\tmov $"+item[1][1]+", %ebx")
+				print("\tmov $"+str(item[1][1])+", %ebx")
 			else :
-				print("\tmov -"+v2['offset']+"(%ebp), %ebx")
+				print("\tmov -"+str(v2['offset'])+"(%ebp), %ebx")
 
 			print("\tcmp %eax, %ebx")
 			if item[2]=='eq':
@@ -42,10 +42,16 @@ class TAC:
 		elif(item[0]=='goto'):
 			print("\tjmp "+item[1])
 		elif(item[0]=='ret'):
+			print("---------------------------------------------------------------")
+			print(item[1])
+			v = self.ST.find(item[1])
 			if(item[1]==''):
 				print("\t ret")
+			elif v==None:
+				print("\tmov -"+item[1]+"(%ebp), %eax")
+				print("\t ret")
 			else:
-				v = self.ST.find(item[1])
+				
 				print("\tmov -"+str(v['offset'])+"(%ebp), %eax")
 				print("\t ret")
 		elif(item[0]=='label'):
@@ -56,9 +62,9 @@ class TAC:
 			else:
 				print("\tcall "+item[1])
 				v = self.ST.find(item[2])
-				print("\t mov %eax, -"+v['offset']+"(%ebp)")
+				print("\t mov %eax, -"+str(v['offset'])+"(%ebp)")
 		elif(item[0]=='adjust_rsp'):
-			print("\t add $"+item[1]+", %esp")
+			print("\t add $"+str(item[1])+", %esp")
 		elif(item[-1]=='+'):
 			res_var = self.ST.find(item[0])
 
@@ -284,7 +290,7 @@ class TAC:
 			print(res_var)
 			print(item)
 			op = self.ST.find(item[1])
-			self.ST.dump_TT()
+			# self.ST.dump_TT()
 			if op==None:
 				print("\tmov $"+item[1]+", %eax")
 			else:

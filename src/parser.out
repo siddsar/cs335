@@ -210,7 +210,7 @@ Rule 199   ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1
 Rule 200   ForStatement -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
 Rule 201   ForStatement -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
 Rule 202   ForStatement -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-Rule 203   ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+Rule 203   ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
 Rule 204   ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
 Rule 205   ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
 Rule 206   ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -504,7 +504,7 @@ FoMark2              : 195 196 197 201 203 204 205 209
 FoMark3              : 195 196 197 201 203 204 205 209
 FoMark4              : 198 199 200 202 206 207 208 210
 FoMark5              : 198 199 200 202 206 207 208 210
-FoMark6              : 195 196 197 201
+FoMark6              : 195 196 197 201 203
 ForInit              : 195 197 198 199 203 205 206 207
 ForStatement         : 141
 ForStatementNoShortIf : 146
@@ -4183,8 +4183,8 @@ state 127
     LOGICAL_AND     reduce using rule 240 (PrimaryNoNewArray -> THIS .)
     QMARK           reduce using rule 240 (PrimaryNoNewArray -> THIS .)
     LOGICAL_OR      reduce using rule 240 (PrimaryNoNewArray -> THIS .)
-    R_SQBR          reduce using rule 240 (PrimaryNoNewArray -> THIS .)
     STMT_TERMINATOR reduce using rule 240 (PrimaryNoNewArray -> THIS .)
+    R_SQBR          reduce using rule 240 (PrimaryNoNewArray -> THIS .)
     R_ROUNDBR       reduce using rule 240 (PrimaryNoNewArray -> THIS .)
     COMMA           reduce using rule 240 (PrimaryNoNewArray -> THIS .)
     R_CURLYBR       reduce using rule 240 (PrimaryNoNewArray -> THIS .)
@@ -4759,10 +4759,10 @@ state 141
     LOGICAL_AND     reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
     QMARK           reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
     LOGICAL_OR      reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
+    STMT_TERMINATOR reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
     R_SQBR          reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
     R_ROUNDBR       reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
     COMMA           reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
-    STMT_TERMINATOR reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
     COLON           reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
     R_CURLYBR       reduce using rule 245 (PrimaryNoNewArray -> ArrayAccess .)
 
@@ -5133,8 +5133,8 @@ state 154
     LOGICAL_AND     reduce using rule 239 (PrimaryNoNewArray -> Literal .)
     QMARK           reduce using rule 239 (PrimaryNoNewArray -> Literal .)
     LOGICAL_OR      reduce using rule 239 (PrimaryNoNewArray -> Literal .)
-    R_SQBR          reduce using rule 239 (PrimaryNoNewArray -> Literal .)
     STMT_TERMINATOR reduce using rule 239 (PrimaryNoNewArray -> Literal .)
+    R_SQBR          reduce using rule 239 (PrimaryNoNewArray -> Literal .)
     R_ROUNDBR       reduce using rule 239 (PrimaryNoNewArray -> Literal .)
     COMMA           reduce using rule 239 (PrimaryNoNewArray -> Literal .)
     R_CURLYBR       reduce using rule 239 (PrimaryNoNewArray -> Literal .)
@@ -5533,10 +5533,10 @@ state 165
     LOGICAL_AND     reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
     QMARK           reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
     LOGICAL_OR      reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
+    STMT_TERMINATOR reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
     R_SQBR          reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
     R_ROUNDBR       reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
     COMMA           reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
-    STMT_TERMINATOR reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
     COLON           reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
     R_CURLYBR       reduce using rule 243 (PrimaryNoNewArray -> FieldAccess .)
 
@@ -7962,8 +7962,8 @@ state 220
     LOGICAL_OR      reduce using rule 274 (UnaryExpression -> PreIncrementExpression .)
     R_ROUNDBR       reduce using rule 274 (UnaryExpression -> PreIncrementExpression .)
     COMMA           reduce using rule 274 (UnaryExpression -> PreIncrementExpression .)
-    R_SQBR          reduce using rule 274 (UnaryExpression -> PreIncrementExpression .)
     STMT_TERMINATOR reduce using rule 274 (UnaryExpression -> PreIncrementExpression .)
+    R_SQBR          reduce using rule 274 (UnaryExpression -> PreIncrementExpression .)
     R_CURLYBR       reduce using rule 274 (UnaryExpression -> PreIncrementExpression .)
     COLON           reduce using rule 274 (UnaryExpression -> PreIncrementExpression .)
 
@@ -8263,8 +8263,8 @@ state 226
     QMARK           reduce using rule 309 (AndExpression -> EqualityExpression .)
     LOGICAL_OR      reduce using rule 309 (AndExpression -> EqualityExpression .)
     R_SQBR          reduce using rule 309 (AndExpression -> EqualityExpression .)
-    R_ROUNDBR       reduce using rule 309 (AndExpression -> EqualityExpression .)
     STMT_TERMINATOR reduce using rule 309 (AndExpression -> EqualityExpression .)
+    R_ROUNDBR       reduce using rule 309 (AndExpression -> EqualityExpression .)
     COMMA           reduce using rule 309 (AndExpression -> EqualityExpression .)
     R_CURLYBR       reduce using rule 309 (AndExpression -> EqualityExpression .)
     COLON           reduce using rule 309 (AndExpression -> EqualityExpression .)
@@ -8347,8 +8347,8 @@ state 229
     LOGICAL_OR      reduce using rule 278 (UnaryExpression -> UnaryExpressionNotPlusMinus .)
     R_ROUNDBR       reduce using rule 278 (UnaryExpression -> UnaryExpressionNotPlusMinus .)
     COMMA           reduce using rule 278 (UnaryExpression -> UnaryExpressionNotPlusMinus .)
-    R_SQBR          reduce using rule 278 (UnaryExpression -> UnaryExpressionNotPlusMinus .)
     STMT_TERMINATOR reduce using rule 278 (UnaryExpression -> UnaryExpressionNotPlusMinus .)
+    R_SQBR          reduce using rule 278 (UnaryExpression -> UnaryExpressionNotPlusMinus .)
     R_CURLYBR       reduce using rule 278 (UnaryExpression -> UnaryExpressionNotPlusMinus .)
     COLON           reduce using rule 278 (UnaryExpression -> UnaryExpressionNotPlusMinus .)
 
@@ -8381,8 +8381,8 @@ state 230
     LOGICAL_AND     reduce using rule 244 (PrimaryNoNewArray -> MethodInvocation .)
     QMARK           reduce using rule 244 (PrimaryNoNewArray -> MethodInvocation .)
     LOGICAL_OR      reduce using rule 244 (PrimaryNoNewArray -> MethodInvocation .)
-    R_SQBR          reduce using rule 244 (PrimaryNoNewArray -> MethodInvocation .)
     STMT_TERMINATOR reduce using rule 244 (PrimaryNoNewArray -> MethodInvocation .)
+    R_SQBR          reduce using rule 244 (PrimaryNoNewArray -> MethodInvocation .)
     R_ROUNDBR       reduce using rule 244 (PrimaryNoNewArray -> MethodInvocation .)
     COMMA           reduce using rule 244 (PrimaryNoNewArray -> MethodInvocation .)
     R_CURLYBR       reduce using rule 244 (PrimaryNoNewArray -> MethodInvocation .)
@@ -8547,8 +8547,8 @@ state 235
     LOGICAL_OR      reduce using rule 275 (UnaryExpression -> PreDecrementExpression .)
     R_ROUNDBR       reduce using rule 275 (UnaryExpression -> PreDecrementExpression .)
     COMMA           reduce using rule 275 (UnaryExpression -> PreDecrementExpression .)
-    R_SQBR          reduce using rule 275 (UnaryExpression -> PreDecrementExpression .)
     STMT_TERMINATOR reduce using rule 275 (UnaryExpression -> PreDecrementExpression .)
+    R_SQBR          reduce using rule 275 (UnaryExpression -> PreDecrementExpression .)
     R_CURLYBR       reduce using rule 275 (UnaryExpression -> PreDecrementExpression .)
     COLON           reduce using rule 275 (UnaryExpression -> PreDecrementExpression .)
 
@@ -8581,8 +8581,8 @@ state 236
     LOGICAL_AND     reduce using rule 242 (PrimaryNoNewArray -> ClassInstanceCreationExpression .)
     QMARK           reduce using rule 242 (PrimaryNoNewArray -> ClassInstanceCreationExpression .)
     LOGICAL_OR      reduce using rule 242 (PrimaryNoNewArray -> ClassInstanceCreationExpression .)
-    R_SQBR          reduce using rule 242 (PrimaryNoNewArray -> ClassInstanceCreationExpression .)
     STMT_TERMINATOR reduce using rule 242 (PrimaryNoNewArray -> ClassInstanceCreationExpression .)
+    R_SQBR          reduce using rule 242 (PrimaryNoNewArray -> ClassInstanceCreationExpression .)
     R_ROUNDBR       reduce using rule 242 (PrimaryNoNewArray -> ClassInstanceCreationExpression .)
     COMMA           reduce using rule 242 (PrimaryNoNewArray -> ClassInstanceCreationExpression .)
     R_CURLYBR       reduce using rule 242 (PrimaryNoNewArray -> ClassInstanceCreationExpression .)
@@ -8801,8 +8801,8 @@ state 245
     LOGICAL_AND     reduce using rule 300 (RelationalExpression -> ShiftExpression .)
     QMARK           reduce using rule 300 (RelationalExpression -> ShiftExpression .)
     LOGICAL_OR      reduce using rule 300 (RelationalExpression -> ShiftExpression .)
-    COLON           reduce using rule 300 (RelationalExpression -> ShiftExpression .)
     STMT_TERMINATOR reduce using rule 300 (RelationalExpression -> ShiftExpression .)
+    COLON           reduce using rule 300 (RelationalExpression -> ShiftExpression .)
     R_ROUNDBR       reduce using rule 300 (RelationalExpression -> ShiftExpression .)
     COMMA           reduce using rule 300 (RelationalExpression -> ShiftExpression .)
     R_SQBR          reduce using rule 300 (RelationalExpression -> ShiftExpression .)
@@ -9968,6 +9968,7 @@ state 269
 
     (224) BreakStatement -> BREAK STMT_TERMINATOR .
 
+    ELSE            reduce using rule 224 (BreakStatement -> BREAK STMT_TERMINATOR .)
     R_CURLYBR       reduce using rule 224 (BreakStatement -> BREAK STMT_TERMINATOR .)
     IDENTIFIER      reduce using rule 224 (BreakStatement -> BREAK STMT_TERMINATOR .)
     IF              reduce using rule 224 (BreakStatement -> BREAK STMT_TERMINATOR .)
@@ -10003,7 +10004,6 @@ state 269
     NULL            reduce using rule 224 (BreakStatement -> BREAK STMT_TERMINATOR .)
     CASE            reduce using rule 224 (BreakStatement -> BREAK STMT_TERMINATOR .)
     DEFAULT         reduce using rule 224 (BreakStatement -> BREAK STMT_TERMINATOR .)
-    ELSE            reduce using rule 224 (BreakStatement -> BREAK STMT_TERMINATOR .)
 
 
 state 270
@@ -12210,8 +12210,8 @@ state 311
     LOGICAL_OR      reduce using rule 277 (UnaryExpression -> MINUS UnaryExpression .)
     R_ROUNDBR       reduce using rule 277 (UnaryExpression -> MINUS UnaryExpression .)
     COMMA           reduce using rule 277 (UnaryExpression -> MINUS UnaryExpression .)
-    R_SQBR          reduce using rule 277 (UnaryExpression -> MINUS UnaryExpression .)
     STMT_TERMINATOR reduce using rule 277 (UnaryExpression -> MINUS UnaryExpression .)
+    R_SQBR          reduce using rule 277 (UnaryExpression -> MINUS UnaryExpression .)
     R_CURLYBR       reduce using rule 277 (UnaryExpression -> MINUS UnaryExpression .)
     COLON           reduce using rule 277 (UnaryExpression -> MINUS UnaryExpression .)
 
@@ -12243,8 +12243,8 @@ state 312
     LOGICAL_OR      reduce using rule 276 (UnaryExpression -> PLUS UnaryExpression .)
     R_ROUNDBR       reduce using rule 276 (UnaryExpression -> PLUS UnaryExpression .)
     COMMA           reduce using rule 276 (UnaryExpression -> PLUS UnaryExpression .)
-    R_SQBR          reduce using rule 276 (UnaryExpression -> PLUS UnaryExpression .)
     STMT_TERMINATOR reduce using rule 276 (UnaryExpression -> PLUS UnaryExpression .)
+    R_SQBR          reduce using rule 276 (UnaryExpression -> PLUS UnaryExpression .)
     R_CURLYBR       reduce using rule 276 (UnaryExpression -> PLUS UnaryExpression .)
     COLON           reduce using rule 276 (UnaryExpression -> PLUS UnaryExpression .)
 
@@ -15981,6 +15981,7 @@ state 360
 
     (223) BreakStatement -> BREAK IDENTIFIER STMT_TERMINATOR .
 
+    ELSE            reduce using rule 223 (BreakStatement -> BREAK IDENTIFIER STMT_TERMINATOR .)
     R_CURLYBR       reduce using rule 223 (BreakStatement -> BREAK IDENTIFIER STMT_TERMINATOR .)
     IDENTIFIER      reduce using rule 223 (BreakStatement -> BREAK IDENTIFIER STMT_TERMINATOR .)
     IF              reduce using rule 223 (BreakStatement -> BREAK IDENTIFIER STMT_TERMINATOR .)
@@ -16016,7 +16017,6 @@ state 360
     NULL            reduce using rule 223 (BreakStatement -> BREAK IDENTIFIER STMT_TERMINATOR .)
     CASE            reduce using rule 223 (BreakStatement -> BREAK IDENTIFIER STMT_TERMINATOR .)
     DEFAULT         reduce using rule 223 (BreakStatement -> BREAK IDENTIFIER STMT_TERMINATOR .)
-    ELSE            reduce using rule 223 (BreakStatement -> BREAK IDENTIFIER STMT_TERMINATOR .)
 
 
 state 361
@@ -16365,8 +16365,8 @@ state 384
     QMARK           reduce using rule 310 (AndExpression -> AndExpression BITWISE_AND EqualityExpression .)
     LOGICAL_OR      reduce using rule 310 (AndExpression -> AndExpression BITWISE_AND EqualityExpression .)
     R_SQBR          reduce using rule 310 (AndExpression -> AndExpression BITWISE_AND EqualityExpression .)
-    R_ROUNDBR       reduce using rule 310 (AndExpression -> AndExpression BITWISE_AND EqualityExpression .)
     STMT_TERMINATOR reduce using rule 310 (AndExpression -> AndExpression BITWISE_AND EqualityExpression .)
+    R_ROUNDBR       reduce using rule 310 (AndExpression -> AndExpression BITWISE_AND EqualityExpression .)
     COMMA           reduce using rule 310 (AndExpression -> AndExpression BITWISE_AND EqualityExpression .)
     R_CURLYBR       reduce using rule 310 (AndExpression -> AndExpression BITWISE_AND EqualityExpression .)
     COLON           reduce using rule 310 (AndExpression -> AndExpression BITWISE_AND EqualityExpression .)
@@ -16627,8 +16627,8 @@ state 393
     LOGICAL_AND     reduce using rule 305 (RelationalExpression -> RelationalExpression INSTANCEOF ReferenceType .)
     QMARK           reduce using rule 305 (RelationalExpression -> RelationalExpression INSTANCEOF ReferenceType .)
     LOGICAL_OR      reduce using rule 305 (RelationalExpression -> RelationalExpression INSTANCEOF ReferenceType .)
-    COLON           reduce using rule 305 (RelationalExpression -> RelationalExpression INSTANCEOF ReferenceType .)
     STMT_TERMINATOR reduce using rule 305 (RelationalExpression -> RelationalExpression INSTANCEOF ReferenceType .)
+    COLON           reduce using rule 305 (RelationalExpression -> RelationalExpression INSTANCEOF ReferenceType .)
     R_ROUNDBR       reduce using rule 305 (RelationalExpression -> RelationalExpression INSTANCEOF ReferenceType .)
     COMMA           reduce using rule 305 (RelationalExpression -> RelationalExpression INSTANCEOF ReferenceType .)
     R_SQBR          reduce using rule 305 (RelationalExpression -> RelationalExpression INSTANCEOF ReferenceType .)
@@ -16655,8 +16655,8 @@ state 394
     LOGICAL_AND     reduce using rule 302 (RelationalExpression -> RelationalExpression GRT ShiftExpression .)
     QMARK           reduce using rule 302 (RelationalExpression -> RelationalExpression GRT ShiftExpression .)
     LOGICAL_OR      reduce using rule 302 (RelationalExpression -> RelationalExpression GRT ShiftExpression .)
-    COLON           reduce using rule 302 (RelationalExpression -> RelationalExpression GRT ShiftExpression .)
     STMT_TERMINATOR reduce using rule 302 (RelationalExpression -> RelationalExpression GRT ShiftExpression .)
+    COLON           reduce using rule 302 (RelationalExpression -> RelationalExpression GRT ShiftExpression .)
     R_ROUNDBR       reduce using rule 302 (RelationalExpression -> RelationalExpression GRT ShiftExpression .)
     COMMA           reduce using rule 302 (RelationalExpression -> RelationalExpression GRT ShiftExpression .)
     R_SQBR          reduce using rule 302 (RelationalExpression -> RelationalExpression GRT ShiftExpression .)
@@ -16686,8 +16686,8 @@ state 395
     LOGICAL_AND     reduce using rule 303 (RelationalExpression -> RelationalExpression LEQ ShiftExpression .)
     QMARK           reduce using rule 303 (RelationalExpression -> RelationalExpression LEQ ShiftExpression .)
     LOGICAL_OR      reduce using rule 303 (RelationalExpression -> RelationalExpression LEQ ShiftExpression .)
-    COLON           reduce using rule 303 (RelationalExpression -> RelationalExpression LEQ ShiftExpression .)
     STMT_TERMINATOR reduce using rule 303 (RelationalExpression -> RelationalExpression LEQ ShiftExpression .)
+    COLON           reduce using rule 303 (RelationalExpression -> RelationalExpression LEQ ShiftExpression .)
     R_ROUNDBR       reduce using rule 303 (RelationalExpression -> RelationalExpression LEQ ShiftExpression .)
     COMMA           reduce using rule 303 (RelationalExpression -> RelationalExpression LEQ ShiftExpression .)
     R_SQBR          reduce using rule 303 (RelationalExpression -> RelationalExpression LEQ ShiftExpression .)
@@ -16717,8 +16717,8 @@ state 396
     LOGICAL_AND     reduce using rule 304 (RelationalExpression -> RelationalExpression GEQ ShiftExpression .)
     QMARK           reduce using rule 304 (RelationalExpression -> RelationalExpression GEQ ShiftExpression .)
     LOGICAL_OR      reduce using rule 304 (RelationalExpression -> RelationalExpression GEQ ShiftExpression .)
-    COLON           reduce using rule 304 (RelationalExpression -> RelationalExpression GEQ ShiftExpression .)
     STMT_TERMINATOR reduce using rule 304 (RelationalExpression -> RelationalExpression GEQ ShiftExpression .)
+    COLON           reduce using rule 304 (RelationalExpression -> RelationalExpression GEQ ShiftExpression .)
     R_ROUNDBR       reduce using rule 304 (RelationalExpression -> RelationalExpression GEQ ShiftExpression .)
     COMMA           reduce using rule 304 (RelationalExpression -> RelationalExpression GEQ ShiftExpression .)
     R_SQBR          reduce using rule 304 (RelationalExpression -> RelationalExpression GEQ ShiftExpression .)
@@ -16748,8 +16748,8 @@ state 397
     LOGICAL_AND     reduce using rule 301 (RelationalExpression -> RelationalExpression LST ShiftExpression .)
     QMARK           reduce using rule 301 (RelationalExpression -> RelationalExpression LST ShiftExpression .)
     LOGICAL_OR      reduce using rule 301 (RelationalExpression -> RelationalExpression LST ShiftExpression .)
-    COLON           reduce using rule 301 (RelationalExpression -> RelationalExpression LST ShiftExpression .)
     STMT_TERMINATOR reduce using rule 301 (RelationalExpression -> RelationalExpression LST ShiftExpression .)
+    COLON           reduce using rule 301 (RelationalExpression -> RelationalExpression LST ShiftExpression .)
     R_ROUNDBR       reduce using rule 301 (RelationalExpression -> RelationalExpression LST ShiftExpression .)
     COMMA           reduce using rule 301 (RelationalExpression -> RelationalExpression LST ShiftExpression .)
     R_SQBR          reduce using rule 301 (RelationalExpression -> RelationalExpression LST ShiftExpression .)
@@ -17163,10 +17163,10 @@ state 408
     LOGICAL_AND     reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
     QMARK           reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
     LOGICAL_OR      reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
+    STMT_TERMINATOR reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
     R_SQBR          reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
     R_ROUNDBR       reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
     COMMA           reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
-    STMT_TERMINATOR reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
     COLON           reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
     R_CURLYBR       reduce using rule 241 (PrimaryNoNewArray -> L_ROUNDBR Expression R_ROUNDBR .)
     BITWISE_NOT     shift and go to state 222
@@ -19560,7 +19560,7 @@ state 457
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -20619,7 +20619,7 @@ state 477
     (200) ForStatement -> FOR . FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     (201) ForStatement -> FOR . FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     (202) ForStatement -> FOR . FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    (203) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -21361,6 +21361,7 @@ state 500
 
     (175) SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .
 
+    R_CURLYBR       reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
     IDENTIFIER      reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
     IF              reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
     WHILE           reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
@@ -21393,7 +21394,6 @@ state 500
     CHAR_LITERAL    reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
     STRING_LITERAL  reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
     NULL            reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
-    R_CURLYBR       reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
     CASE            reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
     DEFAULT         reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
     ELSE            reduce using rule 175 (SwitchStatement -> SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3 .)
@@ -21457,7 +21457,7 @@ state 503
     (200) ForStatement -> FOR FoMark0 . L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     (201) ForStatement -> FOR FoMark0 . L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     (202) ForStatement -> FOR FoMark0 . L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    (203) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -21549,7 +21549,7 @@ state 506
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -22842,7 +22842,7 @@ state 523
     (200) ForStatement -> FOR FoMark0 L_ROUNDBR . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     (201) ForStatement -> FOR FoMark0 L_ROUNDBR . STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     (202) ForStatement -> FOR FoMark0 L_ROUNDBR . STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -23971,7 +23971,7 @@ state 540
     (197) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     (198) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     (199) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -24680,7 +24680,6 @@ state 554
 
     (191) DoStatement -> DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR .
 
-    ELSE            reduce using rule 191 (DoStatement -> DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR .)
     WHILE           reduce using rule 191 (DoStatement -> DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR .)
     R_CURLYBR       reduce using rule 191 (DoStatement -> DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR .)
     IDENTIFIER      reduce using rule 191 (DoStatement -> DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR .)
@@ -24716,6 +24715,7 @@ state 554
     NULL            reduce using rule 191 (DoStatement -> DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR .)
     CASE            reduce using rule 191 (DoStatement -> DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR .)
     DEFAULT         reduce using rule 191 (DoStatement -> DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR .)
+    ELSE            reduce using rule 191 (DoStatement -> DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR .)
 
 
 state 555
@@ -24724,7 +24724,7 @@ state 555
     (197) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     (198) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     (199) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -25032,7 +25032,7 @@ state 559
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -25736,7 +25736,7 @@ state 567
     (197) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     (198) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
     (199) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -26082,7 +26082,7 @@ state 570
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -26588,7 +26588,7 @@ state 577
 
     (195) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     (198) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
 
     STMT_TERMINATOR shift and go to state 587
@@ -27075,136 +27075,25 @@ state 587
 
     (195) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
     (198) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . R_ROUNDBR FoMark4 Statement FoMark5
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     (214) FoMark6 -> .
-    (220) ForUpdate -> . StatementExpressionList
-    (221) StatementExpressionList -> . StatementExpression
-    (222) StatementExpressionList -> . StatementExpressionList COMMA StatementExpression
-    (161) StatementExpression -> . Assignment
-    (162) StatementExpression -> . PreIncrementExpression
-    (163) StatementExpression -> . PreDecrementExpression
-    (164) StatementExpression -> . PostIncrementExpression
-    (165) StatementExpression -> . PostDecrementExpression
-    (166) StatementExpression -> . MethodInvocation
-    (167) StatementExpression -> . ClassInstanceCreationExpression
-    (323) Assignment -> . LeftHandSide AssignmentOperator AssignmentExpression
-    (279) PreIncrementExpression -> . INCREMENT UnaryExpression
-    (280) PreDecrementExpression -> . DECREMENT UnaryExpression
-    (272) PostIncrementExpression -> . PostfixExpression INCREMENT
-    (273) PostDecrementExpression -> . PostfixExpression DECREMENT
-    (261) MethodInvocation -> . Name L_ROUNDBR ArgumentList R_ROUNDBR
-    (262) MethodInvocation -> . Name L_ROUNDBR R_ROUNDBR
-    (263) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
-    (264) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
-    (265) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
-    (266) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
-    (246) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR R_ROUNDBR
-    (247) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR ArgumentList R_ROUNDBR
-    (324) LeftHandSide -> . Name
-    (325) LeftHandSide -> . FieldAccess
-    (326) LeftHandSide -> . ArrayAccess
-    (268) PostfixExpression -> . Primary
-    (269) PostfixExpression -> . Name
-    (270) PostfixExpression -> . PostIncrementExpression
-    (271) PostfixExpression -> . PostDecrementExpression
-    (30) Name -> . SimpleName
-    (31) Name -> . QualifiedName
-    (237) Primary -> . PrimaryNoNewArray
-    (238) Primary -> . ArrayCreationExpression
-    (259) FieldAccess -> . Primary DOT IDENTIFIER
-    (260) FieldAccess -> . SUPER DOT IDENTIFIER
-    (267) ArrayAccess -> . Name DimExprs
-    (32) SimpleName -> . IDENTIFIER
-    (33) QualifiedName -> . Name DOT IDENTIFIER
-    (239) PrimaryNoNewArray -> . Literal
-    (240) PrimaryNoNewArray -> . THIS
-    (241) PrimaryNoNewArray -> . L_ROUNDBR Expression R_ROUNDBR
-    (242) PrimaryNoNewArray -> . ClassInstanceCreationExpression
-    (243) PrimaryNoNewArray -> . FieldAccess
-    (244) PrimaryNoNewArray -> . MethodInvocation
-    (245) PrimaryNoNewArray -> . ArrayAccess
-    (250) ArrayCreationExpression -> . NEW PrimitiveType DimExprs Dims
-    (251) ArrayCreationExpression -> . NEW PrimitiveType DimExprs
-    (252) ArrayCreationExpression -> . NEW ClassType DimExprs Dims
-    (253) ArrayCreationExpression -> . NEW ClassType DimExprs
-    (2) Literal -> . IntConst
-    (3) Literal -> . FloatConst
-    (4) Literal -> . CharConst
-    (5) Literal -> . StringConst
-    (6) Literal -> . NullConst
-    (7) IntConst -> . INT_LITERAL
-    (8) FloatConst -> . FLOAT_LITERAL
-    (9) CharConst -> . CHAR_LITERAL
-    (10) StringConst -> . STRING_LITERAL
-    (11) NullConst -> . NULL
 
-  ! shift/reduce conflict for INCREMENT resolved as shift
-  ! shift/reduce conflict for DECREMENT resolved as shift
-  ! shift/reduce conflict for SUPER resolved as shift
-  ! shift/reduce conflict for NEW resolved as shift
-  ! shift/reduce conflict for IDENTIFIER resolved as shift
-  ! shift/reduce conflict for THIS resolved as shift
-  ! shift/reduce conflict for L_ROUNDBR resolved as shift
-  ! shift/reduce conflict for INT_LITERAL resolved as shift
-  ! shift/reduce conflict for FLOAT_LITERAL resolved as shift
-  ! shift/reduce conflict for CHAR_LITERAL resolved as shift
-  ! shift/reduce conflict for STRING_LITERAL resolved as shift
-  ! shift/reduce conflict for NULL resolved as shift
     R_ROUNDBR       shift and go to state 597
-    INCREMENT       shift and go to state 158
-    DECREMENT       shift and go to state 167
-    SUPER           shift and go to state 182
-    NEW             shift and go to state 150
-    IDENTIFIER      shift and go to state 32
-    THIS            shift and go to state 127
-    L_ROUNDBR       shift and go to state 178
-    INT_LITERAL     shift and go to state 166
-    FLOAT_LITERAL   shift and go to state 156
-    CHAR_LITERAL    shift and go to state 128
-    STRING_LITERAL  shift and go to state 147
-    NULL            shift and go to state 172
+    INCREMENT       reduce using rule 214 (FoMark6 -> .)
+    DECREMENT       reduce using rule 214 (FoMark6 -> .)
+    SUPER           reduce using rule 214 (FoMark6 -> .)
+    NEW             reduce using rule 214 (FoMark6 -> .)
+    IDENTIFIER      reduce using rule 214 (FoMark6 -> .)
+    THIS            reduce using rule 214 (FoMark6 -> .)
+    L_ROUNDBR       reduce using rule 214 (FoMark6 -> .)
+    INT_LITERAL     reduce using rule 214 (FoMark6 -> .)
+    FLOAT_LITERAL   reduce using rule 214 (FoMark6 -> .)
+    CHAR_LITERAL    reduce using rule 214 (FoMark6 -> .)
+    STRING_LITERAL  reduce using rule 214 (FoMark6 -> .)
+    NULL            reduce using rule 214 (FoMark6 -> .)
 
-  ! INCREMENT       [ reduce using rule 214 (FoMark6 -> .) ]
-  ! DECREMENT       [ reduce using rule 214 (FoMark6 -> .) ]
-  ! SUPER           [ reduce using rule 214 (FoMark6 -> .) ]
-  ! NEW             [ reduce using rule 214 (FoMark6 -> .) ]
-  ! IDENTIFIER      [ reduce using rule 214 (FoMark6 -> .) ]
-  ! THIS            [ reduce using rule 214 (FoMark6 -> .) ]
-  ! L_ROUNDBR       [ reduce using rule 214 (FoMark6 -> .) ]
-  ! INT_LITERAL     [ reduce using rule 214 (FoMark6 -> .) ]
-  ! FLOAT_LITERAL   [ reduce using rule 214 (FoMark6 -> .) ]
-  ! CHAR_LITERAL    [ reduce using rule 214 (FoMark6 -> .) ]
-  ! STRING_LITERAL  [ reduce using rule 214 (FoMark6 -> .) ]
-  ! NULL            [ reduce using rule 214 (FoMark6 -> .) ]
-
-    PostfixExpression              shift and go to state 130
-    FieldAccess                    shift and go to state 165
-    PostDecrementExpression        shift and go to state 117
-    PreIncrementExpression         shift and go to state 124
-    StatementExpression            shift and go to state 411
-    FoMark6                        shift and go to state 529
-    IntConst                       shift and go to state 132
-    ArrayAccess                    shift and go to state 141
-    ClassInstanceCreationExpression shift and go to state 151
-    QualifiedName                  shift and go to state 29
-    Assignment                     shift and go to state 120
-    CharConst                      shift and go to state 121
-    PostIncrementExpression        shift and go to state 122
-    LeftHandSide                   shift and go to state 174
-    Literal                        shift and go to state 154
-    ArrayCreationExpression        shift and go to state 136
-    Name                           shift and go to state 359
-    SimpleName                     shift and go to state 31
-    MethodInvocation               shift and go to state 139
-    PreDecrementExpression         shift and go to state 179
-    StatementExpressionList        shift and go to state 514
-    ForUpdate                      shift and go to state 598
-    PrimaryNoNewArray              shift and go to state 126
-    Primary                        shift and go to state 145
-    NullConst                      shift and go to state 168
-    StringConst                    shift and go to state 149
-    FloatConst                     shift and go to state 177
+    FoMark6                        shift and go to state 598
 
 state 588
 
@@ -27326,7 +27215,7 @@ state 592
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -27559,7 +27448,7 @@ state 595
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -27789,10 +27678,108 @@ state 597
 
 state 598
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate . R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (195) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 . ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 . ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (220) ForUpdate -> . StatementExpressionList
+    (221) StatementExpressionList -> . StatementExpression
+    (222) StatementExpressionList -> . StatementExpressionList COMMA StatementExpression
+    (161) StatementExpression -> . Assignment
+    (162) StatementExpression -> . PreIncrementExpression
+    (163) StatementExpression -> . PreDecrementExpression
+    (164) StatementExpression -> . PostIncrementExpression
+    (165) StatementExpression -> . PostDecrementExpression
+    (166) StatementExpression -> . MethodInvocation
+    (167) StatementExpression -> . ClassInstanceCreationExpression
+    (323) Assignment -> . LeftHandSide AssignmentOperator AssignmentExpression
+    (279) PreIncrementExpression -> . INCREMENT UnaryExpression
+    (280) PreDecrementExpression -> . DECREMENT UnaryExpression
+    (272) PostIncrementExpression -> . PostfixExpression INCREMENT
+    (273) PostDecrementExpression -> . PostfixExpression DECREMENT
+    (261) MethodInvocation -> . Name L_ROUNDBR ArgumentList R_ROUNDBR
+    (262) MethodInvocation -> . Name L_ROUNDBR R_ROUNDBR
+    (263) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
+    (264) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
+    (265) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
+    (266) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
+    (246) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR R_ROUNDBR
+    (247) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR ArgumentList R_ROUNDBR
+    (324) LeftHandSide -> . Name
+    (325) LeftHandSide -> . FieldAccess
+    (326) LeftHandSide -> . ArrayAccess
+    (268) PostfixExpression -> . Primary
+    (269) PostfixExpression -> . Name
+    (270) PostfixExpression -> . PostIncrementExpression
+    (271) PostfixExpression -> . PostDecrementExpression
+    (30) Name -> . SimpleName
+    (31) Name -> . QualifiedName
+    (237) Primary -> . PrimaryNoNewArray
+    (238) Primary -> . ArrayCreationExpression
+    (259) FieldAccess -> . Primary DOT IDENTIFIER
+    (260) FieldAccess -> . SUPER DOT IDENTIFIER
+    (267) ArrayAccess -> . Name DimExprs
+    (32) SimpleName -> . IDENTIFIER
+    (33) QualifiedName -> . Name DOT IDENTIFIER
+    (239) PrimaryNoNewArray -> . Literal
+    (240) PrimaryNoNewArray -> . THIS
+    (241) PrimaryNoNewArray -> . L_ROUNDBR Expression R_ROUNDBR
+    (242) PrimaryNoNewArray -> . ClassInstanceCreationExpression
+    (243) PrimaryNoNewArray -> . FieldAccess
+    (244) PrimaryNoNewArray -> . MethodInvocation
+    (245) PrimaryNoNewArray -> . ArrayAccess
+    (250) ArrayCreationExpression -> . NEW PrimitiveType DimExprs Dims
+    (251) ArrayCreationExpression -> . NEW PrimitiveType DimExprs
+    (252) ArrayCreationExpression -> . NEW ClassType DimExprs Dims
+    (253) ArrayCreationExpression -> . NEW ClassType DimExprs
+    (2) Literal -> . IntConst
+    (3) Literal -> . FloatConst
+    (4) Literal -> . CharConst
+    (5) Literal -> . StringConst
+    (6) Literal -> . NullConst
+    (7) IntConst -> . INT_LITERAL
+    (8) FloatConst -> . FLOAT_LITERAL
+    (9) CharConst -> . CHAR_LITERAL
+    (10) StringConst -> . STRING_LITERAL
+    (11) NullConst -> . NULL
 
-    R_ROUNDBR       shift and go to state 607
+    INCREMENT       shift and go to state 158
+    DECREMENT       shift and go to state 167
+    SUPER           shift and go to state 182
+    NEW             shift and go to state 150
+    IDENTIFIER      shift and go to state 32
+    THIS            shift and go to state 127
+    L_ROUNDBR       shift and go to state 178
+    INT_LITERAL     shift and go to state 166
+    FLOAT_LITERAL   shift and go to state 156
+    CHAR_LITERAL    shift and go to state 128
+    STRING_LITERAL  shift and go to state 147
+    NULL            shift and go to state 172
 
+    PostfixExpression              shift and go to state 130
+    FieldAccess                    shift and go to state 165
+    PostDecrementExpression        shift and go to state 117
+    PreIncrementExpression         shift and go to state 124
+    StatementExpression            shift and go to state 411
+    IntConst                       shift and go to state 132
+    ArrayAccess                    shift and go to state 141
+    ClassInstanceCreationExpression shift and go to state 151
+    QualifiedName                  shift and go to state 29
+    Assignment                     shift and go to state 120
+    CharConst                      shift and go to state 121
+    PostIncrementExpression        shift and go to state 122
+    LeftHandSide                   shift and go to state 174
+    Literal                        shift and go to state 154
+    ArrayCreationExpression        shift and go to state 136
+    Name                           shift and go to state 359
+    SimpleName                     shift and go to state 31
+    MethodInvocation               shift and go to state 139
+    PreDecrementExpression         shift and go to state 179
+    StatementExpressionList        shift and go to state 514
+    ForUpdate                      shift and go to state 607
+    PrimaryNoNewArray              shift and go to state 126
+    Primary                        shift and go to state 145
+    NullConst                      shift and go to state 168
+    StringConst                    shift and go to state 149
+    FloatConst                     shift and go to state 177
 
 state 599
 
@@ -27834,7 +27821,7 @@ state 599
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -28060,7 +28047,7 @@ state 601
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -28276,7 +28263,7 @@ state 604
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -28391,7 +28378,6 @@ state 604
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -28418,6 +28404,7 @@ state 604
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     EmptyStatement                 shift and go to state 138
@@ -28473,7 +28460,7 @@ state 606
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -28629,35 +28616,11 @@ state 606
 
 state 607
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR . FoMark2 StatementNoShortIf FoMark3
-    (213) FoMark2 -> .
+    (195) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate . R_ROUNDBR FoMark2 Statement FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate . R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
 
-    IDENTIFIER      reduce using rule 213 (FoMark2 -> .)
-    IF              reduce using rule 213 (FoMark2 -> .)
-    WHILE           reduce using rule 213 (FoMark2 -> .)
-    FOR             reduce using rule 213 (FoMark2 -> .)
-    L_CURLYBR       reduce using rule 213 (FoMark2 -> .)
-    STMT_TERMINATOR reduce using rule 213 (FoMark2 -> .)
-    SWITCH          reduce using rule 213 (FoMark2 -> .)
-    DO              reduce using rule 213 (FoMark2 -> .)
-    BREAK           reduce using rule 213 (FoMark2 -> .)
-    CONTINUE        reduce using rule 213 (FoMark2 -> .)
-    RETURN          reduce using rule 213 (FoMark2 -> .)
-    THROW           reduce using rule 213 (FoMark2 -> .)
-    TRY             reduce using rule 213 (FoMark2 -> .)
-    INCREMENT       reduce using rule 213 (FoMark2 -> .)
-    DECREMENT       reduce using rule 213 (FoMark2 -> .)
-    SUPER           reduce using rule 213 (FoMark2 -> .)
-    NEW             reduce using rule 213 (FoMark2 -> .)
-    THIS            reduce using rule 213 (FoMark2 -> .)
-    L_ROUNDBR       reduce using rule 213 (FoMark2 -> .)
-    INT_LITERAL     reduce using rule 213 (FoMark2 -> .)
-    FLOAT_LITERAL   reduce using rule 213 (FoMark2 -> .)
-    CHAR_LITERAL    reduce using rule 213 (FoMark2 -> .)
-    STRING_LITERAL  reduce using rule 213 (FoMark2 -> .)
-    NULL            reduce using rule 213 (FoMark2 -> .)
+    R_ROUNDBR       shift and go to state 621
 
-    FoMark2                        shift and go to state 621
 
 state 608
 
@@ -28689,7 +28652,7 @@ state 609
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -28804,7 +28767,6 @@ state 609
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -28831,6 +28793,7 @@ state 609
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     EmptyStatement                 shift and go to state 138
@@ -28867,7 +28830,7 @@ state 611
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -28982,7 +28945,6 @@ state 611
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -29009,6 +28971,7 @@ state 611
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     EmptyStatement                 shift and go to state 138
@@ -29024,7 +28987,7 @@ state 612
 
 state 613
 
-    (203) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR . FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -29110,172 +29073,36 @@ state 620
 
 state 621
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 . StatementNoShortIf FoMark3
-    (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
-    (143) StatementNoShortIf -> . LabeledStatementNoShortIf
-    (144) StatementNoShortIf -> . IfThenElseStatementNoShortIf
-    (145) StatementNoShortIf -> . WhileStatementNoShortIf
-    (146) StatementNoShortIf -> . ForStatementNoShortIf
-    (147) StatementWithoutTrailingSubstatement -> . Block
-    (148) StatementWithoutTrailingSubstatement -> . EmptyStatement
-    (149) StatementWithoutTrailingSubstatement -> . ExpressionStatement
-    (150) StatementWithoutTrailingSubstatement -> . SwitchStatement
-    (151) StatementWithoutTrailingSubstatement -> . DoStatement
-    (152) StatementWithoutTrailingSubstatement -> . BreakStatement
-    (153) StatementWithoutTrailingSubstatement -> . ContinueStatement
-    (154) StatementWithoutTrailingSubstatement -> . ReturnStatement
-    (155) StatementWithoutTrailingSubstatement -> . ThrowStatement
-    (156) StatementWithoutTrailingSubstatement -> . TryStatement
-    (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
-    (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
-    (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-    (207) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-    (208) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-    (209) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    (210) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-    (128) Block -> . L_CURLYBR R_CURLYBR
-    (129) Block -> . L_CURLYBR BlockStatements R_CURLYBR
-    (157) EmptyStatement -> . STMT_TERMINATOR
-    (160) ExpressionStatement -> . StatementExpression STMT_TERMINATOR
-    (175) SwitchStatement -> . SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3
-    (191) DoStatement -> . DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR
-    (223) BreakStatement -> . BREAK IDENTIFIER STMT_TERMINATOR
-    (224) BreakStatement -> . BREAK STMT_TERMINATOR
-    (225) ContinueStatement -> . CONTINUE IDENTIFIER STMT_TERMINATOR
-    (226) ContinueStatement -> . CONTINUE STMT_TERMINATOR
-    (227) ReturnStatement -> . RETURN Expression STMT_TERMINATOR
-    (228) ReturnStatement -> . RETURN STMT_TERMINATOR
-    (229) ThrowStatement -> . THROW Expression STMT_TERMINATOR
-    (230) TryStatement -> . TRY Block Catches
-    (231) TryStatement -> . TRY Block Catches Finally
-    (232) TryStatement -> . TRY Block Finally
-    (161) StatementExpression -> . Assignment
-    (162) StatementExpression -> . PreIncrementExpression
-    (163) StatementExpression -> . PreDecrementExpression
-    (164) StatementExpression -> . PostIncrementExpression
-    (165) StatementExpression -> . PostDecrementExpression
-    (166) StatementExpression -> . MethodInvocation
-    (167) StatementExpression -> . ClassInstanceCreationExpression
-    (323) Assignment -> . LeftHandSide AssignmentOperator AssignmentExpression
-    (279) PreIncrementExpression -> . INCREMENT UnaryExpression
-    (280) PreDecrementExpression -> . DECREMENT UnaryExpression
-    (272) PostIncrementExpression -> . PostfixExpression INCREMENT
-    (273) PostDecrementExpression -> . PostfixExpression DECREMENT
-    (261) MethodInvocation -> . Name L_ROUNDBR ArgumentList R_ROUNDBR
-    (262) MethodInvocation -> . Name L_ROUNDBR R_ROUNDBR
-    (263) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
-    (264) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
-    (265) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
-    (266) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
-    (246) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR R_ROUNDBR
-    (247) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR ArgumentList R_ROUNDBR
-    (324) LeftHandSide -> . Name
-    (325) LeftHandSide -> . FieldAccess
-    (326) LeftHandSide -> . ArrayAccess
-    (268) PostfixExpression -> . Primary
-    (269) PostfixExpression -> . Name
-    (270) PostfixExpression -> . PostIncrementExpression
-    (271) PostfixExpression -> . PostDecrementExpression
-    (30) Name -> . SimpleName
-    (31) Name -> . QualifiedName
-    (237) Primary -> . PrimaryNoNewArray
-    (238) Primary -> . ArrayCreationExpression
-    (259) FieldAccess -> . Primary DOT IDENTIFIER
-    (260) FieldAccess -> . SUPER DOT IDENTIFIER
-    (267) ArrayAccess -> . Name DimExprs
-    (32) SimpleName -> . IDENTIFIER
-    (33) QualifiedName -> . Name DOT IDENTIFIER
-    (239) PrimaryNoNewArray -> . Literal
-    (240) PrimaryNoNewArray -> . THIS
-    (241) PrimaryNoNewArray -> . L_ROUNDBR Expression R_ROUNDBR
-    (242) PrimaryNoNewArray -> . ClassInstanceCreationExpression
-    (243) PrimaryNoNewArray -> . FieldAccess
-    (244) PrimaryNoNewArray -> . MethodInvocation
-    (245) PrimaryNoNewArray -> . ArrayAccess
-    (250) ArrayCreationExpression -> . NEW PrimitiveType DimExprs Dims
-    (251) ArrayCreationExpression -> . NEW PrimitiveType DimExprs
-    (252) ArrayCreationExpression -> . NEW ClassType DimExprs Dims
-    (253) ArrayCreationExpression -> . NEW ClassType DimExprs
-    (2) Literal -> . IntConst
-    (3) Literal -> . FloatConst
-    (4) Literal -> . CharConst
-    (5) Literal -> . StringConst
-    (6) Literal -> . NullConst
-    (7) IntConst -> . INT_LITERAL
-    (8) FloatConst -> . FLOAT_LITERAL
-    (9) CharConst -> . CHAR_LITERAL
-    (10) StringConst -> . STRING_LITERAL
-    (11) NullConst -> . NULL
+    (195) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR . FoMark2 Statement FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR . FoMark2 StatementNoShortIf FoMark3
+    (213) FoMark2 -> .
 
-    IDENTIFIER      shift and go to state 616
-    IF              shift and go to state 618
-    WHILE           shift and go to state 615
-    FOR             shift and go to state 613
-    L_CURLYBR       shift and go to state 95
-    STMT_TERMINATOR shift and go to state 181
-    SWITCH          shift and go to state 157
-    DO              shift and go to state 169
-    BREAK           shift and go to state 164
-    CONTINUE        shift and go to state 146
-    RETURN          shift and go to state 131
-    THROW           shift and go to state 184
-    TRY             shift and go to state 143
-    INCREMENT       shift and go to state 158
-    DECREMENT       shift and go to state 167
-    SUPER           shift and go to state 182
-    NEW             shift and go to state 150
-    THIS            shift and go to state 127
-    L_ROUNDBR       shift and go to state 178
-    INT_LITERAL     shift and go to state 166
-    FLOAT_LITERAL   shift and go to state 156
-    CHAR_LITERAL    shift and go to state 128
-    STRING_LITERAL  shift and go to state 147
-    NULL            shift and go to state 172
+    IDENTIFIER      reduce using rule 213 (FoMark2 -> .)
+    IF              reduce using rule 213 (FoMark2 -> .)
+    WHILE           reduce using rule 213 (FoMark2 -> .)
+    FOR             reduce using rule 213 (FoMark2 -> .)
+    L_CURLYBR       reduce using rule 213 (FoMark2 -> .)
+    STMT_TERMINATOR reduce using rule 213 (FoMark2 -> .)
+    SWITCH          reduce using rule 213 (FoMark2 -> .)
+    DO              reduce using rule 213 (FoMark2 -> .)
+    BREAK           reduce using rule 213 (FoMark2 -> .)
+    CONTINUE        reduce using rule 213 (FoMark2 -> .)
+    RETURN          reduce using rule 213 (FoMark2 -> .)
+    THROW           reduce using rule 213 (FoMark2 -> .)
+    TRY             reduce using rule 213 (FoMark2 -> .)
+    INCREMENT       reduce using rule 213 (FoMark2 -> .)
+    DECREMENT       reduce using rule 213 (FoMark2 -> .)
+    SUPER           reduce using rule 213 (FoMark2 -> .)
+    NEW             reduce using rule 213 (FoMark2 -> .)
+    THIS            reduce using rule 213 (FoMark2 -> .)
+    L_ROUNDBR       reduce using rule 213 (FoMark2 -> .)
+    INT_LITERAL     reduce using rule 213 (FoMark2 -> .)
+    FLOAT_LITERAL   reduce using rule 213 (FoMark2 -> .)
+    CHAR_LITERAL    reduce using rule 213 (FoMark2 -> .)
+    STRING_LITERAL  reduce using rule 213 (FoMark2 -> .)
+    NULL            reduce using rule 213 (FoMark2 -> .)
 
-    PostfixExpression              shift and go to state 130
-    FieldAccess                    shift and go to state 165
-    PostDecrementExpression        shift and go to state 117
-    CharConst                      shift and go to state 121
-    ExpressionStatement            shift and go to state 118
-    PreIncrementExpression         shift and go to state 124
-    Primary                        shift and go to state 145
-    StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
-    IntConst                       shift and go to state 132
-    ArrayAccess                    shift and go to state 141
-    ClassInstanceCreationExpression shift and go to state 151
-    ContinueStatement              shift and go to state 153
-    SimpleName                     shift and go to state 31
-    SwitchStatement                shift and go to state 155
-    PostIncrementExpression        shift and go to state 122
-    LeftHandSide                   shift and go to state 174
-    BreakStatement                 shift and go to state 134
-    Name                           shift and go to state 359
-    IfThenElseStatementNoShortIf   shift and go to state 482
-    Literal                        shift and go to state 154
-    ArrayCreationExpression        shift and go to state 136
-    DoStatement                    shift and go to state 160
-    QualifiedName                  shift and go to state 29
-    TryStatement                   shift and go to state 161
-    StatementNoShortIf             shift and go to state 632
-    MethodInvocation               shift and go to state 139
-    PreDecrementExpression         shift and go to state 179
-    ForStatementNoShortIf          shift and go to state 483
-    Block                          shift and go to state 142
-    LabeledStatementNoShortIf      shift and go to state 485
-    ThrowStatement                 shift and go to state 144
-    PrimaryNoNewArray              shift and go to state 126
-    NullConst                      shift and go to state 168
-    FloatConst                     shift and go to state 177
-    WhileStatementNoShortIf        shift and go to state 479
-    Assignment                     shift and go to state 120
-    EmptyStatement                 shift and go to state 138
-    ReturnStatement                shift and go to state 129
-    StatementWithoutTrailingSubstatement shift and go to state 617
+    FoMark2                        shift and go to state 632
 
 state 622
 
@@ -29311,7 +29138,7 @@ state 625
 
 state 626
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 . L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -29358,7 +29185,7 @@ state 629
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -29473,7 +29300,6 @@ state 629
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -29501,6 +29327,7 @@ state 629
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     ReturnStatement                shift and go to state 129
@@ -29674,12 +29501,197 @@ state 631
 
 state 632
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf . FoMark3
-    (216) FoMark3 -> .
+    (195) ForStatement -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 . Statement FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 . StatementNoShortIf FoMark3
+    (136) Statement -> . StatementWithoutTrailingSubstatement
+    (137) Statement -> . LabeledStatement
+    (138) Statement -> . IfThenStatement
+    (139) Statement -> . IfThenElseStatement
+    (140) Statement -> . WhileStatement
+    (141) Statement -> . ForStatement
+    (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
+    (143) StatementNoShortIf -> . LabeledStatementNoShortIf
+    (144) StatementNoShortIf -> . IfThenElseStatementNoShortIf
+    (145) StatementNoShortIf -> . WhileStatementNoShortIf
+    (146) StatementNoShortIf -> . ForStatementNoShortIf
+    (147) StatementWithoutTrailingSubstatement -> . Block
+    (148) StatementWithoutTrailingSubstatement -> . EmptyStatement
+    (149) StatementWithoutTrailingSubstatement -> . ExpressionStatement
+    (150) StatementWithoutTrailingSubstatement -> . SwitchStatement
+    (151) StatementWithoutTrailingSubstatement -> . DoStatement
+    (152) StatementWithoutTrailingSubstatement -> . BreakStatement
+    (153) StatementWithoutTrailingSubstatement -> . ContinueStatement
+    (154) StatementWithoutTrailingSubstatement -> . ReturnStatement
+    (155) StatementWithoutTrailingSubstatement -> . ThrowStatement
+    (156) StatementWithoutTrailingSubstatement -> . TryStatement
+    (158) LabeledStatement -> . IDENTIFIER COLON Statement
+    (168) IfThenStatement -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc Statement IfendSc
+    (169) IfThenElseStatement -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc Statement ElseEndSc
+    (186) WhileStatement -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 Statement WhMark3
+    (195) ForStatement -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    (196) ForStatement -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    (197) ForStatement -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    (198) ForStatement -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
+    (199) ForStatement -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
+    (200) ForStatement -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
+    (201) ForStatement -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 Statement FoMark3
+    (202) ForStatement -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 Statement FoMark5
+    (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
+    (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
+    (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (207) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (208) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (209) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (210) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (128) Block -> . L_CURLYBR R_CURLYBR
+    (129) Block -> . L_CURLYBR BlockStatements R_CURLYBR
+    (157) EmptyStatement -> . STMT_TERMINATOR
+    (160) ExpressionStatement -> . StatementExpression STMT_TERMINATOR
+    (175) SwitchStatement -> . SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3
+    (191) DoStatement -> . DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR
+    (223) BreakStatement -> . BREAK IDENTIFIER STMT_TERMINATOR
+    (224) BreakStatement -> . BREAK STMT_TERMINATOR
+    (225) ContinueStatement -> . CONTINUE IDENTIFIER STMT_TERMINATOR
+    (226) ContinueStatement -> . CONTINUE STMT_TERMINATOR
+    (227) ReturnStatement -> . RETURN Expression STMT_TERMINATOR
+    (228) ReturnStatement -> . RETURN STMT_TERMINATOR
+    (229) ThrowStatement -> . THROW Expression STMT_TERMINATOR
+    (230) TryStatement -> . TRY Block Catches
+    (231) TryStatement -> . TRY Block Catches Finally
+    (232) TryStatement -> . TRY Block Finally
+    (161) StatementExpression -> . Assignment
+    (162) StatementExpression -> . PreIncrementExpression
+    (163) StatementExpression -> . PreDecrementExpression
+    (164) StatementExpression -> . PostIncrementExpression
+    (165) StatementExpression -> . PostDecrementExpression
+    (166) StatementExpression -> . MethodInvocation
+    (167) StatementExpression -> . ClassInstanceCreationExpression
+    (323) Assignment -> . LeftHandSide AssignmentOperator AssignmentExpression
+    (279) PreIncrementExpression -> . INCREMENT UnaryExpression
+    (280) PreDecrementExpression -> . DECREMENT UnaryExpression
+    (272) PostIncrementExpression -> . PostfixExpression INCREMENT
+    (273) PostDecrementExpression -> . PostfixExpression DECREMENT
+    (261) MethodInvocation -> . Name L_ROUNDBR ArgumentList R_ROUNDBR
+    (262) MethodInvocation -> . Name L_ROUNDBR R_ROUNDBR
+    (263) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
+    (264) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
+    (265) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
+    (266) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
+    (246) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR R_ROUNDBR
+    (247) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR ArgumentList R_ROUNDBR
+    (324) LeftHandSide -> . Name
+    (325) LeftHandSide -> . FieldAccess
+    (326) LeftHandSide -> . ArrayAccess
+    (268) PostfixExpression -> . Primary
+    (269) PostfixExpression -> . Name
+    (270) PostfixExpression -> . PostIncrementExpression
+    (271) PostfixExpression -> . PostDecrementExpression
+    (30) Name -> . SimpleName
+    (31) Name -> . QualifiedName
+    (237) Primary -> . PrimaryNoNewArray
+    (238) Primary -> . ArrayCreationExpression
+    (259) FieldAccess -> . Primary DOT IDENTIFIER
+    (260) FieldAccess -> . SUPER DOT IDENTIFIER
+    (267) ArrayAccess -> . Name DimExprs
+    (32) SimpleName -> . IDENTIFIER
+    (33) QualifiedName -> . Name DOT IDENTIFIER
+    (239) PrimaryNoNewArray -> . Literal
+    (240) PrimaryNoNewArray -> . THIS
+    (241) PrimaryNoNewArray -> . L_ROUNDBR Expression R_ROUNDBR
+    (242) PrimaryNoNewArray -> . ClassInstanceCreationExpression
+    (243) PrimaryNoNewArray -> . FieldAccess
+    (244) PrimaryNoNewArray -> . MethodInvocation
+    (245) PrimaryNoNewArray -> . ArrayAccess
+    (250) ArrayCreationExpression -> . NEW PrimitiveType DimExprs Dims
+    (251) ArrayCreationExpression -> . NEW PrimitiveType DimExprs
+    (252) ArrayCreationExpression -> . NEW ClassType DimExprs Dims
+    (253) ArrayCreationExpression -> . NEW ClassType DimExprs
+    (2) Literal -> . IntConst
+    (3) Literal -> . FloatConst
+    (4) Literal -> . CharConst
+    (5) Literal -> . StringConst
+    (6) Literal -> . NullConst
+    (7) IntConst -> . INT_LITERAL
+    (8) FloatConst -> . FLOAT_LITERAL
+    (9) CharConst -> . CHAR_LITERAL
+    (10) StringConst -> . STRING_LITERAL
+    (11) NullConst -> . NULL
 
-    ELSE            reduce using rule 216 (FoMark3 -> .)
+    IDENTIFIER      shift and go to state 481
+    IF              shift and go to state 484
+    WHILE           shift and go to state 480
+    FOR             shift and go to state 477
+    L_CURLYBR       shift and go to state 95
+    STMT_TERMINATOR shift and go to state 181
+    SWITCH          shift and go to state 157
+    DO              shift and go to state 169
+    BREAK           shift and go to state 164
+    CONTINUE        shift and go to state 146
+    RETURN          shift and go to state 131
+    THROW           shift and go to state 184
+    TRY             shift and go to state 143
+    INCREMENT       shift and go to state 158
+    DECREMENT       shift and go to state 167
+    SUPER           shift and go to state 182
+    NEW             shift and go to state 150
+    THIS            shift and go to state 127
+    L_ROUNDBR       shift and go to state 178
+    INT_LITERAL     shift and go to state 166
+    FLOAT_LITERAL   shift and go to state 156
+    CHAR_LITERAL    shift and go to state 128
+    STRING_LITERAL  shift and go to state 147
+    NULL            shift and go to state 172
 
-    FoMark3                        shift and go to state 638
+    PostfixExpression              shift and go to state 130
+    FieldAccess                    shift and go to state 165
+    Statement                      shift and go to state 584
+    PostDecrementExpression        shift and go to state 117
+    CharConst                      shift and go to state 121
+    ExpressionStatement            shift and go to state 118
+    LabeledStatement               shift and go to state 170
+    PreIncrementExpression         shift and go to state 124
+    Primary                        shift and go to state 145
+    StatementExpression            shift and go to state 171
+    IntConst                       shift and go to state 132
+    ArrayAccess                    shift and go to state 141
+    ClassInstanceCreationExpression shift and go to state 151
+    ForStatement                   shift and go to state 152
+    ContinueStatement              shift and go to state 153
+    SimpleName                     shift and go to state 31
+    SwitchStatement                shift and go to state 155
+    PostIncrementExpression        shift and go to state 122
+    LeftHandSide                   shift and go to state 174
+    BreakStatement                 shift and go to state 134
+    IfThenStatement                shift and go to state 135
+    IfThenElseStatementNoShortIf   shift and go to state 482
+    Literal                        shift and go to state 154
+    ArrayCreationExpression        shift and go to state 136
+    DoStatement                    shift and go to state 160
+    QualifiedName                  shift and go to state 29
+    TryStatement                   shift and go to state 161
+    StatementNoShortIf             shift and go to state 638
+    MethodInvocation               shift and go to state 139
+    IfThenElseStatement            shift and go to state 140
+    PreDecrementExpression         shift and go to state 179
+    ForStatementNoShortIf          shift and go to state 483
+    Block                          shift and go to state 142
+    LabeledStatementNoShortIf      shift and go to state 485
+    ThrowStatement                 shift and go to state 144
+    PrimaryNoNewArray              shift and go to state 126
+    WhileStatement                 shift and go to state 163
+    NullConst                      shift and go to state 168
+    FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
+    WhileStatementNoShortIf        shift and go to state 479
+    Assignment                     shift and go to state 120
+    EmptyStatement                 shift and go to state 138
+    ReturnStatement                shift and go to state 129
+    StatementWithoutTrailingSubstatement shift and go to state 486
+    Name                           shift and go to state 359
 
 state 633
 
@@ -29697,7 +29709,7 @@ state 634
 
 state 635
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR . ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -29813,7 +29825,6 @@ state 635
     PostDecrementExpression        shift and go to state 117
     PreIncrementExpression         shift and go to state 124
     StatementExpression            shift and go to state 411
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     LocalVariableDeclaration       shift and go to state 413
     Type                           shift and go to state 133
@@ -29842,6 +29853,7 @@ state 635
     Primary                        shift and go to state 145
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     ClassType                      shift and go to state 78
 
 state 636
@@ -30012,19 +30024,21 @@ state 637
 
 state 638
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3 .
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf . FoMark3
+    (216) FoMark3 -> .
 
-    ELSE            reduce using rule 203 (ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3 .)
+    ELSE            reduce using rule 216 (FoMark3 -> .)
 
+    FoMark3                        shift and go to state 643
 
 state 639
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit . STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
 
-    STMT_TERMINATOR shift and go to state 643
+    STMT_TERMINATOR shift and go to state 644
 
 
 state 640
@@ -30053,13 +30067,13 @@ state 640
     BITWISE_NOT     reduce using rule 212 (FoMark1 -> .)
     LOGICAL_NOT     reduce using rule 212 (FoMark1 -> .)
 
-    FoMark1                        shift and go to state 644
+    FoMark1                        shift and go to state 645
 
 state 641
 
     (187) WhileStatementNoShortIf -> WHILE WhMark1 L_ROUNDBR Expression . R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
 
-    R_ROUNDBR       shift and go to state 645
+    R_ROUNDBR       shift and go to state 646
 
 
 state 642
@@ -30092,11 +30106,18 @@ state 642
     STRING_LITERAL  reduce using rule 171 (IfstartSc -> .)
     NULL            reduce using rule 171 (IfstartSc -> .)
 
-    IfstartSc                      shift and go to state 646
+    IfstartSc                      shift and go to state 647
 
 state 643
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3 .
+
+    ELSE            reduce using rule 203 (ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3 .)
+
+
+state 644
+
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR . FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -30120,9 +30141,9 @@ state 643
     BITWISE_NOT     reduce using rule 212 (FoMark1 -> .)
     LOGICAL_NOT     reduce using rule 212 (FoMark1 -> .)
 
-    FoMark1                        shift and go to state 647
+    FoMark1                        shift and go to state 648
 
-state 644
+state 645
 
     (204) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 . Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (208) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 . Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -30227,7 +30248,7 @@ state 644
     (272) PostIncrementExpression -> . PostfixExpression INCREMENT
     (273) PostDecrementExpression -> . PostfixExpression DECREMENT
 
-    STMT_TERMINATOR shift and go to state 649
+    STMT_TERMINATOR shift and go to state 650
     SUPER           shift and go to state 248
     IDENTIFIER      shift and go to state 32
     THIS            shift and go to state 127
@@ -30272,7 +30293,7 @@ state 644
     ConditionalExpression          shift and go to state 241
     MethodInvocation               shift and go to state 230
     ArrayAccess                    shift and go to state 141
-    Expression                     shift and go to state 648
+    Expression                     shift and go to state 649
     AdditiveExpression             shift and go to state 240
     UnaryExpression                shift and go to state 242
     InclusiveOrExpression          shift and go to state 243
@@ -30285,7 +30306,7 @@ state 644
     PreIncrementExpression         shift and go to state 220
     NullConst                      shift and go to state 168
 
-state 645
+state 646
 
     (187) WhileStatementNoShortIf -> WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR . WhMark2 StatementNoShortIf WhMark3
     (189) WhMark2 -> .
@@ -30315,9 +30336,9 @@ state 645
     STRING_LITERAL  reduce using rule 189 (WhMark2 -> .)
     NULL            reduce using rule 189 (WhMark2 -> .)
 
-    WhMark2                        shift and go to state 650
+    WhMark2                        shift and go to state 651
 
-state 646
+state 647
 
     (170) IfThenElseStatementNoShortIf -> IF L_ROUNDBR Expression R_ROUNDBR IfstartSc . StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
@@ -30338,7 +30359,7 @@ state 646
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -30453,7 +30474,6 @@ state 646
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -30470,7 +30490,7 @@ state 646
     DoStatement                    shift and go to state 160
     QualifiedName                  shift and go to state 29
     TryStatement                   shift and go to state 161
-    StatementNoShortIf             shift and go to state 651
+    StatementNoShortIf             shift and go to state 652
     MethodInvocation               shift and go to state 139
     PreDecrementExpression         shift and go to state 179
     ForStatementNoShortIf          shift and go to state 483
@@ -30480,15 +30500,16 @@ state 646
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     EmptyStatement                 shift and go to state 138
     ReturnStatement                shift and go to state 129
     StatementWithoutTrailingSubstatement shift and go to state 617
 
-state 647
+state 648
 
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 . STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -30591,7 +30612,7 @@ state 647
     (272) PostIncrementExpression -> . PostfixExpression INCREMENT
     (273) PostDecrementExpression -> . PostfixExpression DECREMENT
 
-    STMT_TERMINATOR shift and go to state 653
+    STMT_TERMINATOR shift and go to state 654
     SUPER           shift and go to state 248
     IDENTIFIER      shift and go to state 32
     THIS            shift and go to state 127
@@ -30614,7 +30635,6 @@ state 647
     PostDecrementExpression        shift and go to state 215
     Primary                        shift and go to state 232
     Literal                        shift and go to state 154
-    StringConst                    shift and go to state 149
     AndExpression                  shift and go to state 225
     IntConst                       shift and go to state 132
     ClassInstanceCreationExpression shift and go to state 236
@@ -30635,9 +30655,10 @@ state 647
     SimpleName                     shift and go to state 31
     ConditionalExpression          shift and go to state 241
     MethodInvocation               shift and go to state 230
+    StringConst                    shift and go to state 149
     UnaryExpression                shift and go to state 242
     ArrayAccess                    shift and go to state 141
-    Expression                     shift and go to state 652
+    Expression                     shift and go to state 653
     AdditiveExpression             shift and go to state 240
     InclusiveOrExpression          shift and go to state 243
     PrimaryNoNewArray              shift and go to state 126
@@ -30649,15 +30670,15 @@ state 647
     PreIncrementExpression         shift and go to state 220
     NullConst                      shift and go to state 168
 
-state 648
+state 649
 
     (204) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (208) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
 
-    STMT_TERMINATOR shift and go to state 654
+    STMT_TERMINATOR shift and go to state 655
 
 
-state 649
+state 650
 
     (209) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR . ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (210) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR . R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -30722,7 +30743,7 @@ state 649
     (10) StringConst -> . STRING_LITERAL
     (11) NullConst -> . NULL
 
-    R_ROUNDBR       shift and go to state 655
+    R_ROUNDBR       shift and go to state 656
     INCREMENT       shift and go to state 158
     DECREMENT       shift and go to state 167
     SUPER           shift and go to state 182
@@ -30763,7 +30784,7 @@ state 649
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
 
-state 650
+state 651
 
     (187) WhileStatementNoShortIf -> WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 . StatementNoShortIf WhMark3
     (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
@@ -30784,7 +30805,7 @@ state 650
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -30899,7 +30920,6 @@ state 650
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -30927,136 +30947,31 @@ state 650
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     ReturnStatement                shift and go to state 129
     StatementWithoutTrailingSubstatement shift and go to state 617
 
-state 651
+state 652
 
     (170) IfThenElseStatementNoShortIf -> IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf . ELSE ElseStartSc StatementNoShortIf ElseEndSc
 
-    ELSE            shift and go to state 656
-
-
-state 652
-
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-
-    STMT_TERMINATOR shift and go to state 657
+    ELSE            shift and go to state 657
 
 
 state 653
 
-    (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR . ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR . R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-    (220) ForUpdate -> . StatementExpressionList
-    (221) StatementExpressionList -> . StatementExpression
-    (222) StatementExpressionList -> . StatementExpressionList COMMA StatementExpression
-    (161) StatementExpression -> . Assignment
-    (162) StatementExpression -> . PreIncrementExpression
-    (163) StatementExpression -> . PreDecrementExpression
-    (164) StatementExpression -> . PostIncrementExpression
-    (165) StatementExpression -> . PostDecrementExpression
-    (166) StatementExpression -> . MethodInvocation
-    (167) StatementExpression -> . ClassInstanceCreationExpression
-    (323) Assignment -> . LeftHandSide AssignmentOperator AssignmentExpression
-    (279) PreIncrementExpression -> . INCREMENT UnaryExpression
-    (280) PreDecrementExpression -> . DECREMENT UnaryExpression
-    (272) PostIncrementExpression -> . PostfixExpression INCREMENT
-    (273) PostDecrementExpression -> . PostfixExpression DECREMENT
-    (261) MethodInvocation -> . Name L_ROUNDBR ArgumentList R_ROUNDBR
-    (262) MethodInvocation -> . Name L_ROUNDBR R_ROUNDBR
-    (263) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
-    (264) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
-    (265) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
-    (266) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
-    (246) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR R_ROUNDBR
-    (247) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR ArgumentList R_ROUNDBR
-    (324) LeftHandSide -> . Name
-    (325) LeftHandSide -> . FieldAccess
-    (326) LeftHandSide -> . ArrayAccess
-    (268) PostfixExpression -> . Primary
-    (269) PostfixExpression -> . Name
-    (270) PostfixExpression -> . PostIncrementExpression
-    (271) PostfixExpression -> . PostDecrementExpression
-    (30) Name -> . SimpleName
-    (31) Name -> . QualifiedName
-    (237) Primary -> . PrimaryNoNewArray
-    (238) Primary -> . ArrayCreationExpression
-    (259) FieldAccess -> . Primary DOT IDENTIFIER
-    (260) FieldAccess -> . SUPER DOT IDENTIFIER
-    (267) ArrayAccess -> . Name DimExprs
-    (32) SimpleName -> . IDENTIFIER
-    (33) QualifiedName -> . Name DOT IDENTIFIER
-    (239) PrimaryNoNewArray -> . Literal
-    (240) PrimaryNoNewArray -> . THIS
-    (241) PrimaryNoNewArray -> . L_ROUNDBR Expression R_ROUNDBR
-    (242) PrimaryNoNewArray -> . ClassInstanceCreationExpression
-    (243) PrimaryNoNewArray -> . FieldAccess
-    (244) PrimaryNoNewArray -> . MethodInvocation
-    (245) PrimaryNoNewArray -> . ArrayAccess
-    (250) ArrayCreationExpression -> . NEW PrimitiveType DimExprs Dims
-    (251) ArrayCreationExpression -> . NEW PrimitiveType DimExprs
-    (252) ArrayCreationExpression -> . NEW ClassType DimExprs Dims
-    (253) ArrayCreationExpression -> . NEW ClassType DimExprs
-    (2) Literal -> . IntConst
-    (3) Literal -> . FloatConst
-    (4) Literal -> . CharConst
-    (5) Literal -> . StringConst
-    (6) Literal -> . NullConst
-    (7) IntConst -> . INT_LITERAL
-    (8) FloatConst -> . FLOAT_LITERAL
-    (9) CharConst -> . CHAR_LITERAL
-    (10) StringConst -> . STRING_LITERAL
-    (11) NullConst -> . NULL
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression . STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
 
-    R_ROUNDBR       shift and go to state 658
-    INCREMENT       shift and go to state 158
-    DECREMENT       shift and go to state 167
-    SUPER           shift and go to state 182
-    NEW             shift and go to state 150
-    IDENTIFIER      shift and go to state 32
-    THIS            shift and go to state 127
-    L_ROUNDBR       shift and go to state 178
-    INT_LITERAL     shift and go to state 166
-    FLOAT_LITERAL   shift and go to state 156
-    CHAR_LITERAL    shift and go to state 128
-    STRING_LITERAL  shift and go to state 147
-    NULL            shift and go to state 172
+    STMT_TERMINATOR shift and go to state 658
 
-    PostfixExpression              shift and go to state 130
-    FieldAccess                    shift and go to state 165
-    PostDecrementExpression        shift and go to state 117
-    PreIncrementExpression         shift and go to state 124
-    StatementExpression            shift and go to state 411
-    StringConst                    shift and go to state 149
-    IntConst                       shift and go to state 132
-    ArrayAccess                    shift and go to state 141
-    ClassInstanceCreationExpression shift and go to state 151
-    QualifiedName                  shift and go to state 29
-    Assignment                     shift and go to state 120
-    CharConst                      shift and go to state 121
-    PostIncrementExpression        shift and go to state 122
-    LeftHandSide                   shift and go to state 174
-    Literal                        shift and go to state 154
-    ArrayCreationExpression        shift and go to state 136
-    Name                           shift and go to state 359
-    SimpleName                     shift and go to state 31
-    MethodInvocation               shift and go to state 139
-    PreDecrementExpression         shift and go to state 179
-    StatementExpressionList        shift and go to state 514
-    ForUpdate                      shift and go to state 589
-    PrimaryNoNewArray              shift and go to state 126
-    Primary                        shift and go to state 145
-    NullConst                      shift and go to state 168
-    FloatConst                     shift and go to state 177
 
 state 654
 
-    (204) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    (208) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (205) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR . ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR . R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     (220) ForUpdate -> . StatementExpressionList
     (221) StatementExpressionList -> . StatementExpression
     (222) StatementExpressionList -> . StatementExpressionList COMMA StatementExpression
@@ -31153,7 +31068,7 @@ state 654
     MethodInvocation               shift and go to state 139
     PreDecrementExpression         shift and go to state 179
     StatementExpressionList        shift and go to state 514
-    ForUpdate                      shift and go to state 591
+    ForUpdate                      shift and go to state 589
     PrimaryNoNewArray              shift and go to state 126
     Primary                        shift and go to state 145
     NullConst                      shift and go to state 168
@@ -31161,72 +31076,8 @@ state 654
 
 state 655
 
-    (210) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR . FoMark4 StatementNoShortIf FoMark5
-    (215) FoMark4 -> .
-
-    IDENTIFIER      reduce using rule 215 (FoMark4 -> .)
-    IF              reduce using rule 215 (FoMark4 -> .)
-    WHILE           reduce using rule 215 (FoMark4 -> .)
-    FOR             reduce using rule 215 (FoMark4 -> .)
-    L_CURLYBR       reduce using rule 215 (FoMark4 -> .)
-    STMT_TERMINATOR reduce using rule 215 (FoMark4 -> .)
-    SWITCH          reduce using rule 215 (FoMark4 -> .)
-    DO              reduce using rule 215 (FoMark4 -> .)
-    BREAK           reduce using rule 215 (FoMark4 -> .)
-    CONTINUE        reduce using rule 215 (FoMark4 -> .)
-    RETURN          reduce using rule 215 (FoMark4 -> .)
-    THROW           reduce using rule 215 (FoMark4 -> .)
-    TRY             reduce using rule 215 (FoMark4 -> .)
-    INCREMENT       reduce using rule 215 (FoMark4 -> .)
-    DECREMENT       reduce using rule 215 (FoMark4 -> .)
-    SUPER           reduce using rule 215 (FoMark4 -> .)
-    NEW             reduce using rule 215 (FoMark4 -> .)
-    THIS            reduce using rule 215 (FoMark4 -> .)
-    L_ROUNDBR       reduce using rule 215 (FoMark4 -> .)
-    INT_LITERAL     reduce using rule 215 (FoMark4 -> .)
-    FLOAT_LITERAL   reduce using rule 215 (FoMark4 -> .)
-    CHAR_LITERAL    reduce using rule 215 (FoMark4 -> .)
-    STRING_LITERAL  reduce using rule 215 (FoMark4 -> .)
-    NULL            reduce using rule 215 (FoMark4 -> .)
-
-    FoMark4                        shift and go to state 660
-
-state 656
-
-    (170) IfThenElseStatementNoShortIf -> IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE . ElseStartSc StatementNoShortIf ElseEndSc
-    (173) ElseStartSc -> .
-
-    IDENTIFIER      reduce using rule 173 (ElseStartSc -> .)
-    IF              reduce using rule 173 (ElseStartSc -> .)
-    WHILE           reduce using rule 173 (ElseStartSc -> .)
-    FOR             reduce using rule 173 (ElseStartSc -> .)
-    L_CURLYBR       reduce using rule 173 (ElseStartSc -> .)
-    STMT_TERMINATOR reduce using rule 173 (ElseStartSc -> .)
-    SWITCH          reduce using rule 173 (ElseStartSc -> .)
-    DO              reduce using rule 173 (ElseStartSc -> .)
-    BREAK           reduce using rule 173 (ElseStartSc -> .)
-    CONTINUE        reduce using rule 173 (ElseStartSc -> .)
-    RETURN          reduce using rule 173 (ElseStartSc -> .)
-    THROW           reduce using rule 173 (ElseStartSc -> .)
-    TRY             reduce using rule 173 (ElseStartSc -> .)
-    INCREMENT       reduce using rule 173 (ElseStartSc -> .)
-    DECREMENT       reduce using rule 173 (ElseStartSc -> .)
-    SUPER           reduce using rule 173 (ElseStartSc -> .)
-    NEW             reduce using rule 173 (ElseStartSc -> .)
-    THIS            reduce using rule 173 (ElseStartSc -> .)
-    L_ROUNDBR       reduce using rule 173 (ElseStartSc -> .)
-    INT_LITERAL     reduce using rule 173 (ElseStartSc -> .)
-    FLOAT_LITERAL   reduce using rule 173 (ElseStartSc -> .)
-    CHAR_LITERAL    reduce using rule 173 (ElseStartSc -> .)
-    STRING_LITERAL  reduce using rule 173 (ElseStartSc -> .)
-    NULL            reduce using rule 173 (ElseStartSc -> .)
-
-    ElseStartSc                    shift and go to state 661
-
-state 657
-
-    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (204) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (208) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     (220) ForUpdate -> . StatementExpressionList
     (221) StatementExpressionList -> . StatementExpression
     (222) StatementExpressionList -> . StatementExpressionList COMMA StatementExpression
@@ -31288,7 +31139,7 @@ state 657
     (10) StringConst -> . STRING_LITERAL
     (11) NullConst -> . NULL
 
-    R_ROUNDBR       shift and go to state 662
+    R_ROUNDBR       shift and go to state 660
     INCREMENT       shift and go to state 158
     DECREMENT       shift and go to state 167
     SUPER           shift and go to state 182
@@ -31323,13 +31174,99 @@ state 657
     MethodInvocation               shift and go to state 139
     PreDecrementExpression         shift and go to state 179
     StatementExpressionList        shift and go to state 514
-    ForUpdate                      shift and go to state 598
+    ForUpdate                      shift and go to state 591
     PrimaryNoNewArray              shift and go to state 126
     Primary                        shift and go to state 145
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
 
+state 656
+
+    (210) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR . FoMark4 StatementNoShortIf FoMark5
+    (215) FoMark4 -> .
+
+    IDENTIFIER      reduce using rule 215 (FoMark4 -> .)
+    IF              reduce using rule 215 (FoMark4 -> .)
+    WHILE           reduce using rule 215 (FoMark4 -> .)
+    FOR             reduce using rule 215 (FoMark4 -> .)
+    L_CURLYBR       reduce using rule 215 (FoMark4 -> .)
+    STMT_TERMINATOR reduce using rule 215 (FoMark4 -> .)
+    SWITCH          reduce using rule 215 (FoMark4 -> .)
+    DO              reduce using rule 215 (FoMark4 -> .)
+    BREAK           reduce using rule 215 (FoMark4 -> .)
+    CONTINUE        reduce using rule 215 (FoMark4 -> .)
+    RETURN          reduce using rule 215 (FoMark4 -> .)
+    THROW           reduce using rule 215 (FoMark4 -> .)
+    TRY             reduce using rule 215 (FoMark4 -> .)
+    INCREMENT       reduce using rule 215 (FoMark4 -> .)
+    DECREMENT       reduce using rule 215 (FoMark4 -> .)
+    SUPER           reduce using rule 215 (FoMark4 -> .)
+    NEW             reduce using rule 215 (FoMark4 -> .)
+    THIS            reduce using rule 215 (FoMark4 -> .)
+    L_ROUNDBR       reduce using rule 215 (FoMark4 -> .)
+    INT_LITERAL     reduce using rule 215 (FoMark4 -> .)
+    FLOAT_LITERAL   reduce using rule 215 (FoMark4 -> .)
+    CHAR_LITERAL    reduce using rule 215 (FoMark4 -> .)
+    STRING_LITERAL  reduce using rule 215 (FoMark4 -> .)
+    NULL            reduce using rule 215 (FoMark4 -> .)
+
+    FoMark4                        shift and go to state 661
+
+state 657
+
+    (170) IfThenElseStatementNoShortIf -> IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE . ElseStartSc StatementNoShortIf ElseEndSc
+    (173) ElseStartSc -> .
+
+    IDENTIFIER      reduce using rule 173 (ElseStartSc -> .)
+    IF              reduce using rule 173 (ElseStartSc -> .)
+    WHILE           reduce using rule 173 (ElseStartSc -> .)
+    FOR             reduce using rule 173 (ElseStartSc -> .)
+    L_CURLYBR       reduce using rule 173 (ElseStartSc -> .)
+    STMT_TERMINATOR reduce using rule 173 (ElseStartSc -> .)
+    SWITCH          reduce using rule 173 (ElseStartSc -> .)
+    DO              reduce using rule 173 (ElseStartSc -> .)
+    BREAK           reduce using rule 173 (ElseStartSc -> .)
+    CONTINUE        reduce using rule 173 (ElseStartSc -> .)
+    RETURN          reduce using rule 173 (ElseStartSc -> .)
+    THROW           reduce using rule 173 (ElseStartSc -> .)
+    TRY             reduce using rule 173 (ElseStartSc -> .)
+    INCREMENT       reduce using rule 173 (ElseStartSc -> .)
+    DECREMENT       reduce using rule 173 (ElseStartSc -> .)
+    SUPER           reduce using rule 173 (ElseStartSc -> .)
+    NEW             reduce using rule 173 (ElseStartSc -> .)
+    THIS            reduce using rule 173 (ElseStartSc -> .)
+    L_ROUNDBR       reduce using rule 173 (ElseStartSc -> .)
+    INT_LITERAL     reduce using rule 173 (ElseStartSc -> .)
+    FLOAT_LITERAL   reduce using rule 173 (ElseStartSc -> .)
+    CHAR_LITERAL    reduce using rule 173 (ElseStartSc -> .)
+    STRING_LITERAL  reduce using rule 173 (ElseStartSc -> .)
+    NULL            reduce using rule 173 (ElseStartSc -> .)
+
+    ElseStartSc                    shift and go to state 662
+
 state 658
+
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR . R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (214) FoMark6 -> .
+
+    R_ROUNDBR       shift and go to state 663
+    INCREMENT       reduce using rule 214 (FoMark6 -> .)
+    DECREMENT       reduce using rule 214 (FoMark6 -> .)
+    SUPER           reduce using rule 214 (FoMark6 -> .)
+    NEW             reduce using rule 214 (FoMark6 -> .)
+    IDENTIFIER      reduce using rule 214 (FoMark6 -> .)
+    THIS            reduce using rule 214 (FoMark6 -> .)
+    L_ROUNDBR       reduce using rule 214 (FoMark6 -> .)
+    INT_LITERAL     reduce using rule 214 (FoMark6 -> .)
+    FLOAT_LITERAL   reduce using rule 214 (FoMark6 -> .)
+    CHAR_LITERAL    reduce using rule 214 (FoMark6 -> .)
+    STRING_LITERAL  reduce using rule 214 (FoMark6 -> .)
+    NULL            reduce using rule 214 (FoMark6 -> .)
+
+    FoMark6                        shift and go to state 664
+
+state 659
 
     (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR . FoMark4 StatementNoShortIf FoMark5
     (215) FoMark4 -> .
@@ -31359,9 +31296,9 @@ state 658
     STRING_LITERAL  reduce using rule 215 (FoMark4 -> .)
     NULL            reduce using rule 215 (FoMark4 -> .)
 
-    FoMark4                        shift and go to state 663
+    FoMark4                        shift and go to state 665
 
-state 659
+state 660
 
     (208) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR . FoMark4 StatementNoShortIf FoMark5
     (215) FoMark4 -> .
@@ -31391,9 +31328,9 @@ state 659
     STRING_LITERAL  reduce using rule 215 (FoMark4 -> .)
     NULL            reduce using rule 215 (FoMark4 -> .)
 
-    FoMark4                        shift and go to state 664
+    FoMark4                        shift and go to state 666
 
-state 660
+state 661
 
     (210) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 . StatementNoShortIf FoMark5
     (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
@@ -31414,7 +31351,7 @@ state 660
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -31529,7 +31466,6 @@ state 660
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -31556,13 +31492,14 @@ state 660
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     EmptyStatement                 shift and go to state 138
     ReturnStatement                shift and go to state 129
     StatementWithoutTrailingSubstatement shift and go to state 617
 
-state 661
+state 662
 
     (170) IfThenElseStatementNoShortIf -> IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc . StatementNoShortIf ElseEndSc
     (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
@@ -31583,7 +31520,7 @@ state 661
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -31698,7 +31635,6 @@ state 661
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -31725,13 +31661,14 @@ state 661
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     EmptyStatement                 shift and go to state 138
     ReturnStatement                shift and go to state 129
     StatementWithoutTrailingSubstatement shift and go to state 617
 
-state 662
+state 663
 
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR . FoMark4 StatementNoShortIf FoMark5
     (215) FoMark4 -> .
@@ -31761,9 +31698,113 @@ state 662
     STRING_LITERAL  reduce using rule 215 (FoMark4 -> .)
     NULL            reduce using rule 215 (FoMark4 -> .)
 
-    FoMark4                        shift and go to state 665
+    FoMark4                        shift and go to state 667
 
-state 663
+state 664
+
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 . ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (220) ForUpdate -> . StatementExpressionList
+    (221) StatementExpressionList -> . StatementExpression
+    (222) StatementExpressionList -> . StatementExpressionList COMMA StatementExpression
+    (161) StatementExpression -> . Assignment
+    (162) StatementExpression -> . PreIncrementExpression
+    (163) StatementExpression -> . PreDecrementExpression
+    (164) StatementExpression -> . PostIncrementExpression
+    (165) StatementExpression -> . PostDecrementExpression
+    (166) StatementExpression -> . MethodInvocation
+    (167) StatementExpression -> . ClassInstanceCreationExpression
+    (323) Assignment -> . LeftHandSide AssignmentOperator AssignmentExpression
+    (279) PreIncrementExpression -> . INCREMENT UnaryExpression
+    (280) PreDecrementExpression -> . DECREMENT UnaryExpression
+    (272) PostIncrementExpression -> . PostfixExpression INCREMENT
+    (273) PostDecrementExpression -> . PostfixExpression DECREMENT
+    (261) MethodInvocation -> . Name L_ROUNDBR ArgumentList R_ROUNDBR
+    (262) MethodInvocation -> . Name L_ROUNDBR R_ROUNDBR
+    (263) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
+    (264) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
+    (265) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
+    (266) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
+    (246) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR R_ROUNDBR
+    (247) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR ArgumentList R_ROUNDBR
+    (324) LeftHandSide -> . Name
+    (325) LeftHandSide -> . FieldAccess
+    (326) LeftHandSide -> . ArrayAccess
+    (268) PostfixExpression -> . Primary
+    (269) PostfixExpression -> . Name
+    (270) PostfixExpression -> . PostIncrementExpression
+    (271) PostfixExpression -> . PostDecrementExpression
+    (30) Name -> . SimpleName
+    (31) Name -> . QualifiedName
+    (237) Primary -> . PrimaryNoNewArray
+    (238) Primary -> . ArrayCreationExpression
+    (259) FieldAccess -> . Primary DOT IDENTIFIER
+    (260) FieldAccess -> . SUPER DOT IDENTIFIER
+    (267) ArrayAccess -> . Name DimExprs
+    (32) SimpleName -> . IDENTIFIER
+    (33) QualifiedName -> . Name DOT IDENTIFIER
+    (239) PrimaryNoNewArray -> . Literal
+    (240) PrimaryNoNewArray -> . THIS
+    (241) PrimaryNoNewArray -> . L_ROUNDBR Expression R_ROUNDBR
+    (242) PrimaryNoNewArray -> . ClassInstanceCreationExpression
+    (243) PrimaryNoNewArray -> . FieldAccess
+    (244) PrimaryNoNewArray -> . MethodInvocation
+    (245) PrimaryNoNewArray -> . ArrayAccess
+    (250) ArrayCreationExpression -> . NEW PrimitiveType DimExprs Dims
+    (251) ArrayCreationExpression -> . NEW PrimitiveType DimExprs
+    (252) ArrayCreationExpression -> . NEW ClassType DimExprs Dims
+    (253) ArrayCreationExpression -> . NEW ClassType DimExprs
+    (2) Literal -> . IntConst
+    (3) Literal -> . FloatConst
+    (4) Literal -> . CharConst
+    (5) Literal -> . StringConst
+    (6) Literal -> . NullConst
+    (7) IntConst -> . INT_LITERAL
+    (8) FloatConst -> . FLOAT_LITERAL
+    (9) CharConst -> . CHAR_LITERAL
+    (10) StringConst -> . STRING_LITERAL
+    (11) NullConst -> . NULL
+
+    INCREMENT       shift and go to state 158
+    DECREMENT       shift and go to state 167
+    SUPER           shift and go to state 182
+    NEW             shift and go to state 150
+    IDENTIFIER      shift and go to state 32
+    THIS            shift and go to state 127
+    L_ROUNDBR       shift and go to state 178
+    INT_LITERAL     shift and go to state 166
+    FLOAT_LITERAL   shift and go to state 156
+    CHAR_LITERAL    shift and go to state 128
+    STRING_LITERAL  shift and go to state 147
+    NULL            shift and go to state 172
+
+    PostfixExpression              shift and go to state 130
+    FieldAccess                    shift and go to state 165
+    PostDecrementExpression        shift and go to state 117
+    PreIncrementExpression         shift and go to state 124
+    StatementExpression            shift and go to state 411
+    IntConst                       shift and go to state 132
+    ArrayAccess                    shift and go to state 141
+    ClassInstanceCreationExpression shift and go to state 151
+    QualifiedName                  shift and go to state 29
+    Assignment                     shift and go to state 120
+    CharConst                      shift and go to state 121
+    PostIncrementExpression        shift and go to state 122
+    LeftHandSide                   shift and go to state 174
+    Literal                        shift and go to state 154
+    ArrayCreationExpression        shift and go to state 136
+    Name                           shift and go to state 359
+    SimpleName                     shift and go to state 31
+    MethodInvocation               shift and go to state 139
+    PreDecrementExpression         shift and go to state 179
+    StatementExpressionList        shift and go to state 514
+    ForUpdate                      shift and go to state 668
+    PrimaryNoNewArray              shift and go to state 126
+    Primary                        shift and go to state 145
+    NullConst                      shift and go to state 168
+    StringConst                    shift and go to state 149
+    FloatConst                     shift and go to state 177
+
+state 665
 
     (207) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 . StatementNoShortIf FoMark5
     (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
@@ -31784,7 +31825,7 @@ state 663
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -31899,7 +31940,6 @@ state 663
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -31926,13 +31966,14 @@ state 663
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     EmptyStatement                 shift and go to state 138
     ReturnStatement                shift and go to state 129
     StatementWithoutTrailingSubstatement shift and go to state 617
 
-state 664
+state 666
 
     (208) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 . StatementNoShortIf FoMark5
     (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
@@ -31953,7 +31994,7 @@ state 664
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -32068,7 +32109,6 @@ state 664
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -32095,13 +32135,14 @@ state 664
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     EmptyStatement                 shift and go to state 138
     ReturnStatement                shift and go to state 129
     StatementWithoutTrailingSubstatement shift and go to state 617
 
-state 665
+state 667
 
     (206) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 . StatementNoShortIf FoMark5
     (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
@@ -32122,7 +32163,7 @@ state 665
     (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
     (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
     (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
-    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
@@ -32237,7 +32278,6 @@ state 665
     PreIncrementExpression         shift and go to state 124
     Primary                        shift and go to state 145
     StatementExpression            shift and go to state 171
-    StringConst                    shift and go to state 149
     IntConst                       shift and go to state 132
     ArrayAccess                    shift and go to state 141
     ClassInstanceCreationExpression shift and go to state 151
@@ -32264,6 +32304,215 @@ state 665
     PrimaryNoNewArray              shift and go to state 126
     NullConst                      shift and go to state 168
     FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
+    WhileStatementNoShortIf        shift and go to state 479
+    Assignment                     shift and go to state 120
+    EmptyStatement                 shift and go to state 138
+    ReturnStatement                shift and go to state 129
+    StatementWithoutTrailingSubstatement shift and go to state 617
+
+state 668
+
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate . R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+
+    R_ROUNDBR       shift and go to state 669
+
+
+state 669
+
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR . FoMark2 StatementNoShortIf FoMark3
+    (213) FoMark2 -> .
+
+    IDENTIFIER      reduce using rule 213 (FoMark2 -> .)
+    IF              reduce using rule 213 (FoMark2 -> .)
+    WHILE           reduce using rule 213 (FoMark2 -> .)
+    FOR             reduce using rule 213 (FoMark2 -> .)
+    L_CURLYBR       reduce using rule 213 (FoMark2 -> .)
+    STMT_TERMINATOR reduce using rule 213 (FoMark2 -> .)
+    SWITCH          reduce using rule 213 (FoMark2 -> .)
+    DO              reduce using rule 213 (FoMark2 -> .)
+    BREAK           reduce using rule 213 (FoMark2 -> .)
+    CONTINUE        reduce using rule 213 (FoMark2 -> .)
+    RETURN          reduce using rule 213 (FoMark2 -> .)
+    THROW           reduce using rule 213 (FoMark2 -> .)
+    TRY             reduce using rule 213 (FoMark2 -> .)
+    INCREMENT       reduce using rule 213 (FoMark2 -> .)
+    DECREMENT       reduce using rule 213 (FoMark2 -> .)
+    SUPER           reduce using rule 213 (FoMark2 -> .)
+    NEW             reduce using rule 213 (FoMark2 -> .)
+    THIS            reduce using rule 213 (FoMark2 -> .)
+    L_ROUNDBR       reduce using rule 213 (FoMark2 -> .)
+    INT_LITERAL     reduce using rule 213 (FoMark2 -> .)
+    FLOAT_LITERAL   reduce using rule 213 (FoMark2 -> .)
+    CHAR_LITERAL    reduce using rule 213 (FoMark2 -> .)
+    STRING_LITERAL  reduce using rule 213 (FoMark2 -> .)
+    NULL            reduce using rule 213 (FoMark2 -> .)
+
+    FoMark2                        shift and go to state 670
+
+state 670
+
+    (203) ForStatementNoShortIf -> FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 . StatementNoShortIf FoMark3
+    (142) StatementNoShortIf -> . StatementWithoutTrailingSubstatement
+    (143) StatementNoShortIf -> . LabeledStatementNoShortIf
+    (144) StatementNoShortIf -> . IfThenElseStatementNoShortIf
+    (145) StatementNoShortIf -> . WhileStatementNoShortIf
+    (146) StatementNoShortIf -> . ForStatementNoShortIf
+    (147) StatementWithoutTrailingSubstatement -> . Block
+    (148) StatementWithoutTrailingSubstatement -> . EmptyStatement
+    (149) StatementWithoutTrailingSubstatement -> . ExpressionStatement
+    (150) StatementWithoutTrailingSubstatement -> . SwitchStatement
+    (151) StatementWithoutTrailingSubstatement -> . DoStatement
+    (152) StatementWithoutTrailingSubstatement -> . BreakStatement
+    (153) StatementWithoutTrailingSubstatement -> . ContinueStatement
+    (154) StatementWithoutTrailingSubstatement -> . ReturnStatement
+    (155) StatementWithoutTrailingSubstatement -> . ThrowStatement
+    (156) StatementWithoutTrailingSubstatement -> . TryStatement
+    (159) LabeledStatementNoShortIf -> . IDENTIFIER COLON StatementNoShortIf
+    (170) IfThenElseStatementNoShortIf -> . IF L_ROUNDBR Expression R_ROUNDBR IfstartSc StatementNoShortIf ELSE ElseStartSc StatementNoShortIf ElseEndSc
+    (187) WhileStatementNoShortIf -> . WHILE WhMark1 L_ROUNDBR Expression R_ROUNDBR WhMark2 StatementNoShortIf WhMark3
+    (203) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (204) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (205) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (206) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (207) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (208) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (209) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    (210) ForStatementNoShortIf -> . FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
+    (128) Block -> . L_CURLYBR R_CURLYBR
+    (129) Block -> . L_CURLYBR BlockStatements R_CURLYBR
+    (157) EmptyStatement -> . STMT_TERMINATOR
+    (160) ExpressionStatement -> . StatementExpression STMT_TERMINATOR
+    (175) SwitchStatement -> . SWITCH L_ROUNDBR Expression R_ROUNDBR SwMark2 SwitchBlock SwMark3
+    (191) DoStatement -> . DO doWhMark1 Statement WHILE doWhMark2 L_ROUNDBR Expression R_ROUNDBR doWhMark3 STMT_TERMINATOR
+    (223) BreakStatement -> . BREAK IDENTIFIER STMT_TERMINATOR
+    (224) BreakStatement -> . BREAK STMT_TERMINATOR
+    (225) ContinueStatement -> . CONTINUE IDENTIFIER STMT_TERMINATOR
+    (226) ContinueStatement -> . CONTINUE STMT_TERMINATOR
+    (227) ReturnStatement -> . RETURN Expression STMT_TERMINATOR
+    (228) ReturnStatement -> . RETURN STMT_TERMINATOR
+    (229) ThrowStatement -> . THROW Expression STMT_TERMINATOR
+    (230) TryStatement -> . TRY Block Catches
+    (231) TryStatement -> . TRY Block Catches Finally
+    (232) TryStatement -> . TRY Block Finally
+    (161) StatementExpression -> . Assignment
+    (162) StatementExpression -> . PreIncrementExpression
+    (163) StatementExpression -> . PreDecrementExpression
+    (164) StatementExpression -> . PostIncrementExpression
+    (165) StatementExpression -> . PostDecrementExpression
+    (166) StatementExpression -> . MethodInvocation
+    (167) StatementExpression -> . ClassInstanceCreationExpression
+    (323) Assignment -> . LeftHandSide AssignmentOperator AssignmentExpression
+    (279) PreIncrementExpression -> . INCREMENT UnaryExpression
+    (280) PreDecrementExpression -> . DECREMENT UnaryExpression
+    (272) PostIncrementExpression -> . PostfixExpression INCREMENT
+    (273) PostDecrementExpression -> . PostfixExpression DECREMENT
+    (261) MethodInvocation -> . Name L_ROUNDBR ArgumentList R_ROUNDBR
+    (262) MethodInvocation -> . Name L_ROUNDBR R_ROUNDBR
+    (263) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
+    (264) MethodInvocation -> . Primary DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
+    (265) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
+    (266) MethodInvocation -> . SUPER DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
+    (246) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR R_ROUNDBR
+    (247) ClassInstanceCreationExpression -> . NEW ClassType L_ROUNDBR ArgumentList R_ROUNDBR
+    (324) LeftHandSide -> . Name
+    (325) LeftHandSide -> . FieldAccess
+    (326) LeftHandSide -> . ArrayAccess
+    (268) PostfixExpression -> . Primary
+    (269) PostfixExpression -> . Name
+    (270) PostfixExpression -> . PostIncrementExpression
+    (271) PostfixExpression -> . PostDecrementExpression
+    (30) Name -> . SimpleName
+    (31) Name -> . QualifiedName
+    (237) Primary -> . PrimaryNoNewArray
+    (238) Primary -> . ArrayCreationExpression
+    (259) FieldAccess -> . Primary DOT IDENTIFIER
+    (260) FieldAccess -> . SUPER DOT IDENTIFIER
+    (267) ArrayAccess -> . Name DimExprs
+    (32) SimpleName -> . IDENTIFIER
+    (33) QualifiedName -> . Name DOT IDENTIFIER
+    (239) PrimaryNoNewArray -> . Literal
+    (240) PrimaryNoNewArray -> . THIS
+    (241) PrimaryNoNewArray -> . L_ROUNDBR Expression R_ROUNDBR
+    (242) PrimaryNoNewArray -> . ClassInstanceCreationExpression
+    (243) PrimaryNoNewArray -> . FieldAccess
+    (244) PrimaryNoNewArray -> . MethodInvocation
+    (245) PrimaryNoNewArray -> . ArrayAccess
+    (250) ArrayCreationExpression -> . NEW PrimitiveType DimExprs Dims
+    (251) ArrayCreationExpression -> . NEW PrimitiveType DimExprs
+    (252) ArrayCreationExpression -> . NEW ClassType DimExprs Dims
+    (253) ArrayCreationExpression -> . NEW ClassType DimExprs
+    (2) Literal -> . IntConst
+    (3) Literal -> . FloatConst
+    (4) Literal -> . CharConst
+    (5) Literal -> . StringConst
+    (6) Literal -> . NullConst
+    (7) IntConst -> . INT_LITERAL
+    (8) FloatConst -> . FLOAT_LITERAL
+    (9) CharConst -> . CHAR_LITERAL
+    (10) StringConst -> . STRING_LITERAL
+    (11) NullConst -> . NULL
+
+    IDENTIFIER      shift and go to state 616
+    IF              shift and go to state 618
+    WHILE           shift and go to state 615
+    FOR             shift and go to state 613
+    L_CURLYBR       shift and go to state 95
+    STMT_TERMINATOR shift and go to state 181
+    SWITCH          shift and go to state 157
+    DO              shift and go to state 169
+    BREAK           shift and go to state 164
+    CONTINUE        shift and go to state 146
+    RETURN          shift and go to state 131
+    THROW           shift and go to state 184
+    TRY             shift and go to state 143
+    INCREMENT       shift and go to state 158
+    DECREMENT       shift and go to state 167
+    SUPER           shift and go to state 182
+    NEW             shift and go to state 150
+    THIS            shift and go to state 127
+    L_ROUNDBR       shift and go to state 178
+    INT_LITERAL     shift and go to state 166
+    FLOAT_LITERAL   shift and go to state 156
+    CHAR_LITERAL    shift and go to state 128
+    STRING_LITERAL  shift and go to state 147
+    NULL            shift and go to state 172
+
+    PostfixExpression              shift and go to state 130
+    FieldAccess                    shift and go to state 165
+    PostDecrementExpression        shift and go to state 117
+    CharConst                      shift and go to state 121
+    ExpressionStatement            shift and go to state 118
+    PreIncrementExpression         shift and go to state 124
+    Primary                        shift and go to state 145
+    StatementExpression            shift and go to state 171
+    IntConst                       shift and go to state 132
+    ArrayAccess                    shift and go to state 141
+    ClassInstanceCreationExpression shift and go to state 151
+    ContinueStatement              shift and go to state 153
+    SimpleName                     shift and go to state 31
+    SwitchStatement                shift and go to state 155
+    PostIncrementExpression        shift and go to state 122
+    LeftHandSide                   shift and go to state 174
+    BreakStatement                 shift and go to state 134
+    Name                           shift and go to state 359
+    IfThenElseStatementNoShortIf   shift and go to state 482
+    Literal                        shift and go to state 154
+    ArrayCreationExpression        shift and go to state 136
+    DoStatement                    shift and go to state 160
+    QualifiedName                  shift and go to state 29
+    TryStatement                   shift and go to state 161
+    StatementNoShortIf             shift and go to state 638
+    MethodInvocation               shift and go to state 139
+    PreDecrementExpression         shift and go to state 179
+    ForStatementNoShortIf          shift and go to state 483
+    Block                          shift and go to state 142
+    LabeledStatementNoShortIf      shift and go to state 485
+    ThrowStatement                 shift and go to state 144
+    PrimaryNoNewArray              shift and go to state 126
+    NullConst                      shift and go to state 168
+    FloatConst                     shift and go to state 177
+    StringConst                    shift and go to state 149
     WhileStatementNoShortIf        shift and go to state 479
     Assignment                     shift and go to state 120
     EmptyStatement                 shift and go to state 138
@@ -32308,15 +32557,3 @@ WARNING: shift/reduce conflict for FLOAT_LITERAL in state 579 resolved as shift
 WARNING: shift/reduce conflict for CHAR_LITERAL in state 579 resolved as shift
 WARNING: shift/reduce conflict for STRING_LITERAL in state 579 resolved as shift
 WARNING: shift/reduce conflict for NULL in state 579 resolved as shift
-WARNING: shift/reduce conflict for INCREMENT in state 587 resolved as shift
-WARNING: shift/reduce conflict for DECREMENT in state 587 resolved as shift
-WARNING: shift/reduce conflict for SUPER in state 587 resolved as shift
-WARNING: shift/reduce conflict for NEW in state 587 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 587 resolved as shift
-WARNING: shift/reduce conflict for THIS in state 587 resolved as shift
-WARNING: shift/reduce conflict for L_ROUNDBR in state 587 resolved as shift
-WARNING: shift/reduce conflict for INT_LITERAL in state 587 resolved as shift
-WARNING: shift/reduce conflict for FLOAT_LITERAL in state 587 resolved as shift
-WARNING: shift/reduce conflict for CHAR_LITERAL in state 587 resolved as shift
-WARNING: shift/reduce conflict for STRING_LITERAL in state 587 resolved as shift
-WARNING: shift/reduce conflict for NULL in state 587 resolved as shift

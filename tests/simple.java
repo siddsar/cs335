@@ -1,7 +1,7 @@
 class Debug {
 
-    int add(int aks, int b,int x,int d,char cd ) {
-        int nigagaga = 9;
+    int add(int a, int b,int x,int d,char cc ) {
+        // int n = 9;
         int c = a + b;
         char x = cc ;
         return x+d ;

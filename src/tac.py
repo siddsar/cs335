@@ -4,6 +4,7 @@ class TAC:
     	self.ST = ST
     	# print(self.ST)
         self.code = []
+        # self.asm = []
 
     def generate_assembly(self,item):
 		if item[0]=='func' :
@@ -97,7 +98,7 @@ class TAC:
 				else:
 					op = self.ST.find(item[2])
 					print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
-					print("\tmov $"+str(item[1])",%ebx")
+					print("\tmov $"+str(item[1])+",%ebx")
 					print("\tsub %eax,%ebx")
 					print("\tmov %ebx,-"+str(res_var['offset'])+"(%ebp)")
 
@@ -281,11 +282,12 @@ class TAC:
 		elif item[3]=='=':
 			res_var = self.ST.find(item[0])
 			op = self.ST.find(item[1])
+			# self.ST.dump_TT()
 			if op==None:
-				print("\tmov $"+item[1]+",%eax")
+				print("\tmov $"+item[1]+", %eax")
 			else:
-				print("\tmov -"+str(op['offset'])+"%(ebp),%eax")
-			print("\t mov %eax, -" + str(res_var['offset']) + "(%ebp)")
+				print("\tmov -"+str(op['offset'])+"%(ebp), %eax")
+			print("\tmov %eax, -" + str(res_var['offset']) + "(%ebp)")
 			
 
     def emit(self,list_to_append):

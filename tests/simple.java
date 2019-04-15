@@ -1,7 +1,8 @@
 class Debug {
-    // int add(int a, int b) {
-    //     return a + b;
-    // }
+    int add(int a, int b) {
+        return a + b;
+    }
+
     int main() {
         // int a = 19;
         // int b = 2;
@@ -9,10 +10,11 @@ class Debug {
         // boolean c;
         // c = a && b || d;
         // c = ~a;
-        int n=3;	
-        for(int i = 0;i < n;i=i+1){
-    		int x=2;
-    	}
+        int n=3;
+        add(n,4);
+     //    for(int i = 0;i < n;i=i+1){
+    	// 	int x=2;
+    	// }
     }
 
 }

@@ -56,7 +56,7 @@ class TAC:
 					# print("mov $"+str(res_var['offset'])+",%eax")
 					# print("addl %rbp,%eax")
 					# print("mov %ebx,0(%eax)")
-					print("\tadd $"+item[2]+",-"+str(res['offset'])+"(%ebp)")
+					# print("\tadd $"+item[2]+",-"+str(res['offset'])+"(%ebp)")
 
 				else:
 					op1 = self.ST.find(item[1])
@@ -73,7 +73,7 @@ class TAC:
 					# print("mov %ebx,0(%eax)")
 					print("\tmov -"+str(op1['offset'])+"(%ebp),%eax")
 					print("\tadd -"+str(op2['offset'])+"(%ebp),%eax")
-					print("\tmov %eax,-"+str(o['offset'])+"(%ebp),%eax")
+					print("\tmov %eax,-"+str(op1['offset'])+"(%ebp),%eax")
 
 
 

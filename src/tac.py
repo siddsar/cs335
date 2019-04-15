@@ -289,9 +289,9 @@ class TAC:
 			op = self.ST.find(item[1])
 			# self.ST.dump_TT()
 			if op==None:
-				print("\tmov $"+item[1]+", %eax")
+				print("\tmov $"+str(item[1])+", %eax")
 			else:
-				print("\tmov -"+str(op['offset'])+"%(ebp), %eax")
+				print("\tmov -"+str(op['offset'])+"(%ebp), %eax")
 			print("\tmov %eax, -" + str(res_var['offset']) + "(%ebp)")
 			
 

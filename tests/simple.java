@@ -11,6 +11,7 @@ class Debug {
     // }
 
     int fact(int n){
+    	int nigga =325;
     	return 4;
     	// if(n==1){
     	// 	return 1;
@@ -20,8 +21,10 @@ class Debug {
 
 
     int main() {
-    	int x;
-    	x = fact(4);
+    	int x =  fact(5);
+    	int[] arr;
+    	arr = new int[5];
+    	// x = fact(4);
         // int a = 19;
         // int b = 2;
         // int d = 1 ;

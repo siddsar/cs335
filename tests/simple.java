@@ -18,13 +18,7 @@ class ifib{
         return fn;
     }
     int main() {
-        System.out.println(ifib(0));
-     	System.out.println(ifib(1));
-        System.out.println(ifib(2));
-        System.out.println(ifib(3));
-        System.out.println(ifib(4));
-        System.out.println(ifib(5));
-        System.out.println(ifib(6));
-        System.out.println(ifib(7));
+        float a = 6.5;
+
     }
 }

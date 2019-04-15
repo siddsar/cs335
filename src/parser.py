@@ -626,7 +626,7 @@ def p_LocalVariableDeclaration(p):
             continue
         # pprint(rules_store)
         i = symbol['place']
-        pprint(p[2])
+        # pprint(p[2])
         if 'type' in symbol:
             t = symbol['type']
         else:

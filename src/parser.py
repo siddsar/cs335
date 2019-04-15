@@ -321,7 +321,7 @@ def p_VariableDeclarator(p):
         p[0]['place'] = p[1]
         p[0]['type'] = p[3]['ret_type']
     else:
-        TAC.emit([p[1][0], p[3]['place'], '', p[2]])
+        TAC.emit([p[1], p[3]['place'], '', p[2]])
         p[0]['place'] = p[1]
         if 'is_var' not in p[3]:
             attributes = ST.find(p[3]['place'])
@@ -908,12 +908,12 @@ def p_ForStatement(p):
 def p_ForStatementNoShortIf(p):
     '''
     ForStatementNoShortIf : FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
-    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     | FOR FoMark0 L_ROUNDBR ForInit STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 Expression STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
-    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
+    | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR FoMark6 ForUpdate R_ROUNDBR FoMark2 StatementNoShortIf FoMark3
     | FOR FoMark0 L_ROUNDBR STMT_TERMINATOR FoMark1 STMT_TERMINATOR R_ROUNDBR FoMark4 StatementNoShortIf FoMark5
     '''
     rules_store.append(p.slice)

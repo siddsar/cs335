@@ -14,6 +14,15 @@ class TAC:
 		elif item[0]=='arg' :
 			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+"(%ebp), %eax")
 			print("\tmov %eax, -"+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")
+		elif item[0]=='print' :
+			v = self.ST.find(item[1])
+			if v==None:
+				print("\tpush $"+str(item[1]))
+			else :
+				print("\tpush -"+str(v['offset'])+"(%ebp)")
+			print("\tpush $outFormatInt")
+			print("\tcall printf")
+			print("\tadd $8, %esp")
 		elif(item[0]=='ifgoto'):
 			v1 = self.ST.find(item[1][0])
 			v2 = self.ST.find(item[1][1])
@@ -42,19 +51,23 @@ class TAC:
 		elif(item[0]=='goto'):
 			print("\tjmp "+item[1])
 		elif(item[0]=='ret'):
-			# print("---------------------------------------------------------------")
-			# print(item[1])
 			v = self.ST.find(item[1])
 			if(item[1]==''):
+				print("\tmov %ebp, %esp")
+				print("\tpop %ebp")
 				print("\tret")
 			elif v==None:
 				print("\tmov $"+item[1]+", %eax")
+				print("\tmov %ebp, %esp")
+				print("\tpop %ebp")
 				print("\tret")
 			else:
 				print("\tmov -"+str(v['offset'])+"(%ebp), %eax")
+				print("\tmov %ebp, %esp")
+				print("\tpop %ebp")
 				print("\tret")
 		elif(item[0]=='label'):
-			print("\t"+item[1])
+			print(str(item[1])+":")
 		elif(item[0]=='call'):
 			if(item[2]==''):
 				print("\tcall "+item[1])
@@ -287,7 +300,6 @@ class TAC:
 		elif item[3]=='=':
 			res_var = self.ST.find(item[0])
 			op = self.ST.find(item[1])
-			# self.ST.dump_TT()
 			if op==None:
 				print("\tmov $"+str(item[1])+", %eax")
 			else:

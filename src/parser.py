@@ -1945,13 +1945,22 @@ def main():
     # file_out = inputfile.split('/')[-1].split('.')[0]
     code = open(inputfile, 'r').read()
     code += "\n"
+    print("\t.data")
+    print("\toutFormatInt:")
+    print("\t.string \"%d\\n\"")
+    print("\toutFormatStr:")
+    print("\t.string \"%s\\n\"")
+    print("\tinFormat:")
+    print("\t.string \"%d\\n\"")
+    print("\t.global main")
     t = yacc.parse(code)
-    print("...........................")
+
+    # print("...........................")
     # print(t)
     TAC.print_tac()
-    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     # ST.dump_TT()
-    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     # pprint(rules_store)
 
     #sys.stdout = open(file_out + ".html", 'w')

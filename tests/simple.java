@@ -25,12 +25,18 @@ class Debug {
 
 
     int main() {
-    	int x;
-    	x = fact(5);
-    	// // int[] arr;
-    	// // arr = new int[5];
-    	// int x = 685;
-    	// System.out.println(x);
+    	// int x;
+    	// x = fact(5);
+    	// // // int[] arr;
+    	// // // arr = new int[5];
+    	// // int x = 685;
+    	// // System.out.println(x);
+    	int y = 25;
+    	for(int i=0;i<4;i=i+1){
+    		y = y+13;
+    		System.out.println(14);
+    	}
+
     }
 
 }

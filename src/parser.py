@@ -723,7 +723,7 @@ def p_IfstartSc(p):
     '''IfstartSc : '''
     labelif = ST.ident()
     labelafterif = ST.ident()
-    TAC.emit(['ifgoto', p[-2]['place'], 'eq 0', labelafterif])
+    TAC.emit(['ifgoto', [p[-2]['place'],0], 'eq', labelafterif])
     TAC.emit(['goto', labelif, '', ''])
     TAC.emit(['label', labelif, '', ''])
     ST.create_table(labelif, offset_stack[-1])
@@ -777,7 +777,7 @@ def p_SwMark3(p):
         if exp == '':
             TAC.emit(['goto', label, '', ''])
         else:
-            TAC.emit(['ifgoto', p[-4]['place'], 'eq ' + exp, label])
+            TAC.emit(['ifgoto', [p[-4]['place'],exp], 'eq', label])
     TAC.emit(['label', p[-2][0], '', ''])
     ST.scope_terminate()
 def p_SwitchBlock(p):
@@ -855,7 +855,7 @@ def p_WhMark1(p):
 
 def p_WhMark2(p):
     '''WhMark2 : '''
-    TAC.emit(['ifgoto',p[-2]['place'],'eq 0', p[-4][2]])
+    TAC.emit(['ifgoto',[p[-2]['place'],0],'eq', p[-4][2]])
     TAC.emit(['goto',p[-4][1],'',''])
     TAC.emit(['label',p[-4][1],'',''])
 
@@ -882,7 +882,7 @@ def p_doWhMark1(p):
 
 def p_doWhMark3(p):
     '''doWhMark3 : '''
-    TAC.emit(['ifgoto',p[-2]['place'],'eq 0', p[-7][2]])
+    TAC.emit(['ifgoto',[p[-2]['place'],0],'eq', p[-7][2]])
     TAC.emit(['goto',p[-7][1],'',''])
     TAC.emit(['label',p[-7][2],'',''])
 
@@ -936,7 +936,7 @@ def p_FoMark2(p):
     '''FoMark2 : '''
     TAC.emit(['goto',p[-6][0],'',''])
     TAC.emit(['label',p[-6][1],'',''])
-    TAC.emit(['ifgoto',p[-5]['place'],'eq 0', p[-6][3]])
+    TAC.emit(['ifgoto',[p[-5]['place'],0],'eq', p[-6][3]])
 
 def p_FoMark6(p):
     '''FoMark6 : '''
@@ -945,7 +945,7 @@ def p_FoMark6(p):
 
 def p_FoMark4(p):
     '''FoMark4 : '''
-    TAC.emit(['ifgoto',p[-3]['place'],'eq 0', p[-4][2]])
+    TAC.emit(['ifgoto',[p[-3]['place'],0],'eq', p[-4][2]])
     TAC.emit(['goto',p[-4][1],'',''])
     TAC.emit(['label',p[-4][1],'',''])
 
@@ -1171,6 +1171,7 @@ def p_MethodInvocation(p):
                     raise Exception("Wrong number of arguments to function call: %s" %(p[1]['place']))
                 if 'this' in p[1].keys():
                     TAC.emit(['param', p[1]['this'], '', ''])
+                p[3].reverse()
                 for i in range(len(p[3])):
                     parameter = p[3][i]
                     proto = prototype[i]
@@ -1179,8 +1180,10 @@ def p_MethodInvocation(p):
                     TAC.emit(['param',parameter['place'],'',''])
             elif 'this' in p[1].keys():
                 TAC.emit(['param', p[1]['this'], '', ''])
+
             offset_stack[-1] += ST.insert(temp_var,attributes['type'],temp=True)
             TAC.emit(['call',p[1]['place'],temp_var,''])
+            TAC.emit(['adjust_rsp',attributes['number_params']*4,'',''])
             p[0] = {
                 'place' : temp_var,
                 'ret_type' : attributes['type']
@@ -1527,7 +1530,7 @@ def p_RelationalExpression(p):
         if p[2]=='>':
             p[0]['type'] = 'INT'
             offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
-            TAC.emit(['ifgoto', p[1]['place'], 'gt ' + p[3]['place'], l2])
+            TAC.emit(['ifgoto', [p[1]['place'], p[3]['place']], 'gt', l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
             TAC.emit(['goto', l3, '', ''])
@@ -1537,7 +1540,7 @@ def p_RelationalExpression(p):
         elif p[2]=='>=':
             p[0]['type'] = 'INT'
             offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
-            TAC.emit(['ifgoto', p[1]['place'], 'geq ' + p[3]['place'], l2])
+            TAC.emit(['ifgoto', [p[1]['place'],p[3]['place']], 'geq', l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
             TAC.emit(['goto', l3, '', ''])
@@ -1547,7 +1550,7 @@ def p_RelationalExpression(p):
         elif p[2]=='<':
             p[0]['type'] = 'INT'
             offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
-            TAC.emit(['ifgoto', p[1]['place'], 'lt ' + p[3]['place'], l2])
+            TAC.emit(['ifgoto', [p[1]['place'], p[3]['place']], 'lt', l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
             TAC.emit(['goto', l3, '', ''])
@@ -1557,7 +1560,7 @@ def p_RelationalExpression(p):
         elif p[2]=='<=':
             p[0]['type'] = 'INT'
             offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
-            TAC.emit(['ifgoto', p[1]['place'], 'leq ' + p[3]['place'], l2])
+            TAC.emit(['ifgoto', [p[1]['place'],p[3]['place']], 'leq', l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
             TAC.emit(['goto', l3, '', ''])
@@ -1602,7 +1605,7 @@ def p_EqualityExpression(p):
         if(p[2][0]=='='):
             p[0]['type'] = 'INT'
             offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
-            TAC.emit(['ifgoto', p[1]['place'], 'eq ' + p[3]['place'], l2])
+            TAC.emit(['ifgoto', [p[1]['place'],p[3]['place']], 'eq' , l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
             TAC.emit(['goto', l3, '', ''])
@@ -1612,7 +1615,7 @@ def p_EqualityExpression(p):
         else:
             p[0]['type'] = 'INT'
             ST.insert(newPlace,p[0]['type'],temp=True)
-            TAC.emit(['ifgoto', p[1]['place'], 'neq '+ p[3]['place'], l2])
+            TAC.emit(['ifgoto', [p[1]['place'],p[3]['place']], 'neq', l2])
             TAC.emit(['label', l1, '', ''])
             TAC.emit([newPlace, '0', '', '='])
             TAC.emit(['goto', l3, '', ''])
@@ -1752,7 +1755,7 @@ def p_ConditionalAndExpression(p):
         p[0]['type'] = 'INT'
         offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
         TAC.emit([newPlace,p[1]['place'],'','='])
-        TAC.emit(['ifgoto',p[1]['place'],'eq 0',l1])
+        TAC.emit(['ifgoto',[p[1]['place'],0],'eq',l1])
         TAC.emit([newPlace, p[1]['place'], p[3]['place'], '&'])
         TAC.emit(['label',l1,'',''])
     else:
@@ -1788,7 +1791,7 @@ def p_ConditionalOrExpression(p):
         p[0]['type'] = 'INT'
         ST.insert(newPlace,p[0]['type'],temp=True)
         TAC.emit([newPlace,p[1]['place'],'','='])
-        TAC.emit(['ifgoto',p[1]['place'],'eq 1',l1])
+        TAC.emit(['ifgoto',[p[1]['place'],1],'eq',l1])
         TAC.emit([newPlace, p[1]['place'], p[3]['place'], '|'])
         TAC.emit(['label',l1,'',''])
     else:

@@ -314,6 +314,7 @@ def p_VariableDeclarator(p):
     p[0] = {}
     if len(p) == 2:
         p[0]['place'] = p[1]
+        p[0]['assign'] = None
         return
     elif type(p[3]) != type({}):
         return
@@ -321,7 +322,8 @@ def p_VariableDeclarator(p):
         p[0]['place'] = p[1]
         p[0]['type'] = p[3]['ret_type']
     else:
-        TAC.emit([p[1], p[3]['place'], '', p[2]])
+        #TAC.emit([p[1], p[3]['place'], '', p[2]])
+        p[0]['assign'] = p[3]['place']
         p[0]['place'] = p[1]
         if 'is_var' not in p[3]:
             attributes = ST.find(p[3]['place'])
@@ -578,6 +580,8 @@ def p_LocalVariableDeclaration(p):
         if 'is_array' not in p[1].keys():
             if t == None:
                 offset_stack[-1] += ST.insert(i, p[1]['type'])
+                if 'assign' in symbol.keys():
+                    TAC.emit([symbol['place'], symbol['assign'], '', '='])
                 return
             if len(i) == 2:
                 raise Exception("Array cannot be assigned to a primitive type")
@@ -588,6 +592,8 @@ def p_LocalVariableDeclaration(p):
             if type(t) != type(tuple([])) and t != p[1]['type']:
                 raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t))
             offset_stack[-1] += ST.insert(i, p[1]['type'])
+            if 'assign' in symbol.keys():
+                TAC.emit([symbol['place'], symbol['assign'], '', '='])
         else:
             if type(i) != type(' '):
                 if t == None:

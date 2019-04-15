@@ -25,6 +25,7 @@ class Debug {
 
 
     int main() {
+
     	// int x;
     	// x = fact(5);
     	// // // int[] arr;
@@ -37,6 +38,24 @@ class Debug {
     		System.out.println(14);
     	}
 
+    	// int[] arr;
+    	// arr = new int[5];
+    	printInt(5);
+    	// x = fact(4);
+        // int a = 19;
+        // int b = 2;
+        // int d = 1 ;
+        // boolean c;
+        // c = a && b || d;
+        // c = ~a;
+        // int Nigga = 3;
+        // int n;
+        // n = 4;
+        // if(n*n > n-n){
+        // 	n = 4 + 6;
+        // }
+        // add(1,2,3,4,'a');
+        // int z = 525;
     }
 
 }

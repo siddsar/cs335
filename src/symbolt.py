@@ -22,6 +22,10 @@ class SymbolTmap:
     def find(self,name,func=False):
         now_sc = self.cur_sc
         while now_sc != None:
+            # print(now_sc)
+            # print("lolol")
+            # print(name)
+            # pprint(self.map_scope[now_sc].vars)
             if func and name in self.map_scope[now_sc].funcs:
                 return self.map_scope[now_sc].funcs[name]
             elif not func and name in self.map_scope[now_sc].vars:
@@ -95,8 +99,10 @@ class SymbolT:
         size = self.find_size(type_name)
 
         if(arr):
-            self.offset += (size_arr * size)
-            offset_len = (size_arr * size)
+            offset_len = size
+            for i in size_arr:
+                offset_len *= int(i)
+            self.offset += offset_len
         else:
             self.offset += size
             offset_len = size

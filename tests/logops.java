@@ -5,9 +5,7 @@ class Debug {
     int main() {
         int a = 19;
         int b = 2;
-        int d = 1 ;
         boolean c;
-        c = a && b || d;
-        c = ~a;
+        c = !a;
     }
 }

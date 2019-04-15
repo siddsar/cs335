@@ -14,9 +14,15 @@ class ackermann{
     //     return i;
     // }
     void main(){
-        int j = 1,i = -1;
-        // int j = -1;
-        // int i = Ack(3,4);
-        // System.out.println(i);
+        int[][] arr = new int[8][5];
+        arr[0][3] = 2;
+        arr[1][4] = 5;
+        // int x = arr[0];
+        // arr[2] = 6;
+        // arr[3] = 8;
+        // arr[4] = 10;
+        // arr[5] = 12;
+        // arr[6] = 14;
+        // arr[7] = 16;
     }
 }

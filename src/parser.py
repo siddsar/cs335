@@ -339,7 +339,7 @@ def p_VariableDeclarator(p):
         to_emit.append([t, '1', '', '='])
         for i in p[3]['place']:
             to_emit.append([t, t, i, '*'])
-        to_emit.append(['declare', p[1], t, p[3]['type']])
+        # to_emit.append(['declare', p[1], t, p[3]['type']])
         p[0]['place'] = (p[1], p[3]['place'])
         p[0]['type'] = p[3]['type']
         p[0]['emit_intrs'] = to_emit
@@ -1287,7 +1287,7 @@ def p_ArrayAccess(p):
     src = p[1]['place'] + '[' + str(index) + ']'
     t1 = ST.temp_var()
     offset_stack[-1] += ST.insert(t1,attributes['type'],temp=True)
-    TAC.emit([t1, src, '', '='])
+    TAC.emit([t1, p[1]['place'], str(index), '=arr'])
     p[0]['type'] = attributes['type']
     p[0]['place'] = t1
     p[0]['access_type'] = 'array'
@@ -1327,7 +1327,7 @@ def p_PostfixExpression(p):
         p[0]['name'] = p[1]['name']
         p[0]['index'] = p[1]['index']
 
-        TAC.emit(p[0]['place'], p[0]['name'] + '[' + p[0]['index'] + ']', '', '=', ST)
+        TAC.emit(p[0]['place'], p[0]['name'],p[0]['index'] , '=arr')
 
     elif 'is_array' in p[1].keys():
         p[0]['place'] = p[1]['arr_size']
@@ -1904,7 +1904,7 @@ def p_Assignment(p):
             raise Exception("Type Mismatch for symbol: "+ str(p[3]['place'])+str(p[3]['type']))
     else:
         # dest = p[1]['name'] + '[' + p[1]['index'] + ']'
-        TAC.emit([p[1]['name'],p[1]['index'] , p[3]['place'], '=arr'])
+        TAC.emit([p[1]['name'],p[1]['index'] , p[3]['place'], 'arr='])
 
     rules_store.append(p.slice)
 def p_LeftHandSide(p):
@@ -1967,7 +1967,7 @@ def main():
 
     # print("...........................")
     # print(t)
-    # TAC.print_tac()
+    TAC.print_tac()
     # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     # ST.dump_TT()
     # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")

@@ -77,6 +77,7 @@ class SymbolT:
 
 
     def find_size(self,type_name):
+        print(type_name)
         type_name = type_name.upper()
 
         if(type_name == 'INT'):

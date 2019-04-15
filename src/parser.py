@@ -591,6 +591,8 @@ def p_LocalVariableDeclaration(p):
                 raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t[0]))
             if type(t) != type(tuple([])) and t != p[1]['type']:
                 raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t))
+            print(i)
+            ST.dump_TT()
             offset_stack[-1] += ST.insert(i, p[1]['type'])
             if 'assign' in symbol.keys():
                 TAC.emit([symbol['place'], symbol['assign'], '', '='])
@@ -1012,13 +1014,16 @@ def p_ReturnStatement(p):
     | RETURN STMT_TERMINATOR
     '''
     if len(p)==3 :
-        TAC.emit(['ret', '', '', ''])
+        if global_return_type=='VOID':
+            TAC.emit(['ret', '', '', ''])
+        else :
+            raise Exception("Expected return type %s" %(global_return_type))
     else:
 
         to_return = global_return_type
         curr_returned = ST.find(p[2]['place'])
-        print(to_return)
-        print(curr_returned['type'])
+        # print(to_return)
+        # print(curr_returned['type'])
         if curr_returned != None:
             if to_return != curr_returned['type']:
                 raise Exception("Wrong return type in %s" %(ST.cur_sc))
@@ -1830,16 +1835,17 @@ def p_Assignment(p):
     '''
     Assignment : LeftHandSide AssignmentOperator AssignmentExpression
     '''
-    # print(p[1])
+    print(p[1])
+    print(p[3])
     if 'access_type' not in p[1].keys():
         attributes = ST.find(p[1]['place'])
         if attributes == None:
             raise Exception("Undeclared variable used: "+str(p[1]['place']))
-        if 'is_array' in attributes and attributes['is_array']:
+        elif 'is_array' in attributes and attributes['is_array']:
             raise Exception("Array not indexed properly" +str(p[1]['place']))
-        if 'ret_type' in p[3].keys() and p[3]['ret_type'][0] == attributes['type']:
+        elif 'ret_type' in p[3].keys() and p[3]['ret_type'] == attributes['type']:
             TAC.emit([p[1]['place'], p[3]['place'], '', p[2]])
-        if attributes['type'] == p[3]['type']:
+        elif attributes['type'] == p[3]['type']:
             TAC.emit([p[1]['place'], p[3]['place'], '', p[2]])
         else:
             raise Exception("Type Mismatch for symbol: "+ str(p[3]['place'])+str(p[3]['type']))

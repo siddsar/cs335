@@ -4,23 +4,68 @@ class TAC:
     	self.ST = ST
     	# print(self.ST)
         self.code = []
+        # self.asm = []
 
     def generate_assembly(self,item):
-		if(item[0]=='func'):
-			print("No imp")
+		if item[0]=='func' :
+			print(item[1]+':')
+			print("\t push %ebp")
+			print("\t mov %esp, %ebp")
+		elif item[0]=='arg' :
+			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+"(%ebp), %eax")
+			print("\tmov %eax, -"+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")
 		elif(item[0]=='ifgoto'):
-			print("No imp")
+			v1 = self.ST.find(item[1][0])
+			v2 = self.ST.find(item[1][1])
+			if v1==None:
+				print("\tmov $"+item[1][0]+", %eax")
+			else :
+				print("\tmov -"+str(v1['offset'])+"(%ebp), %eax")
+			if v2==None:
+				print("\tmov $"+str(item[1][1])+", %ebx")
+			else :
+				print("\tmov -"+str(v2['offset'])+"(%ebp), %ebx")
+
+			print("\tcmp %eax, %ebx")
+			if item[2]=='eq':
+				print("\tje "+item[3])
+			elif item[2]=='neq':
+				print("\tjne "+item[3])
+			elif item[2]=='gt':
+				print("\tjg "+item[3])	
+			elif item[2]=='gte':
+				print("\tjge "+item[3])	
+			elif item[2]=='lt':
+				print("\tjl "+item[3])
+			elif item[2]=='lte':
+				print("\tjle "+item[3])		
 		elif(item[0]=='goto'):
-			print("No imp")
+			print("\tjmp "+item[1])
 		elif(item[0]=='ret'):
-			print("No imp")
+			print("---------------------------------------------------------------")
+			print(item[1])
+			v = self.ST.find(item[1])
+			if(item[1]==''):
+				print("\t ret")
+			elif v==None:
+				print("\tmov -"+item[1]+"(%ebp), %eax")
+				print("\t ret")
+			else:
+				
+				print("\tmov -"+str(v['offset'])+"(%ebp), %eax")
+				print("\t ret")
 		elif(item[0]=='label'):
-			print("No imp")
+			print("\t"+item[1])
 		elif(item[0]=='call'):
-			print("No imp")
-
+			if(item[2]==''):
+				print("\tcall "+item[1])
+			else:
+				print("\tcall "+item[1])
+				v = self.ST.find(item[2])
+				print("\t mov %eax, -"+str(v['offset'])+"(%ebp)")
+		elif(item[0]=='adjust_rsp'):
+			print("\t add $"+str(item[1])+", %esp")
 		elif(item[-1]=='+'):
-
 			res_var = self.ST.find(item[0])
 
 			if self.ST.find(item[1])==None:
@@ -48,8 +93,6 @@ class TAC:
 					print("\tadd -"+str(op2['offset'])+"(%ebp),%eax")
 					print("\tmov %eax,-"+str(res_var['offset'])+"(%ebp)")
 
-
-
 		elif(item[-1]=='-'):
 
 			res_var = self.ST.find(item[0])
@@ -61,7 +104,7 @@ class TAC:
 				else:
 					op = self.ST.find(item[2])
 					print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
-					print("\tmov $"+str(item[1])",%ebx")
+					print("\tmov $"+str(item[1])+",%ebx")
 					print("\tsub %eax,%ebx")
 					print("\tmov %ebx,-"+str(res_var['offset'])+"(%ebp)")
 
@@ -244,12 +287,15 @@ class TAC:
 					
 		elif item[3]=='=':
 			res_var = self.ST.find(item[0])
+			print(res_var)
+			print(item)
 			op = self.ST.find(item[1])
+			# self.ST.dump_TT()
 			if op==None:
-				print("\tmov $"+item[1]+",%eax")
+				print("\tmov $"+item[1]+", %eax")
 			else:
-				print("\tmov -"+str(op['offset'])+"%(ebp),%eax")
-			print("\t mov %eax, -" + str(res_var['offset']) + "(%ebp)")
+				print("\tmov -"+str(op['offset'])+"%(ebp), %eax")
+			print("\tmov %eax, -" + str(res_var['offset']) + "(%ebp)")
 			
 
     def emit(self,list_to_append):

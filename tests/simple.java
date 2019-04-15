@@ -16,7 +16,7 @@ class Debug {
     	// 	return 1;
     	// }
     	// return n*fact(n-1);
-    }
+
 
     int main() {
     	int x;
@@ -35,9 +35,6 @@ class Debug {
         // }
         // add(1,2,3,4,'a');
         // int z = 525;
-     //    for(int i = 0;i < n;i=i+1){
-    	// 	int x=2;
-    	// }
     }
 
 }

@@ -423,7 +423,7 @@ def p_MethodDeclarator(p):
                     dims = []
                     for j in range(size):
                         dims.append(p[4][i + 1 + j]['place'])
-                    offset_stack[-1] += ST.insert(parameter['place'],parameter['type'], is_array=True, arr_size=dims)
+                    offset_stack[-1] += ST.insert(parameter['place'],parameter['type'], arr=True, size_arr=dims)
                 except:
                     raise Exception("Array passing guidelines not followed properly for arg %s" %(i))
             else:
@@ -599,7 +599,7 @@ def p_LocalVariableDeclaration(p):
         else:
             if type(i) != type(' '):
                 if t == None:
-                    offset_stack[-1] += ST.insert(i[0], p[1]['type'], is_array=True, arr_size=i[1])
+                    offset_stack[-1] += ST.insert(i[0], p[1]['type'], arr=True, size_arr=i[1])
                     return
                 if len(i) == 1:
                     raise Exception("Primitive types cannot be assigned to array")
@@ -609,10 +609,10 @@ def p_LocalVariableDeclaration(p):
                     raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t))
                 if type(t) == type(tuple([])) and t[0] != p[1]['type']:
                     raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t[0]))
-                offset_stack[-1] += ST.insert(i[0], p[1]['type'], is_array=True, arr_size=i[1])
+                offset_stack[-1] += ST.insert(i[0], p[1]['type'], arr=True, size_arr=i[1])
             else:
                 if t == None:
-                    offset_stack[-1] += ST.insert(i, p[1]['type'], is_array=True, arr_size=0)
+                    offset_stack[-1] += ST.insert(i, p[1]['type'], arr=True, size_arr=0)
                     return
                 if type(t) == type(tuple([])) and t[0] != p[1]['type']:
                     raise Exception("%s and %s types are not compatible" %(t[0], p[1]['type']))
@@ -622,7 +622,7 @@ def p_LocalVariableDeclaration(p):
                     raise Exception("%s and %s types are not compatible" %(t, p[1]['type']))
                 if 'is_array' in symbol and len(symbol['arr_size']) != p[1]['arr_size']:
                     raise Exception("Array dimensions mismatch: %s" %(i))
-                offset_stack[-1] += ST.insert(i, p[1]['type'], is_array=True, arr_size=0)
+                offset_stack[-1] += ST.insert(i, p[1]['type'], arr=True, size_arr=0)
     for symbol in p[2]:
         if "emit_intrs" in symbol.keys():
             for X in symbol["emit_intrs"]:

@@ -1,17 +1,22 @@
-class Debug {
-
-    int fact(int n){
-    	if(n==1){
-    		return 1;
-    	}
-    	return n*fact(n-1);
+class ackermann{
+    // int Ack(int m,int n) {
+    //     int i = -1, j = -1;
+    //     if (m>=0 && n>=0) {
+    //         if (m == 0) {
+    //             i = n + 1;
+    //         } else if (n == 0) {
+    //             i = Ack(m - 1, 1);
+    //         } else {
+    //             j = Ack(m, n - 1);
+    //             i = Ack(m - 1, j);
+    //         }
+    //     }
+    //     return i;
+    // }
+    void main(){
+        int j = 1,i = -1;
+        // int j = -1;
+        // int i = Ack(3,4);
+        // System.out.println(i);
     }
-
-
-    int main() {
-    	int x = fact(6);
-    	System.out.println(x);
-
-    }
-
 }

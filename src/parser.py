@@ -380,6 +380,8 @@ def p_VariableDeclarator(p):
         #     p[0]['is_array'] = False
         #
         # p[0]['type'] = p[3]['type']
+    # pprint(p[0])
+    # print("lol")
     rules_store.append(p.slice)
 
 def p_VariableDeclaratorId(p):
@@ -622,6 +624,7 @@ def p_LocalVariableDeclaration(p):
                 raise Exception("Wrong class assignments")
             offset_stack[-1] += ST.insert(symbol['place'], symbol['class_name'])
             continue
+        # pprint(rules_store)
         i = symbol['place']
         if 'type' in symbol:
             t = symbol['type']
@@ -1370,8 +1373,10 @@ def p_UnaryExpression(p):
     if len(p) == 2:
         p[0] = p[1]
         return
-    else:
-        pass
+    elif p[1] == '-':
+        p[0] = p[2]
+        p[0]['place'] = '-' + p[2]['place']
+
     rules_store.append(p.slice)
 def p_PreIncrementExpression(p):
     '''

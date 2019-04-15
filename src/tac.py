@@ -14,6 +14,12 @@ class TAC:
 		elif item[0]=='arg' :
 			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+"(%ebp), %eax")
 			print("\tmov %eax, -"+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")
+		elif item[0]=='param':
+			v = self.ST.find(item[1])
+			if v==None:
+				print("\tpush $"+str(item[1]))
+			else:
+				print("\tpush -"+str(v['offset'])+"(%ebp)")
 		elif item[0]=='print' :
 			v = self.ST.find(item[1])
 			if v==None:
@@ -35,7 +41,7 @@ class TAC:
 			else :
 				print("\tmov -"+str(v2['offset'])+"(%ebp), %ebx")
 
-			print("\tcmp %eax, %ebx")
+			print("\tcmp %ebx, %eax")
 			if item[2]=='eq':
 				print("\tje "+item[3])
 			elif item[2]=='neq':

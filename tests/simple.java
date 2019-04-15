@@ -1,5 +1,6 @@
 class Debug {
 
+<<<<<<< HEAD
     // int add(int aks, int b,int x,int d,char cc ) {
     //     // int niggga;
     //     // niggga = 3;
@@ -22,27 +23,49 @@ class Debug {
     	// int x = 4;
     	return 325;
     	// return n * x;
+=======
+    int fact(int n){
+    	// int nigga =325;
+    	// return 4;
+    	if(n==1){
+    		return 1;
+    	}
+    	int z = n-1;
+    	int y = fact(z);
+    	// return 325;
+    	return n*y;
+>>>>>>> 6248ca309abe6b53876da26855c90df0c3a0ce01
     }
 
 
     int main() {
+<<<<<<< HEAD
 
+=======
+    	// // int x;
+    	int x = fact(2);
+    	// // // // int[] arr;
+    	// // // // arr = new int[5];
+    	// // // int x = 685;
+    	// int y = x+25;
+    	// if(x<2){
+    	System.out.println(x);
+    	// }
+    	// else{
+    	// 	System.out.println(y);
+    	// }
+    	// int y = 25;
+>>>>>>> 6248ca309abe6b53876da26855c90df0c3a0ce01
 
-    	// int x;
-    	// x = fact(5);
-    	// // // int[] arr;
-    	// // // arr = new int[5];
-    	// // int x = 685;
-    	// // System.out.println(x);
-    	int y = 25;
-    	for(int i=0;i<4;i=i+1){
-    		y = y+13;
-    		System.out.println(14);
-    	}
+    	// for(int i=0;i<8;i=i+1){
+    	// 	y = y+13;
+    	// 	System.out.println(15);
+    	// 	System.out.println(y);
+    	// }
 
     	// int[] arr;
     	// arr = new int[5];
-    	printInt(5);
+    	// printInt(5);
     	// x = fact(4);
         // int a = 19;
         // int b = 2;

@@ -9,8 +9,8 @@ class TAC:
     def generate_assembly(self,item):
 		if item[0]=='func' :
 			print(item[1]+':')
-			print("\t push %ebp")
-			print("\t mov %esp, %ebp")
+			print("\tpush %ebp")
+			print("\tmov %esp, %ebp")
 		elif item[0]=='arg' :
 			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+"(%ebp), %eax")
 			print("\tmov %eax, -"+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")
@@ -42,18 +42,17 @@ class TAC:
 		elif(item[0]=='goto'):
 			print("\tjmp "+item[1])
 		elif(item[0]=='ret'):
-			print("---------------------------------------------------------------")
-			print(item[1])
+			# print("---------------------------------------------------------------")
+			# print(item[1])
 			v = self.ST.find(item[1])
 			if(item[1]==''):
-				print("\t ret")
+				print("\tret")
 			elif v==None:
-				print("\tmov -"+item[1]+"(%ebp), %eax")
-				print("\t ret")
+				print("\tmov $"+item[1]+", %eax")
+				print("\tret")
 			else:
-				
 				print("\tmov -"+str(v['offset'])+"(%ebp), %eax")
-				print("\t ret")
+				print("\tret")
 		elif(item[0]=='label'):
 			print("\t"+item[1])
 		elif(item[0]=='call'):
@@ -62,9 +61,9 @@ class TAC:
 			else:
 				print("\tcall "+item[1])
 				v = self.ST.find(item[2])
-				print("\t mov %eax, -"+str(v['offset'])+"(%ebp)")
+				print("\tmov %eax, -"+str(v['offset'])+"(%ebp)")
 		elif(item[0]=='adjust_rsp'):
-			print("\t add $"+str(item[1])+", %esp")
+			print("\tadd $"+str(item[1])+", %esp")
 		elif(item[-1]=='+'):
 			res_var = self.ST.find(item[0])
 
@@ -287,20 +286,18 @@ class TAC:
 					
 		elif item[3]=='=':
 			res_var = self.ST.find(item[0])
-			print(res_var)
-			print(item)
 			op = self.ST.find(item[1])
 			# self.ST.dump_TT()
 			if op==None:
-				print("\tmov $"+item[1]+", %eax")
+				print("\tmov $"+str(item[1])+", %eax")
 			else:
-				print("\tmov -"+str(op['offset'])+"%(ebp), %eax")
+				print("\tmov -"+str(op['offset'])+"(%ebp), %eax")
 			print("\tmov %eax, -" + str(res_var['offset']) + "(%ebp)")
 			
 
     def emit(self,list_to_append):
         self.code.append(list_to_append)
-        print(list_to_append)
+        # print(list_to_append)
     	self.generate_assembly(list_to_append)
 
     def print_tac(self):

@@ -591,7 +591,7 @@ def p_LocalVariableDeclaration(p):
                 raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t[0]))
             if type(t) != type(tuple([])) and t != p[1]['type']:
                 raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t))
-            print(i)
+            # print(i)
             ST.dump_TT()
             offset_stack[-1] += ST.insert(i, p[1]['type'])
             if 'assign' in symbol.keys():
@@ -1835,8 +1835,6 @@ def p_Assignment(p):
     '''
     Assignment : LeftHandSide AssignmentOperator AssignmentExpression
     '''
-    print(p[1])
-    print(p[3])
     if 'access_type' not in p[1].keys():
         attributes = ST.find(p[1]['place'])
         if attributes == None:

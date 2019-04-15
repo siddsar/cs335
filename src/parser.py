@@ -626,6 +626,7 @@ def p_LocalVariableDeclaration(p):
             continue
         # pprint(rules_store)
         i = symbol['place']
+        pprint(p[2])
         if 'type' in symbol:
             t = symbol['type']
         else:
@@ -634,9 +635,9 @@ def p_LocalVariableDeclaration(p):
             if t == None:
                 offset_stack[-1] += ST.insert(i, p[1]['type'])
                 return
-            if len(i) == 2:
+            if len(i) == 2 and type(i)!= type(''):
                 raise Exception("Array cannot be assigned to a primitive type")
-            if len(t) == 2 and t[1] != 0:
+            if len(t) == 2 and t[1] != 0 and type(i)!= type(''):
                 raise Exception("Mismatch in function return: %s" %(i))
             if type(t) == type(tuple([])) and t[0] != p[1]['type']:
                 raise Exception("Type mismatch: Expected %s, but got %s" %(p[1]['type'], t[0]))

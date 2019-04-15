@@ -11,6 +11,7 @@ class TAC:
 			print(item[1]+':')
 			print("\tpush %ebp")
 			print("\tmov %esp, %ebp")
+			print("\tadd $-512, %esp")
 		elif item[0]=='arg' :
 			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+"(%ebp), %eax")
 			print("\tmov %eax, -"+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")
@@ -57,6 +58,8 @@ class TAC:
 		elif(item[0]=='goto'):
 			print("\tjmp "+item[1])
 		elif(item[0]=='ret'):
+			if item[2]=='main':
+				return
 			v = self.ST.find(item[1])
 			if(item[1]==''):
 				print("\tmov %ebp, %esp")

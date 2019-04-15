@@ -1957,10 +1957,12 @@ def main():
     print("\t.string \"%d\\n\"")
     print("\t.global main")
     t = yacc.parse(code)
+    print("\tmov $1, %eax")
+    print("\tint $0x80")
 
     # print("...........................")
     # print(t)
-    TAC.print_tac()
+    # TAC.print_tac()
     # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     # ST.dump_TT()
     # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")

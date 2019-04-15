@@ -6,18 +6,22 @@ class TAC:
         self.code = []
 
     def generate_assembly(self,item):
-		if(item[0]=='func'):
-			print("No imp")
+		if item[0]=='func' :
+			print(item[1]+str(:))
+			print("\t push %ebp")
+			print("\t mov %esp, %ebp")
+		elif item[0]=='arg' :
+			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+', -'+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")
 		elif(item[0]=='ifgoto'):
-			print("No imp")
+			print("\tNo imp")
 		elif(item[0]=='goto'):
-			print("No imp")
+			print("\tjmp "+item[1])
 		elif(item[0]=='ret'):
-			print("No imp")
+			print("\tNo imp")
 		elif(item[0]=='label'):
-			print("No imp")
+			print("\t"+item[1])
 		elif(item[0]=='call'):
-			print("No imp")
+			print("\tNo imp")
 		elif(item[-1]=='+'):
 			res_var = self.ST.find(item[0])
 			if self.ST.find(item[1])==None:

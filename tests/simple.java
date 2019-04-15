@@ -1,6 +1,8 @@
 class Debug {
-    int add(int a, int b) {
-        return a + b;
+    int add(int a, int b,int x,int d,char cc) {
+        int c = a + b;
+        char x = cc
+        return c;
     }
 
     int main() {
@@ -11,7 +13,12 @@ class Debug {
         // c = a && b || d;
         // c = ~a;
         int n=3;
-        add(n,4);
+        if(n*n> n-n){
+        	n = 4+6;
+        }
+        add(1,2,3,4,'a');
+        int z = 525;
+
      //    for(int i = 0;i < n;i=i+1){
     	// 	int x=2;
     	// }

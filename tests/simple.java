@@ -23,6 +23,13 @@ class Debug {
     	// int x = fact(2);
     	System.out.println(x);
     	System.out.println(25);
+    	// // int x;
+    	int x = fact(2);
+    	// // // // int[] arr;
+    	// // // // arr = new int[5];
+    	// // // int x = 685;
+    	// int y = x+25;
+    	// if(x<2){
     	System.out.println(x);
     	// }
     	// else{

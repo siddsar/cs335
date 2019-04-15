@@ -1,17 +1,5 @@
 class Debug {
 
-    // int add(int aks, int b,int x,int d,char cc ) {
-    //     // int niggga;
-    //     // niggga = 3;
-
-    //     // int c = a + b;
-    //     // char x = cc ;
-    //     // return x+d ;
-    //     return aks;
-    // }
-
-    // int printInt(int n);
-
     int fact(int n){
     	// int nigga =325;
     	// return 4;
@@ -26,7 +14,6 @@ class Debug {
 
 
     int main() {
-
     	// // int x;
     	int x = fact(2);
     	// // // // int[] arr;

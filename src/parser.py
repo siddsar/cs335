@@ -12,7 +12,7 @@ ST = SymbolTmap()
 TAC = TAC(ST)
 rules_store = []
 global_return_type = None
-
+global_method = None
 offset_stack = []
 offset_stack.append(0)
 
@@ -402,7 +402,9 @@ def p_MethodDeclaration(p):
     MethodDeclaration : MethodHeader MethodAddParentScope MethodBody
     '''
     p[0]=p[1]
-    TAC.emit(['ret','','',''])
+    global global_method
+    global_method = p[1]['name']
+    TAC.emit(['ret','',p[1]['name'],''])
     ST.scope_terminate()
     offset_stack.pop()
 
@@ -1060,7 +1062,7 @@ def p_ReturnStatement(p):
     '''
     if len(p)==3 :
         if global_return_type=='VOID':
-            TAC.emit(['ret', '', '', ''])
+            TAC.emit(['ret', '', global_method, ''])
         else :
             raise Exception("Expected return type %s" %(global_return_type))
     else:
@@ -1077,7 +1079,7 @@ def p_ReturnStatement(p):
         else:
             if p[2]['type'] != to_return :
                 raise Exception("Wrong return type in %s" %(ST.cur_sc))
-        TAC.emit(['ret', p[2]['place'], '', ''])
+        TAC.emit(['ret', p[2]['place'], global_method, ''])
 
     rules_store.append(p.slice)
 def p_ThrowStatement(p):
@@ -1435,17 +1437,15 @@ def p_MultiplicativeExpression(p):
     p[0] = {
         'place' : newPlace,
     }
+    # pprint(p[1])
+    # pprint(p[3])
     if 'ret_type' in p[1].keys():
-        type1 = p[1]['ret_type'][0]
-        if p[1]['ret_type'][1] != 0:
-            raise Exception("Error")
+        type1 = p[1]['ret_type']
     else:
         type1 = p[1]['type']
 
     if 'ret_type' in p[3].keys():
-        type2 = p[3]['ret_type'][0]
-        if p[3]['ret_type'][1] != 0:
-            raise Exception("Error")
+        type2 = p[3]['ret_type']
     else:
         type2 = p[3]['type']
     if p[2] == '*':

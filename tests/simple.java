@@ -10,22 +10,32 @@ class Debug {
     //     return aks;
     // }
 
+    int printInt(int n);
+
     int fact(int n){
-    	int nigga =325;
-    	return 4;
-    	// if(n==1){
-    	// 	return 1;
-    	// }
-    	// return n*fact(n-1);
+    	// int nigga =325;
+    	// return 4;
+    	if(n==1){
+    		return 1;
+    	}
+    	int x = fact(n-1);
+    	return n * x;
     }
 
 
     int main() {
     	int x =  fact(5);
+<<<<<<< HEAD
     	int[] intArray = new int[20];
 	intArray[1] = 44;
 	intArray[4] = 333;
      	// x = fact(4);
+=======
+    	// int[] arr;
+    	// arr = new int[5];
+    	printInt(5);
+    	// x = fact(4);
+>>>>>>> a389f2838bbe4db3e5f972de55ca280bfea236af
         // int a = 19;
         // int b = 2;
         // int d = 1 ;

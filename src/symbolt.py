@@ -103,13 +103,15 @@ class SymbolT:
 
         if(arr):
             self.offset += (size_arr * size)
+            offset_len = (size_arr * size)
         else:
             self.offset += size
+            offset_len = size
 
         p = { 'type':type_name, 'arr':arr, 'size_arr':size_arr , 'offset':self.offset, 'temp':temp}
 
         self.vars[id]=p
-        return self.offset
+        return offset_len
 
     def insert_func(self,id,type_name,params):
         if id in self.funcs.keys():

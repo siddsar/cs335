@@ -7,13 +7,16 @@ class TAC:
 
     def generate_assembly(self,item):
 		if item[0]=='func' :
-			print(item[1]+str(:))
+			print(item[1]+':')
 			print("\t push %ebp")
 			print("\t mov %esp, %ebp")
 		elif item[0]=='arg' :
-			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+', -'+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")
+			print("\tmov "+str(4+int(self.ST.find(item[1])['offset']))+"(%ebp), %eax")
+			print("\tmov %eax, -"+str(int(self.ST.find(item[1])['offset']))+"(%ebp)")
 		elif(item[0]=='ifgoto'):
-			print("\tNo imp")
+			# print("\tNo imp")
+			
+			print("\t item")
 		elif(item[0]=='goto'):
 			print("\tjmp "+item[1])
 		elif(item[0]=='ret'):

@@ -7,11 +7,8 @@ from symbolt import SymbolTmap
 from pprint import pprint
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-f','--path')
-parser.add_argument('-m', '--mode',default='False')
+parser.add_argument("mode")
 parser.parse_args()
-
-args = parser.parse_args()
 
 tokens = lexer.tokens
 ST = SymbolTmap()
@@ -424,7 +421,6 @@ def p_MethodAddParentScope(p):
     par_scope = ST.parent_scope()
     # pprint(p[-1])
     # print(par_scope)
-    #print(p[-1])
     offset_stack[-1] += ST.insert(p[-1]['name'], p[-1]['type'],func=True, params=p[-1]['args'], scope=par_scope)
     # print(p[-1]['name'], p[-1]['type'],True, p[-1]['args'], par_scope)
 
@@ -466,7 +462,7 @@ def p_MethodHeader(p):
 def p_MethodDeclarator(p):
     '''
     MethodDeclarator : IDENTIFIER L_ROUNDBR MethodCreateScope R_ROUNDBR
-    | IDENTIFIER L_ROUNDBR MethodCreateScope FormalParameterList R_ROUNDBR 
+    | IDENTIFIER L_ROUNDBR MethodCreateScope FormalParameterList R_ROUNDBR
     '''
     p[0] = {
         'name' : p[1],
@@ -1266,11 +1262,10 @@ def p_MethodInvocation(p):
             elif 'this' in p[1].keys():
                 TAC.emit(['param', p[1]['this'], '', ''])
 
-            
+            offset_stack[-1] += ST.insert(temp_var,attributes['type'],temp=True)
             if attributes['type'] == 'VOID':
                 TAC.emit(['call',p[1]['place'],'',''])
             else:
-                offset_stack[-1] += ST.insert(temp_var,attributes['type'],temp=True)
                 TAC.emit(['call',p[1]['place'],temp_var,''])
             TAC.emit(['adjust_rsp',attributes['number_params']*4,'',''])
             p[0] = {
@@ -2004,8 +1999,8 @@ def main():
     tokens = lexer.tokens
     parser = yacc.yacc()
     global flag_mr
-    flag_mr = args.mode
-    inputfile = args.path
+    flag_mr = False
+    inputfile = sys.argv[1]
     # file_out = inputfile.split('/')[-1].split('.')[0]
     code = open(inputfile, 'r').read()
     code += "\n"

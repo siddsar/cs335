@@ -1,17 +1,9 @@
 import lexer
 import ply.yacc as yacc
-import argparse
 import sys
 from tac import *
 from symbolt import SymbolTmap
 from pprint import pprint
-
-parser = argparse.ArgumentParser()
-parser.add_argument('-f','--path')
-parser.add_argument('-m', '--mode',default='False')
-parser.parse_args()
-
-args = parser.parse_args()
 
 tokens = lexer.tokens
 ST = SymbolTmap()
@@ -2003,8 +1995,11 @@ def main():
     tokens = lexer.tokens
     parser = yacc.yacc()
     global flag_mr
-    flag_mr = args.mode
-    inputfile = args.path
+    flag_mr = True
+    inputfile = sys.argv[1]
+    if len(sys.argv)>2:
+        if sys.argv[2]=='-m':
+            flag_mr=False
     # file_out = inputfile.split('/')[-1].split('.')[0]
     code = open(inputfile, 'r').read()
     code += "\n"
@@ -2019,7 +2014,6 @@ def main():
     t = yacc.parse(code)
     print("\tmov $1, %eax")
     print("\tint $0x80")
-
     # print("...........................")
     # print(t)
     # TAC.print_tac()

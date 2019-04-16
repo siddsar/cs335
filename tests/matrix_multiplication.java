@@ -4,17 +4,27 @@ class matrix_multiplication{
      //    int i;
     	// int j;
      //    int k;
-        int [] arr = new int[5];
-        arr[0] = 84;
-        arr[1] = 14;
-        arr[2] = 832354;
-        arr[3] = 12254;
-        arr[4] = 348687;
-        System.out.println(arr[0]);
+        int x = 6;
+        System.out.println(x);
+        System.in.scanln(x);
+        System.out.println(x);
+        
 
-        for(int i=0;i<5;i++){
-            System.out.println(arr[i]);
-        }
+        // int [] arr = new int[5];
+        // arr[0] = 1;
+        // // arr[1] = 2;
+        // arr[2] = 3;
+        // // arr[3] = 4;
+        // // arr[4] = 5;
+        // System.out.println(arr[0]);
+        // System.out.println(arr[1]);
+        // System.out.println(arr[2]);
+        // System.out.println(arr[3]);
+        // System.out.println(arr[4]);
+
+        // for(int i=0;i<5;i++){
+        //     System.out.println(arr[i]);
+        // }
 
         // int[][] firstarray = new int[2][2];
         // int[][] secondarray = new int[2][2];

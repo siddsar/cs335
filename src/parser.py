@@ -109,7 +109,7 @@ def p_IntegralType(p):
                         | CHAR
     '''
     p[0] = {
-        'type' : p[1].upper()
+        'type' : 'INT'
     }
     rules_store.append(p.slice)
 def p_FloatingPointType(p):
@@ -117,7 +117,7 @@ def p_FloatingPointType(p):
                             | DOUBLE
     '''
     p[0] = {
-        'type' : p[1].upper()
+        'type' : 'FLOAT'
     }
 
     rules_store.append(p.slice)
@@ -419,6 +419,7 @@ def p_MethodAddParentScope(p):
     MethodAddParentScope :
     '''
     par_scope = ST.parent_scope()
+    # ST.dump_TT()
     # pprint(p[-1])
     # print(par_scope)
     offset_stack[-1] += ST.insert(p[-1]['name'], p[-1]['type'],func=True, params=p[-1]['args'], scope=par_scope)
@@ -456,7 +457,7 @@ def p_MethodHeader(p):
             p[0]['type'] = p[1]['type']############################################################################3
         else:
             p[0]['type'] = 'VOID'
-        global global_return_type ###############################################################################
+        # global global_return_type ###############################################################################
         global_return_type = p[0]['type']
     rules_store.append(p.slice)
 def p_MethodDeclarator(p):
@@ -1293,7 +1294,6 @@ def p_MethodInvocation(p):
                 p[3].reverse()
                 for i in range(len(p[3])):
                     parameter = p[3][i]
-                    proto = prototype[i]
                     TAC.emit(['param',parameter['place'],'',''])
 
             offset_stack[-1] += ST.insert(temp_var,'INT',temp=True)

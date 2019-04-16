@@ -54,7 +54,11 @@ class TAC:
 			elif item[2]=='lt':
 				print("\tjl "+item[3])
 			elif item[2]=='lte':
-				print("\tjle "+item[3])		
+				print("\tjle "+item[3])
+			else:
+				print("--------------------------------------------------------------------------")
+				print("ERROR")
+				print("--------------------------------------------------------------------------")
 		elif(item[0]=='goto'):
 			print("\tjmp "+item[1])
 		elif(item[0]=='ret'):
@@ -320,13 +324,13 @@ class TAC:
 			if index==None:
 				print("\tmov $"+str(item[1])+", %eax")
 			else:
-				print("\tmov $-"+str(index['offset'])+"(%ebp), %eax")
-			print("\tadd $-"+str(v['offset'])+"(%ebp), %eax")
+				print("\tmov -"+str(index['offset'])+"(%ebp), %eax")
+			print("\tadd -"+str(v['offset'])+"(%ebp), %eax")
 			v2 = self.ST.find(item[2])
 			if v2==None:
-				print("\tmov $"+str(item[2])+", %ebx")
+				print("\tmov "+str(item[2])+", %ebx")
 			else:
-				print("\tmov $-"+str(v2['offset'])+"(%ebp), %ebx")
+				print("\tmov -"+str(v2['offset'])+"(%ebp), %ebx")
 			print("\tmov %ebx, (%eax)")
 		elif item[3]=='=arr':
 			index = self.ST.find(item[2])
@@ -334,12 +338,16 @@ class TAC:
 			if index==None:
 				print("\tmov $"+str(item[2])+", %eax")
 			else:
-				print("\tmov $-"+str(index['offset'])+"(%ebp), %eax")
-			print("\tadd $-"+str(v['offset'])+"(%ebp), %eax")
+				print("\tmov -"+str(index['offset'])+"(%ebp), %eax")
+			print("\tadd -"+str(v['offset'])+"(%ebp), %eax")
 			v2 = self.ST.find(item[0])
-			print("\tmov $-"+str(v2['offset'])+"(%ebp), %ebx")
+			print("\tmov -"+str(v2['offset'])+"(%ebp), %ebx")
 			print("\tmov (%eax), %ebx")
-			
+		else:
+			print("--------------------------------------------------------------------------")
+			print("ERROR")
+			print("--------------------------------------------------------------------------")
+
     def emit(self,list_to_append):
         self.code.append(list_to_append)
         # print(list_to_append)

@@ -6,7 +6,7 @@
 	inFormat:
 	.string "%d\n"
 	.global main
-Ack:
+ackermann:
 	push %ebp
 	mov %esp, %ebp
 	add $-512, %esp
@@ -67,14 +67,6 @@ scope7:
 	je scope9
 	jmp scope8
 scope8:
-	push -4(%ebp)
-	push $outFormatInt
-	call printf
-	add $8, %esp
-	push -8(%ebp)
-	push $outFormatInt
-	call printf
-	add $8, %esp
 	mov -4(%ebp), %eax
 	mov $0, %ebx
 	cmp %ebx, %eax
@@ -123,7 +115,7 @@ scope19:
 	mov %ebx, -44(%ebp)
 	push $1
 	push -44(%ebp)
-	call Ack
+	call ackermann
 	mov %eax, -48(%ebp)
 	add $8, %esp
 	mov -48(%ebp), %eax
@@ -135,7 +127,7 @@ scope20:
 	mov %ebx, -52(%ebp)
 	push -52(%ebp)
 	push -4(%ebp)
-	call Ack
+	call ackermann
 	mov %eax, -56(%ebp)
 	add $8, %esp
 	mov -56(%ebp), %eax
@@ -145,7 +137,7 @@ scope20:
 	mov %ebx, -60(%ebp)
 	push -16(%ebp)
 	push -60(%ebp)
-	call Ack
+	call ackermann
 	mov %eax, -64(%ebp)
 	add $8, %esp
 	mov -64(%ebp), %eax
@@ -165,8 +157,8 @@ main:
 	mov %esp, %ebp
 	add $-512, %esp
 	push $1
-	push $4
-	call Ack
+	push $3
+	call ackermann
 	mov %eax, -4(%ebp)
 	add $8, %esp
 	mov -4(%ebp), %eax

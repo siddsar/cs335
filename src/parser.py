@@ -6,8 +6,14 @@ from tac import *
 from symbolt import SymbolTmap
 from pprint import pprint
 
-tokens = lexer.tokens
+parser = argparse.ArgumentParser()
+parser.add_argument('-f','--path')
+parser.add_argument('-m', '--mode',default='False')
+parser.parse_args()
 
+args = parser.parse_args()
+
+tokens = lexer.tokens
 ST = SymbolTmap()
 TAC = TAC(ST)
 rules_store = []
@@ -336,9 +342,9 @@ def p_VariableDeclarator(p):
     if 'is_array' in p[3].keys() and p[3]['is_array']:
         t = ST.temp_var()
         ST.insert(t,'INT',temp=True)
-        to_emit.append([t, '1', '', '='])
-        for i in p[3]['place']:
-            to_emit.append([t, t, i, '*'])
+        # to_emit.append([t, '1', '', '='])
+        # for i in p[3]['place']:
+        #     to_emit.append([t, t, i, '*'])
         # to_emit.append(['declare', p[1], t, p[3]['type']])
         p[0]['place'] = (p[1], p[3]['place'])
         p[0]['type'] = p[3]['type']
@@ -439,8 +445,14 @@ def p_MethodHeader(p):
         # TODO
         pass
     elif len(p) == 4:
-        # TODO
-        pass
+        p[0]['name'] = p[3]['name']
+        p[0]['args'] = p[3]['args']
+        if type(p[2]) == type({}):
+            p[0]['type'] = p[2]['type']############################################################################3
+        else:
+            p[0]['type'] = 'VOID'
+        global global_return_type ###############################################################################
+        global_return_type = p[0]['type']
     elif len(p) == 3:
         p[0]['name'] = p[2]['name']
         p[0]['args'] = p[2]['args']
@@ -1217,9 +1229,9 @@ def p_MethodInvocation(p):
     | SUPER DOT IDENTIFIER L_ROUNDBR ArgumentList R_ROUNDBR
     | SUPER DOT IDENTIFIER L_ROUNDBR R_ROUNDBR
     '''
-    if p[2] == '(':
+    if p[2] == '(' and flag_mr:
         attributes = ST.find(p[1]['place'], func=True)
-        if attributes == None and p[1]['place'] != "System.out.println":
+        if attributes == None and p[1]['place'] != "System.out.println" and p[1]['place'] != "System.in.scanln":
             raise Exception("Undeclared function used: %s" %(p[1]['place']))
 
         if p[1]['place'] == 'System.out.println':
@@ -1229,6 +1241,13 @@ def p_MethodInvocation(p):
                         TAC.emit(['print',parameter['place'],'','_' + parameter['type']])
                     else:
                         TAC.emit(['print',parameter['place'],'','_INT'])
+        elif p[1]['place'] == 'System.in.scanln':
+            if len(p) == 5:
+                for parameter in p[3]:
+                    if 'type' in parameter.keys():
+                        TAC.emit(['scan',parameter['place'],'','_' + parameter['type']])
+                    else:
+                        TAC.emit(['scan',parameter['place'],'','_INT'])
         else:
             temp_var = ST.temp_var()
             if len(p) == 5:
@@ -1247,16 +1266,49 @@ def p_MethodInvocation(p):
             elif 'this' in p[1].keys():
                 TAC.emit(['param', p[1]['this'], '', ''])
 
-            offset_stack[-1] += ST.insert(temp_var,attributes['type'],temp=True)
+            
             if attributes['type'] == 'VOID':
                 TAC.emit(['call',p[1]['place'],'',''])
             else:
+                offset_stack[-1] += ST.insert(temp_var,attributes['type'],temp=True)
                 TAC.emit(['call',p[1]['place'],temp_var,''])
             TAC.emit(['adjust_rsp',attributes['number_params']*4,'',''])
             p[0] = {
                 'place' : temp_var,
                 'ret_type' : attributes['type']
             }
+    elif p[2] == '(':
+        if p[1]['place'] == 'System.out.println':
+            if len(p) == 5:
+                for parameter in p[3]:
+                    if 'type' in parameter.keys():
+                        TAC.emit(['print',parameter['place'],'','_' + parameter['type']])
+                    else:
+                        TAC.emit(['print',parameter['place'],'','_INT'])
+        elif p[1]['place'] == 'System.in.scanln':
+            if len(p) == 5:
+                for parameter in p[3]:
+                    if 'type' in parameter.keys():
+                        TAC.emit(['scan',parameter['place'],'','_' + parameter['type']])
+                    else:
+                        TAC.emit(['scan',parameter['place'],'','_INT'])
+        else:
+            temp_var = ST.temp_var()
+            if len(p) == 5:
+                p[3].reverse()
+                for i in range(len(p[3])):
+                    parameter = p[3][i]
+                    proto = prototype[i]
+                    TAC.emit(['param',parameter['place'],'',''])
+
+            offset_stack[-1] += ST.insert(temp_var,'INT',temp=True)
+            TAC.emit(['call',p[1]['place'],temp_var,''])
+            TAC.emit(['adjust_rsp',len(p[3])*4,'',''])
+            p[0] = {
+                'place' : temp_var,
+                'ret_type' : 'INT'
+            }
+
 
     rules_store.append(p.slice)
 def p_ArrayAccess(p):
@@ -1951,7 +2003,9 @@ def p_error(p):
 def main():
     tokens = lexer.tokens
     parser = yacc.yacc()
-    inputfile = sys.argv[1]
+    global flag_mr
+    flag_mr = args.mode
+    inputfile = args.path
     # file_out = inputfile.split('/')[-1].split('.')[0]
     code = open(inputfile, 'r').read()
     code += "\n"

@@ -91,6 +91,8 @@ class SymbolT:
             return 8
         elif( type_name == 'LONG'):
             return 8
+        else:
+            return 4
 
 
     def insert_var(self,id,type_name,arr=False,size_arr=None,temp=False):

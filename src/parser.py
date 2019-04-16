@@ -45,6 +45,7 @@ def p_FloatConst(p):
         'idVal' : p[1],
         'type' : 'FLOAT'
     }
+    pprint(p[0])
     rules_store.append(p.slice)
 def p_CharConst(p):
     '''
@@ -93,6 +94,7 @@ def p_PrimitiveType(p):
 def p_NumericType(p):
     ''' NumericType :   IntegralType
                       | FloatingPointType
+                      | CharType
     '''
     p[0] = p[1]
     rules_store.append(p.slice)
@@ -101,7 +103,6 @@ def p_IntegralType(p):
                         | SHORT
                         | INT
                         | LONG
-                        | CHAR
     '''
     p[0] = {
         'type' : 'INT'
@@ -115,6 +116,13 @@ def p_FloatingPointType(p):
         'type' : 'FLOAT'
     }
 
+    rules_store.append(p.slice)
+def p_CharType(p):
+    ''' CharType :  CHAR
+    '''
+    p[0] = {
+        'type' : 'CHAR'
+    }
     rules_store.append(p.slice)
 def p_ReferenceType(p):
     ''' ReferenceType :   ArrayType
@@ -333,7 +341,7 @@ def p_VariableDeclarator(p):
 
     if 'is_array' in p[3].keys() and p[3]['is_array']:
         t = ST.temp_var()
-        ST.insert(t,'INT',temp=True)
+        ST.insert(t,p[3]['type'],temp=True)
         # to_emit.append([t, '1', '', '='])
         # for i in p[3]['place']:
         #     to_emit.append([t, t, i, '*'])
@@ -473,21 +481,26 @@ def p_MethodDeclarator(p):
     if len(p) == 6:
         for i in range(len(p[4])):
             parameter = p[4][i]
+            # pprint(parameter)
             if 'is_array' in parameter and parameter['is_array']:
-                try:
+
                     size = parameter['arr_size']
                     tmp = p[4][i + size]
-                    dims = []
-                    for j in range(size):
-                        dims.append(p[4][i + 1 + j]['place'])
-                    offset_stack[-1] += ST.insert(parameter['place'],parameter['type'], arr=True, size_arr=dims)
-                except:
-                    raise Exception("Array passing guidelines not followed properly for arg %s" %(i))
+                    size_a = [size]
+                    # dims = []
+                    # for j in range(size):
+                    #     dims.append(p[4][i + 1 + j]['place'])
+                    offset_stack[-1] += ST.insert(parameter['place'],parameter['type'], arr=True, size_arr=size_a)
+                # except:
+                #     raise Exception("Array passing guidelines not followed properly for arg %s" %(i))
             else:
                 offset_stack[-1] += ST.insert(parameter['place'],parameter['type'])
     TAC.emit(['func', p[1], '', ''])
     for arg in p[0]['args']:
-        TAC.emit(['arg', arg['place'], '', ''])
+        if 'is_array' in arg.keys() and arg['is_array']:
+            TAC.emit(['arg_arr', arg['place'], '', ''])
+        else:
+            TAC.emit(['arg', arg['place'], '', ''])
     rules_store.append(p.slice)
 def p_MethodCreateScope(p):
     '''
@@ -631,7 +644,8 @@ def p_LocalVariableDeclaration(p):
             continue
         # pprint(rules_store)
         i = symbol['place']
-        # pprint(p[2])
+        # pprint(symbol)
+        # pprint(p[1])
         if 'type' in symbol:
             t = symbol['type']
         else:
@@ -1249,16 +1263,19 @@ def p_MethodInvocation(p):
                 if 'this' in p[1].keys():
                     TAC.emit(['param', p[1]['this'], '', ''])
                 p[3].reverse()
+                prototype.reverse()
                 for i in range(len(p[3])):
                     parameter = p[3][i]
                     proto = prototype[i]
+                    # pprint(proto)
                     if parameter['type'] != proto['type']:
                         raise Exception("Wrong type of arg passed to function %s; got %s but expected %s" %(p[1]['place'], parameter['type'], proto['type']))
-                    TAC.emit(['param',parameter['place'],'',''])
+                    else:
+                        TAC.emit(['param',parameter['place'],'',''])
             elif 'this' in p[1].keys():
                 TAC.emit(['param', p[1]['this'], '', ''])
 
-            
+
             if attributes['type'] == 'VOID':
                 TAC.emit(['call',p[1]['place'],'',''])
             else:
@@ -1506,6 +1523,10 @@ def p_MultiplicativeExpression(p):
             p[0]['type'] = 'INT'
             offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
             TAC.emit([newPlace,p[1]['place'], p[3]['place'], p[2]])
+        elif type1 == "FLOAT" or type2 == "FLOAT":
+            p[0]['type'] = 'FLOAT'
+            offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
+            TAC.emit([newPlace,p[1]['place'], p[3]['place'], p[2]+'f'])
         else:
             raise Exception('Error: Type is not compatible'+p[1]['place']+','+p[3]['place']+'.')
     elif p[2] == '/' :
@@ -1513,6 +1534,10 @@ def p_MultiplicativeExpression(p):
             p[0]['type'] = 'INT'
             offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
             TAC.emit([newPlace, p[1]['place'], p[3]['place'], p[2]])
+        elif type1 == "FLOAT" or type2 == "FLOAT":
+            p[0]['type'] = 'FLOAT'
+            offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
+            TAC.emit([newPlace,p[1]['place'], p[3]['place'], p[2]+'f'])
         else:
             raise Exception('Error: Type is not compatible' + p[1]['place'] + ',' + p[3]['place'] + '.')
     elif p[2] == '%':
@@ -1554,6 +1579,10 @@ def p_AdditiveExpression(p):
         p[0]['type'] = 'INT'
         offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
         TAC.emit([newPlace, p[1]['place'], p[3]['place'], p[2]])
+    elif type1 == "FLOAT" or type2 == "FLOAT":
+        p[0]['type'] = 'FLOAT'
+        offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
+        TAC.emit([newPlace,p[1]['place'], p[3]['place'], p[2]+'f'])
     elif type1 == "CHAR" and type2 == "INT":
         p[0]['type'] = 'CHAR'
         offset_stack[-1] += ST.insert(newPlace,p[0]['type'],temp=True)
@@ -1993,6 +2022,7 @@ def p_error(p):
 
 def main():
     tokens = lexer.tokens
+    # print("lol")
     parser = yacc.yacc()
     global flag_mr
     flag_mr = True
@@ -2011,12 +2041,14 @@ def main():
     print("\tinFormat:")
     print("\t.string \"%d\\n\"")
     print("\t.global main")
+    # print("lolololol")
     t = yacc.parse(code)
     print("\tmov $1, %eax")
     print("\tint $0x80")
+    # pprint(rules_store)
     # print("...........................")
     # print(t)
-    # TAC.print_tac()
+    TAC.print_tac()
     # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     # ST.dump_TT()
     # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")

@@ -5,10 +5,6 @@ from tac import *
 from symbolt import SymbolTmap
 from pprint import pprint
 
-parser = argparse.ArgumentParser()
-parser.add_argument("mode")
-parser.parse_args()
-
 tokens = lexer.tokens
 ST = SymbolTmap()
 TAC = TAC(ST)
@@ -1275,7 +1271,10 @@ def p_MethodInvocation(p):
                     if parameter['type'] != proto['type']:
                         raise Exception("Wrong type of arg passed to function %s; got %s but expected %s" %(p[1]['place'], parameter['type'], proto['type']))
                     else:
-                        TAC.emit(['param',parameter['place'],'',''])
+                        if 'is_array' in proto.keys() and proto['is_array']:
+                            TAC.emit(['param_arr',parameter['place'],'',''])
+                        else:
+                            TAC.emit(['param',parameter['place'],'',''])
             elif 'this' in p[1].keys():
                 TAC.emit(['param', p[1]['this'], '', ''])
 

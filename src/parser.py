@@ -5,6 +5,10 @@ from tac import *
 from symbolt import SymbolTmap
 from pprint import pprint
 
+parser = argparse.ArgumentParser()
+parser.add_argument("mode")
+parser.parse_args()
+
 tokens = lexer.tokens
 ST = SymbolTmap()
 TAC = TAC(ST)
@@ -1275,11 +1279,10 @@ def p_MethodInvocation(p):
             elif 'this' in p[1].keys():
                 TAC.emit(['param', p[1]['this'], '', ''])
 
-
+            offset_stack[-1] += ST.insert(temp_var,attributes['type'],temp=True)
             if attributes['type'] == 'VOID':
                 TAC.emit(['call',p[1]['place'],'',''])
             else:
-                offset_stack[-1] += ST.insert(temp_var,attributes['type'],temp=True)
                 TAC.emit(['call',p[1]['place'],temp_var,''])
             TAC.emit(['adjust_rsp',attributes['number_params']*4,'',''])
             p[0] = {

@@ -1,4 +1,5 @@
 class ifib{
+<<<<<<< HEAD
 	int func(int[] a, int x){
 		int i = a[x];
 		return i;
@@ -16,5 +17,16 @@ class ifib{
         for(int i=0;i<6;i++){
         	System.out.println(arr1[i]);
         }
+=======
+    
+    int main() {
+        int [] a = new int[2];
+        a[0]=100;
+        a[1] = 200 ;
+        System.out.println(a[0]);
+        System.out.println(a[1]);
+
+
+>>>>>>> 6da8808e0a36393fb9d50b801ceede989158c3a0
     }
 }

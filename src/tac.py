@@ -103,7 +103,8 @@ class TAC:
 			if self.ST.find(item[1])==None:
 				if self.ST.find(item[2])==None:
 					val = int(item[1])+int(item[2])
-					print("\tmov $"+str(val)+",-"+str(res_var['offset'])+"(%ebp)")
+					print("\tmov $"+str(val)+",%ecx")
+					print("\tmov %ecx, -" + str(res_var['offset'])+"(%ebp)")
 				else:
 					op = self.ST.find(item[2])
 					print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
@@ -132,7 +133,8 @@ class TAC:
 			if self.ST.find(item[1])==None:
 				if self.ST.find(item[2])==None:
 					val = int(item[1])-int(item[2])
-					print("\tmov $"+str(val)+",-"+str(res_var['offset'])+"(%ebp)")
+					print("\tmov $"+str(val)+",%ecx")
+					print("\tmov %ecx, -" + str(res_var['offset'])+"(%ebp)")
 				else:
 					op = self.ST.find(item[2])
 					print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
@@ -162,7 +164,8 @@ class TAC:
 			if self.ST.find(item[1])==None:
 				if self.ST.find(item[2])==None:
 					val = int(item[1])*int(item[2])
-					print("\tmov $"+str(val)+",-"+str(res_var['offset'])+"(%ebp)")
+					print("\tmov $"+str(val)+",%ecx")
+					print("\tmov %ecx, -" + str(res_var['offset'])+"(%ebp)")
 				else:
 					op = self.ST.find(item[2])
 					print("\tmov -"+str(op['offset'])+"(%ebp),%eax")
@@ -191,7 +194,8 @@ class TAC:
 			if self.ST.find(item[1])==None:
 				if self.ST.find(item[2])==None:
 					val = int(item[1])/int(item[2])
-					print("\tmov $"+str(val)+",-"+str(res_var['offset'])+"(%ebp)")
+					print("\tmov $"+str(val)+",%ecx")
+					print("\tmov %ecx, -" + str(res_var['offset'])+"(%ebp)")
 				else:
 					op = self.ST.find(item[2])
 					dx = int(item[1])>>32
@@ -226,7 +230,8 @@ class TAC:
 			if self.ST.find(item[1])==None:
 				if self.ST.find(item[2])==None:
 					val = int(item[1])/int(item[2])
-					print("\tmov $"+str(val)+",-"+str(res_var['offset'])+"(%ebp)")
+					print("\tmov $"+str(val)+",%ecx")
+					print("\tmov %ecx, -" + str(res_var['offset'])+"(%ebp)")
 				else:
 					op = self.ST.find(item[2])
 					dx = int(item[1])>>32
@@ -269,7 +274,8 @@ class TAC:
 						val = int(item[1]) or int(item[2])
 					else:
 						val = int(item[1])^int(item[2])
-					print("\tmov $" + str(val) + ",-" + str(res_var['offset'])+"(%ebp)")
+					print("\tmov $"+str(val)+",%ecx")
+					print("\tmov %ecx, -" + str(res_var['offset'])+"(%ebp)")
 
 				else:
 
@@ -330,8 +336,10 @@ class TAC:
 			v = self.ST.find(item[0])
 			if index==None:
 				print("\tmov $"+str(item[1])+", %eax")
+				print("\timul $4, %eax")
 			else:
 				print("\tmov -"+str(index['offset'])+"(%ebp), %eax")
+				print("\timul $4, %eax")
 			print("\tadd %ebp, %eax")
 			print("\tadd $-"+str(v['offset'])+", %eax")
 			# print("\tadd -"+str(v['offset'])+"(%ebp), %eax")
@@ -346,8 +354,10 @@ class TAC:
 			v = self.ST.find(item[1])
 			if index==None:
 				print("\tmov $"+str(item[2])+", %eax")
+				print("\timul $4, %eax")
 			else:
 				print("\tmov -"+str(index['offset'])+"(%ebp), %eax")
+				print("\timul $4, %eax")
 			print("\tadd %ebp, %eax")
 			print("\tadd $-"+str(v['offset'])+", %eax")
 			# print("\tadd -"+str(v['offset'])+"(%ebp), %eax")
@@ -361,7 +371,7 @@ class TAC:
 
     def emit(self,list_to_append):
         self.code.append(list_to_append)
-        # print(list_to_append)
+        #print(list_to_append)
     	self.generate_assembly(list_to_append)
 
     def print_tac(self):

@@ -7,8 +7,11 @@ from symbolt import SymbolTmap
 from pprint import pprint
 
 parser = argparse.ArgumentParser()
-parser.add_argument("mode")
+parser.add_argument('-f','--path')
+parser.add_argument('-m', '--mode',default='False')
 parser.parse_args()
+
+args = parser.parse_args()
 
 tokens = lexer.tokens
 ST = SymbolTmap()
@@ -2000,8 +2003,8 @@ def main():
     tokens = lexer.tokens
     parser = yacc.yacc()
     global flag_mr
-    flag_mr = True
-    inputfile = sys.argv[1]
+    flag_mr = args.mode
+    inputfile = args.path
     # file_out = inputfile.split('/')[-1].split('.')[0]
     code = open(inputfile, 'r').read()
     code += "\n"

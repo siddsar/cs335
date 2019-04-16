@@ -1,7 +1,6 @@
 class ackermann{
     // int Ack(int m,int n) {
-    //     int i = -1;
-    //     int j = -1;
+    //     int i = -1, j = -1;
     //     if (m>=0 && n>=0) {
     //         if (m == 0) {
     //             i = n + 1;
@@ -43,6 +42,5 @@ class ackermann{
         arr[6] = 14;
         arr[7] = 16;
 
-        
     }
 }

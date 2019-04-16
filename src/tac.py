@@ -30,6 +30,13 @@ class TAC:
 			print("\tpush $outFormatInt")
 			print("\tcall printf")
 			print("\tadd $8, %esp")
+		elif item[0]=='scan' :
+			v = self.ST.find(item[1])
+			print("\tlea -"+str(v['offset'])+"(%ebp), %eax")
+			print("\tpush %eax")
+			print("\tpush $inFormat")
+			print("\tcall scanf")
+			print("\tadd $8, %esp")
 		elif(item[0]=='ifgoto'):
 			v1 = self.ST.find(item[1][0])
 			v2 = self.ST.find(item[1][1])

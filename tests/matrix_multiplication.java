@@ -4,9 +4,21 @@ class matrix_multiplication{
      //    int i;
     	// int j;
      //    int k;
-        int[][] firstarray = new int[2][2];
+        int [] arr = new int[5];
+        arr[0] = 84;
+        arr[1] = 14;
+        arr[2] = 832354;
+        arr[3] = 12254;
+        arr[4] = 348687;
+        System.out.println(arr[0]);
+
+        for(int i=0;i<5;i++){
+            System.out.println(arr[i]);
+        }
+
+        // int[][] firstarray = new int[2][2];
         // int[][] secondarray = new int[2][2];
-        firstarray[0][0] = 1;
+        // firstarray[1][1] = 100;
         // firstarray[0][1] = 2;
         // firstarray[1][0] = 3;
         // firstarray[1][1] = 4;
@@ -39,4 +51,5 @@ class matrix_multiplication{
         //     }
         // }
     }
+
 }

@@ -97,6 +97,8 @@ class SymbolT:
         if id in self.vars.keys():
             raise Exception('Variable %s is already declared before!' %(id))
         size = self.find_size(type_name)
+        # print(type_name)
+        # print(size)
 
         if(arr):
             offset_len = size

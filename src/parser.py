@@ -418,6 +418,7 @@ def p_MethodAddParentScope(p):
     par_scope = ST.parent_scope()
     # pprint(p[-1])
     # print(par_scope)
+    #print(p[-1])
     offset_stack[-1] += ST.insert(p[-1]['name'], p[-1]['type'],func=True, params=p[-1]['args'], scope=par_scope)
     # print(p[-1]['name'], p[-1]['type'],True, p[-1]['args'], par_scope)
 
@@ -453,7 +454,7 @@ def p_MethodHeader(p):
 def p_MethodDeclarator(p):
     '''
     MethodDeclarator : IDENTIFIER L_ROUNDBR MethodCreateScope R_ROUNDBR
-    | IDENTIFIER L_ROUNDBR MethodCreateScope FormalParameterList R_ROUNDBR
+    | IDENTIFIER L_ROUNDBR MethodCreateScope FormalParameterList R_ROUNDBR 
     '''
     p[0] = {
         'name' : p[1],
@@ -1968,7 +1969,7 @@ def main():
 
     # print("...........................")
     # print(t)
-    TAC.print_tac()
+    # TAC.print_tac()
     # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     # ST.dump_TT()
     # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")

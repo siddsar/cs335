@@ -1,5 +1,6 @@
 class ifib{
-    int iifiii();
+    int printInt(int n);
+
     int ifib (int n) {
         int f1 = 0;
         int f2 = 1;
@@ -10,15 +11,21 @@ class ifib{
         else if (n==1) {
             fn = 1;
         }
-        for (int i = 1; i<n ; i++) {
+        for (int i=1;i<n;i++) {
             fn = f1 + f2;
             f1 = f2;
             f2 = fn;
         }
         return fn;
     }
-    int main() {
-        float a = 6.5;
-        iifiii();
+    public static void main() {
+        printInt(ifib(0));
+        printInt(ifib(1));
+        printInt(ifib(2));
+        printInt(ifib(3));
+        printInt(ifib(4));
+        printInt(ifib(5));
+        printInt(ifib(6));
+        printInt(ifib(7));
     }
 }

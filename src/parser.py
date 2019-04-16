@@ -438,8 +438,14 @@ def p_MethodHeader(p):
         # TODO
         pass
     elif len(p) == 4:
-        # TODO
-        pass
+        p[0]['name'] = p[3]['name']
+        p[0]['args'] = p[3]['args']
+        if type(p[2]) == type({}):
+            p[0]['type'] = p[2]['type']############################################################################3
+        else:
+            p[0]['type'] = 'VOID'
+        global global_return_type ###############################################################################
+        global_return_type = p[0]['type']
     elif len(p) == 3:
         p[0]['name'] = p[2]['name']
         p[0]['args'] = p[2]['args']

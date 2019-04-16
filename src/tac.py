@@ -49,7 +49,7 @@ class TAC:
 				print("\tjne "+item[3])
 			elif item[2]=='gt':
 				print("\tjg "+item[3])	
-			elif item[2]=='gte':
+			elif item[2]=='geq':
 				print("\tjge "+item[3])	
 			elif item[2]=='lt':
 				print("\tjl "+item[3])
